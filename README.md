@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+## __**REACT + CORDOVA**__
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**1/ Créer un projet React**
 
-## Available Scripts
+```bash
+npx create-react-app nomdelapp
+```
 
-In the project directory, you can run:
+**2/ Debug React si besoin**
+`'React' must be in scope when using JSX` -> ajoutez `import React, { Component }  from 'react';` au fichier
+Si votre IDE fait n'importe quoi avec la mise en page, renommez les .js en .jsx
 
-### `npm start`
+**3/ Fusionner avec Cordova**
+https://www.youtube.com/watch?v=SdSg0leeGaM
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## __**CORDOVA**__
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**1 / Installer tout ce bordel**
 
-### `npm test`
+```txt
+Android Studio 2021.3.1.16
+Java JDK 11.0.16
+Gradle 7.4.2
+SDK Platform Android 11.0 (Api Level 30) -> S'installe depuis Android Studio
+Android SDK Tools (Obsolete) -> Se trouve dans SDK Tool d'Android Studio
+Android SDK Build Tools 30.0.3 -> Se trouve dans SDK Tool d'Android Studio
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**2/ Modifier l'env**
 
-### `npm run build`
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin 
+export ANDROID_HOME=$HOME/Android/Sdk
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator/
+export PATH=$PATH:$ANDROID_HOME/tools
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Mettez ça dans le ~/.zshrc pour que ça soit toujours valide.
+Changez la version de Java au besoin pour matcher ce que vous avez sur votre poste.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**3/ Construire l'app**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```cpp
+npm run build
+cordova build android
+```
 
-### `npm run eject`
+**3.5/ Lancer le projet**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+> React
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> Android (on peut aussi passer par Android Studio si l'emulateur ne fonctionne pas, ou simplement installer l'apk sur son tel)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+cordova emulate android
+```
