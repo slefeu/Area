@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 #expose port
-EXPOSE 3000
+EXPOSE 8081
 
 #get the mobile apk
 RUN mkdir -p /mobile_app/

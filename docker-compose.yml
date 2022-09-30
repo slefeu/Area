@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   client_web:
     container_name: client_web
@@ -8,7 +9,7 @@ services:
     depends_on:
       - client_mobile
     ports:
-      - "3000:3000"
+      - "8081:8081"
     command: npm start
     volumes:
       - apk:/mobile_app/
