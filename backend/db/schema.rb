@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_03_171209) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
-    t.integer "status", default: 0, null: false
+    t.integer "user_type", default: 0, null: false
     t.string "password", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

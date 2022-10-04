@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  enum status: [:normal, :administrato]
+  enum user_type: [:normal, :administrator]
 end
