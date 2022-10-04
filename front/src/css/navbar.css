@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #212434;
+    display: flex;
+    flex-direction: column;
+    width: 13rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbarTitle {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.navbarSearch {
+    background: #1a1c27;
+    color: #b9bcd1;
+    border-radius: .5rem;
+    border: none;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+input::placeholder {
+    color: #eaedff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbarTop {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.line {
+    width: 70%;
+    height: 1px;
+    background: #4b4d5c;
+    margin: 1rem 0;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.navbarMiddle {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbarBottom {
+    background: #2a2f3e;
+    width: 100%;
+    border-top: solid #2c3745;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.navItem {
+    color: #b5b8c0;
+    text-decoration: none;
+    padding: .7rem;
+    font-size: 1rem;
+    padding-left: 1.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.navbarBottom .navItem {
+    margin-bottom: 0;
+}
+
+.navIcon {
+    padding-right: .6rem;
+    display: flex;
+}
+
+.fixedRight {
+    position: absolute;
+    right: .6rem;
+}
