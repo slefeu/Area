@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :users
-
+  get "about.json", to: "application#about"
   # Nasa service
   scope :nasa do
     get "apod", to: "nasa#apod"
