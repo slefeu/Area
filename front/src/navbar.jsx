@@ -11,24 +11,24 @@ function Navbar() {
         
             <div className="navbarTop">
                 <h1 className="navbarTitle">AREA</h1>
-                <input type="text" className="navbarSearch" placeholder="🔍 Search" />
             </div>
 
             <div className="navbarMiddle">
                 <NavItem icon={<AiFillHome />} name="Home" link="/" />
-                <NavItem icon={<AiOutlinePlus />} name="Create" link="/" />
+                <NavItem icon={<AiOutlinePlus />} name="Create" link="/" classes="add"/>
 
                 <div className="line"></div>
 
                 <NavItem icon={<AiFillBook />} name="Documentation" link="/" />
                 <NavItem icon={<AiFillSetting />} name="Settings" link="/" />
+
+                <NavItem icon={<AiOutlineUser />} name="Profil" link="/" classes="right" />
+                <NavItem icon={<AiOutlineLogout />} name="" link="/" classes="right"/>
             </div>
 
             <div className="navbarBottom">
-                <NavItem icon={<AiOutlineUser />} name="Profile" link="/" />
-                <a href="/" className="navItem">
-                    <div className="navIcon fixedRight"><AiOutlineLogout /></div>
-                </a>
+                <NavItem icon={<AiOutlineUser />} name="Profil" link="/" />
+                <NavItem icon={<AiOutlineLogout />} name="" link="/" classes="fixedRight"/>
             </div>
         </div>
     )

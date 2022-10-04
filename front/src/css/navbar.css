@@ -9,6 +9,7 @@
     flex-direction: column;
     width: 13rem;
     font-family: 'Poppins', sans-serif;
+    transition-duration: .5s;
 }
 
 .navbarTitle {
@@ -19,25 +20,9 @@
     text-align: center;
 }
 
-.navbarSearch {
-    background: #1a1c27;
-    color: #b9bcd1;
-    border-radius: .5rem;
-    border: none;
-    padding: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-
-input::placeholder {
-    color: #eaedff;
-    font-family: 'Poppins', sans-serif;
-}
-
 .navbarTop {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
 }
 
 .line {
@@ -52,6 +37,7 @@ input::placeholder {
 .navbarMiddle {
     display: flex;
     flex-direction: column;
+    transition-duration: .5s;
 }
 
 .navbarBottom {
@@ -65,10 +51,11 @@ input::placeholder {
     flex-direction: row;
     padding-top: .5rem;
     padding-bottom: .5rem;
+    transition-duration: .5s;
 }
 
 .navItem {
-    color: #b5b8c0;
+    color: #e0e4ee;
     text-decoration: none;
     padding: .7rem;
     font-size: 1rem;
@@ -76,6 +63,11 @@ input::placeholder {
     display: flex;
     align-items: center;
     margin-bottom: .5rem;
+    transition-duration: .3s;
+}
+
+.navItem:hover {
+    color: var(--accent-color)
 }
 
 .navbarBottom .navItem {
@@ -90,4 +82,74 @@ input::placeholder {
 .fixedRight {
     position: absolute;
     right: .6rem;
+}
+
+.right {
+    display: none;
+}
+
+.add {
+    transition-duration: .5s;
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar {
+        flex-direction: row;
+        height: 3.5rem;
+        width: 100%;
+        bottom: 0;
+        top: unset;
+    }
+    .navbarTop {
+        display: none;
+    }
+    .navbarMiddle {
+        flex-direction: row;
+        width: 100%;
+    }
+    .navbarBottom {
+        display: none;
+    }
+    .line {
+        display: none;
+    }
+    .navbarTitle {
+        display: none;
+    }
+    .navText {
+        display: none;
+    }
+    .fixedRight {
+        position: unset;
+    }
+    .navItem {
+        width: 100%;
+        margin-bottom: 0;
+        align-items: center;
+        justify-content: center;
+        padding-left: .7rem;
+    }
+    .right {
+        display: flex;
+    }
+    .add {
+        position: fixed;
+        background: var(--accent-color);
+        padding: 0;
+        margin: .5rem;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2.4rem;
+        width: 2.4rem;
+        border-radius: .7rem;
+        bottom: 3.5rem;
+        right: 0;
+        font-size: 1.4rem;
+        color: white;
+    }
+    .navIcon {
+        padding: 0;
+    }
 }
