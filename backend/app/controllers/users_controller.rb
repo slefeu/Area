@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
+  before_action :is_admin?
 
   # GET /users
   def index
@@ -39,6 +42,10 @@ class UsersController < ApplicationController
   end
 
   private
+    def is_admin?
+      render json: { error: "not permitted" } if @user.status == :normal
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
