@@ -40,8 +40,8 @@ services:
 
   sidekiq:
     depends_on:
-      - "db"
-      - "redis"
+      - db
+      - redis
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -49,6 +49,7 @@ services:
     volumes:
       - ./backend/:/rails-app
     environment:
+      - DATABASE_HOST=db
       - REDIS_URL_SIDEKIQ=redis://redis:6379/1
 
   server:

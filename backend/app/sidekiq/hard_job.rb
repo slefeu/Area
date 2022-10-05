@@ -4,6 +4,8 @@ class HardJob
   include Sidekiq::Job
 
   def perform(*args)
-    puts "Hello world"
+    User.all.each do |user|
+      puts user.inspect
+    end
   end
 end
