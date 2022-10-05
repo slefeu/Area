@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  # Validattions
+  validates :email,
+    format: { with: /(.+)@(.+)/, message: "Email invalid"  },
+              uniqueness: { case_sensitive: false },
+              length: { minimum: 4, maximum: 254 }
 
+  # Devise gem authentication
   devise :database_authenticatable,
          :jwt_authenticatable,
          :registerable,
