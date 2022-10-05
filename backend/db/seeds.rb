@@ -11,5 +11,5 @@ users = [{ first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@
 
 users.each do |user|
   User.create(first_name: user[:first_name], last_name: user[:last_name], email: user[:email],
-              user_type: :normal, password: user[:password])
+              admin: true, password: user[:password])
 end

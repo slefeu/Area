@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   devise_for :users, defaults: { format: :json }, :controllers => {:sessions => "users/sessions"}
   #devise_for :admin
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show, :destroy]
 
 
   get "about.json", to: "application#about"
