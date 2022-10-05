@@ -1,0 +1,13 @@
+box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+}
+
+.registerPage {
+    height: 100vh;
+    border:green;
+    background: var(--background-color);
+}
