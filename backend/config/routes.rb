@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # Defines the root path route ("/")
-  # root "articles#index"
+
+  root "application#about"
 
   resources :users
   get "about.json", to: "application#about"
