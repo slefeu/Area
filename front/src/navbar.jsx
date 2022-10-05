@@ -15,20 +15,20 @@ function Navbar() {
 
             <div className="navbarMiddle">
                 <NavItem icon={<AiFillHome />} name="Home" link="/" />
-                <NavItem icon={<AiOutlinePlus />} name="Create" link="/" classes="add"/>
+                <NavItem icon={<AiOutlinePlus />} name="Create" classes="add"/>
 
                 <div className="line"></div>
 
-                <NavItem icon={<AiFillBook />} name="Documentation" link="/" />
-                <NavItem icon={<AiFillSetting />} name="Settings" link="/" />
+                <NavItem icon={<AiFillBook />} name="Documentation" />
+                <NavItem icon={<AiFillSetting />} name="Settings" />
 
-                <NavItem icon={<AiOutlineUser />} name="Profil" link="/" classes="right" />
-                <NavItem icon={<AiOutlineLogout />} name="" link="/" classes="right"/>
+                <NavItem icon={<AiOutlineUser />} name="Profil" classes="right" />
+                <NavItem icon={<AiOutlineLogout />} name="" classes="right"/>
             </div>
 
             <div className="navbarBottom">
-                <NavItem icon={<AiOutlineUser />} name="Profil" link="/" />
-                <NavItem icon={<AiOutlineLogout />} name="" link="/" classes="fixedRight"/>
+                <NavItem icon={<AiOutlineUser />} name="Profil" />
+                <NavItem icon={<AiOutlineLogout />} name="" classes="fixedRight"/>
             </div>
         </div>
     )
