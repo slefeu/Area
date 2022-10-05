@@ -1,0 +1,8 @@
+:root {
+    --accent-color: rgba(37, 121, 211, 1);
+    --accent-color-fade: rgba(37, 121, 211, 0.123);
+    --background-color: #1a1c27;
+    --navbar-color: #212434;
+    --text-color: white;
+    --navbar-light-color: #2a2f3e;
+}
