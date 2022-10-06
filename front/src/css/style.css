@@ -73,6 +73,16 @@ body {
     text-align: justify;
 }
 
+.container.error {
+    border: solid var(--error-text);
+    background: var(--error-background);
+    backdrop-filter: blur(10px);
+}
+
+.container.error .containerTitle {
+    color: var(--error-text);
+}
+
 @media only screen and (max-width: 600px) {
     .content {
         width: calc(100vw - 2rem);

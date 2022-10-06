@@ -24,6 +24,7 @@ COPY package-lock.json /
 COPY . .
 
 RUN npm install
+RUN cordova plugin add cordova-plugin-screen-orientation
 
 #create apk
 RUN npm run build

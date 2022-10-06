@@ -9,6 +9,7 @@
     width: 13rem;
     font-family: 'Poppins', sans-serif;
     transition-duration: .5s;
+    z-index: 10;
 }
 
 .navbarTitle {
@@ -139,7 +140,7 @@
         position: fixed;
         background: var(--accent-color);
         padding: 0;
-        margin: .5rem;
+        margin: .6rem;
         text-align: center;
         display: flex;
         justify-content: center;
@@ -147,11 +148,12 @@
         height: 3.5rem;
         width: 3.5rem;
         border-radius: .7rem;
-        bottom: 4.5rem;
+        bottom: 4.6rem;
         right: 0;
         font-size: 1.6rem;
         color: var(--text-color);
         box-shadow: 0 .2rem .5rem rgb(24, 45, 77);
+        z-index: 11;
     }
     .navIcon {
         padding: 0;
