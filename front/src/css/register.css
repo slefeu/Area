@@ -8,6 +8,12 @@ box {
 
 .registerPage {
     height: 100vh;
-    border:green;
-    background: var(--background-color);
+    background: white;
+}
+
+.registerTitle {
+    font-size: 4rem;
+    font-weight: bold;
+    padding-bottom: 2rem;
+    color: var(--navbar-color);
 }
