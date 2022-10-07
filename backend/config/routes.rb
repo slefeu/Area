@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "application#about"
 
-  devise_for :users, defaults: { format: :json }, :controllers => {:sessions => "users/sessions"}
-  #devise_for :admin
+  devise_for :users, defaults: { format: :json }, controllers: { sessions: "users/sessions" }
+  # devise_for :admin
   resources :users, only: [:index, :show, :destroy]
 
 
