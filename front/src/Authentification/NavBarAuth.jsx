@@ -16,7 +16,6 @@ class ButtonNavBar extends Component {
 
     switchClass(type) {
         this.setState({ active: type, classPicked: "activeButton" });
-        console.log(this.state);
     }
 
     render() {
