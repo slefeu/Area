@@ -46,7 +46,6 @@ body {
     background: var(--navbar-light-color);
     display: flex;
     flex: 1 25%;
-    /* height: auto; */
     height: fit-content;
     justify-content: center;
     align-items: center;
