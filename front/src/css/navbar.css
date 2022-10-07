@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 .navbar {
     position: fixed;
     left: 0;
     top: 0;
     height: 100%;
-    background: #212434;
+    background: var(--navbar-color);
     display: flex;
     flex-direction: column;
     width: 13rem;
     font-family: 'Poppins', sans-serif;
     transition-duration: .5s;
+    z-index: 10;
 }
 
 .navbarTitle {
-    color: white;
+    color: var(--text-color);
     font-weight: bold;
     font-size: 1.5rem;
     width: 100%;
@@ -28,7 +28,8 @@
 .line {
     width: 70%;
     height: 1px;
-    background: #4b4d5c;
+    background: var(--text-color);
+    opacity: .1;
     margin: 1rem 0;
     margin-left: 15%;
     margin-right: 15%;
@@ -41,9 +42,8 @@
 }
 
 .navbarBottom {
-    background: #2a2f3e;
+    background: var(--navbar-light-color);
     width: 100%;
-    border-top: solid #2c3745;
     bottom: 0;
     position: absolute;
     display: flex;
@@ -52,10 +52,11 @@
     padding-top: .5rem;
     padding-bottom: .5rem;
     transition-duration: .5s;
+    box-shadow: 0 -.2rem 0 rgba(255, 255, 255, .1);
 }
 
 .navItem {
-    color: #e0e4ee;
+    color: var(--text-color);
     text-decoration: none;
     padding: .7rem;
     font-size: 1rem;
@@ -64,6 +65,8 @@
     align-items: center;
     margin-bottom: .5rem;
     transition-duration: .3s;
+    background: none;
+    border: none;
 }
 
 .navItem:hover {
@@ -95,10 +98,11 @@
 @media only screen and (max-width: 600px) {
     .navbar {
         flex-direction: row;
-        height: 3.5rem;
+        height: 4.5rem;
         width: 100%;
         bottom: 0;
         top: unset;
+        box-shadow: 0 -.4rem .5rem rgba(0, 0, 0, 0.322);
     }
     .navbarTop {
         display: none;
@@ -136,20 +140,23 @@
         position: fixed;
         background: var(--accent-color);
         padding: 0;
-        margin: .5rem;
+        margin: .6rem;
         text-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 2.4rem;
-        width: 2.4rem;
+        height: 3.5rem;
+        width: 3.5rem;
         border-radius: .7rem;
-        bottom: 3.5rem;
+        bottom: 4.6rem;
         right: 0;
-        font-size: 1.4rem;
-        color: white;
+        font-size: 1.6rem;
+        color: var(--text-color);
+        box-shadow: 0 .2rem .5rem rgb(24, 45, 77);
+        z-index: 11;
     }
     .navIcon {
         padding: 0;
+        font-size: 1.3rem;
     }
 }

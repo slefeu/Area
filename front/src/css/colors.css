@@ -1,7 +1,9 @@
 :root {
-    --dark: rgb(20, 27, 44);
-    --light-dark: rgb(38, 45, 61);
     --accent-color: rgba(37, 121, 211, 1);
-    --accent-color-2: rgba(37, 211, 187, 1);
-    --light: rgb(232, 233, 234);
+    --background-color: #1a1c27;
+    --navbar-color: #212434;
+    --text-color: white;
+    --navbar-light-color: #2a2f3e;
+    --error-text: #f70c37;
+    --error-background: #f70c373b;
 }

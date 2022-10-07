@@ -27,6 +27,7 @@ RUN npm install
 
 #create apk
 RUN npm run build
+RUN cordova plugin add cordova-plugin-screen-orientation
 RUN cordova build android
 
 #move the apk to the appropriate folder
