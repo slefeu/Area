@@ -4,34 +4,52 @@ import "../css/colors.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import { SiFacebook as FbLogo } from "react-icons/si";
 import { AiFillTwitterCircle as TwitterLogo } from "react-icons/ai"
+import axios from "axios";
 
 function LoginForm() {
+    function SetLoginValues() {
+        const user = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        };
+
+        axios.post('http://localhost:8080/login', { user })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(res => {
+                console.log("Error " + res);
+            })
+    }
+
     return (
         <>
-            <form className="formPadding">
-                <fieldset className="fieldSetFormat">
+            <form className="box formPadding">
+                <fieldset className="box fieldSetFormat">
                     <input
-                        className="fieldFormat"
+                        className="box fieldFormat"
+                        id="email"
                         type="text"
                         placeholder="Email"
                     />
                 </fieldset>
-                <fieldset className="fieldSetFormat">
+                <fieldset className="box fieldSetFormat">
                     <input
-                        className="fieldFormat"
+                        className="box fieldFormat"
+                        id="password"
                         type="password"
                         placeholder="Password"
                     />
                 </fieldset>
-                <fieldset className="fieldSetFormat">
+                <fieldset className="box fieldSetFormat">
                     <input
-                        className="fieldFormat"
+                        className="box fieldFormat"
                         type="text"
                         placeholder="Server Id"
                     />
                 </fieldset>
             </form>
-            <button className="buttonFormat">
+            <button className="box buttonFormat" onClick={SetLoginValues}>
                 Login
             </button>
         </>
@@ -40,31 +58,31 @@ function LoginForm() {
 
 function Login() {
     return (
-        <box className="loginPage">
+        <div className="box loginPage">
             <ButtonNavBar active="Login" classPicked="activeButton" />
-            <box className="loginForm">
-                <box className="loginTitle">
+            <div className="box loginForm">
+                <div className="loginTitle box">
                     Login to your Account
-                </box>
-                <box className="loginText">
+                </div>
+                <div className="box loginText">
                     Using your social networks
-                </box>
-                <box className="logos">
-                    <box className="logoPadding">
+                </div>
+                <div className="logos box">
+                    <div className="logoPadding box">
                         <FbLogo preserveAspectRatio="xMaxYMid meet" fill="darkblue" opacity={.8} size={50} >
                         </FbLogo>
-                    </box>
-                    <box className="logoPadding">
+                    </div>
+                    <div className="box logoPadding">
                         <TwitterLogo preserveAspectRatio="xMaxYMid meet" fill="cyan" opacity={.8} size={60} >
                         </TwitterLogo>
-                    </box>
-                </box>
-                <box className="orText">
+                    </div>
+                </div>
+                <div className="box orText">
                     Or
-                </box>
+                </div>
                 <LoginForm></LoginForm>
-            </box>
-        </box>
+            </div>
+        </div>
     );
 }
 
