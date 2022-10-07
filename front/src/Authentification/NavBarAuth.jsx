@@ -25,7 +25,7 @@ class ButtonNavBar extends Component {
                     <Link to={this.state.links[this.state.types.indexOf(type)]} key={i}>
                         <button
                             type="button"
-                            className={this.state.active === type ? "activeButton" : "passiveButton"}
+                            className={`button ${this.state.active === type ? "active" : ""}`}
                             key={type}
                             onClick={() => this.switchClass(type)}
                         >

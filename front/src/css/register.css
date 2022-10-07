@@ -12,6 +12,10 @@
 }
 
 .registerTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     font-size: 4rem;
     font-weight: bold;
     padding-bottom: 2rem;

@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
 * {
     font-family: 'Poppins', sans-serif
 }
@@ -14,6 +13,7 @@
 .loginPage {
     height: 100vh;
     background: white;
+    width: 100vw;
 }
 
 .loginTitle {
@@ -21,6 +21,7 @@
     font-weight: bold;
     padding-bottom: .3rem;
     color: var(--navbar-color);
+    text-align: center;
 }
 
 .loginText {
@@ -54,16 +55,16 @@
 }
 
 .fieldFormat {
-font-size: 1rem;
-border-radius: 5rem;
-line-height: 1.5;
-padding: 5px 10px;
-transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
-border: 2px solid #dee1e2;
-color: rgb(14, 14, 16);
-background: #dee1e2;
-display: block;
-height: 36px;
+    font-size: 1rem;
+    border-radius: 5rem;
+    line-height: 1.5;
+    padding: 5px 10px;
+    transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+    border: 2px solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 36px;
 }
 
 .fieldFormat:hover {
@@ -82,20 +83,20 @@ height: 36px;
     line-height: 1.5;
     transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
     border: none;
-    width:25%;
-    padding-top:.5rem;
-    padding-bottom:.5rem;
+    width: 25%;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
 }
 
 .buttonFormat:hover {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .formPadding {
-    padding-bottom:.5rem;
+    padding-bottom: .5rem;
 }
 
 .orText {
-    color:grey;
+    color: grey;
     font-size: 1.3rem;
 }
