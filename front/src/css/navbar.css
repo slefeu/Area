@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #212434;
+    display: flex;
+    flex-direction: column;
+    width: 13rem;
+    font-family: 'Poppins', sans-serif;
+    transition-duration: .5s;
+}
+
+.navbarTitle {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.navbarTop {
+    display: flex;
+    flex-direction: column;
+}
+
+.line {
+    width: 70%;
+    height: 1px;
+    background: #4b4d5c;
+    margin: 1rem 0;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.navbarMiddle {
+    display: flex;
+    flex-direction: column;
+    transition-duration: .5s;
+}
+
+.navbarBottom {
+    background: #2a2f3e;
+    width: 100%;
+    border-top: solid #2c3745;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition-duration: .5s;
+}
+
+.navItem {
+    color: #e0e4ee;
+    text-decoration: none;
+    padding: .7rem;
+    font-size: 1rem;
+    padding-left: 1.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+    transition-duration: .3s;
+}
+
+.navItem:hover {
+    color: var(--accent-color)
+}
+
+.navbarBottom .navItem {
+    margin-bottom: 0;
+}
+
+.navIcon {
+    padding-right: .6rem;
+    display: flex;
+}
+
+.fixedRight {
+    position: absolute;
+    right: .6rem;
+}
+
+.right {
+    display: none;
+}
+
+.add {
+    transition-duration: .5s;
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar {
+        flex-direction: row;
+        height: 3.5rem;
+        width: 100%;
+        bottom: 0;
+        top: unset;
+    }
+    .navbarTop {
+        display: none;
+    }
+    .navbarMiddle {
+        flex-direction: row;
+        width: 100%;
+    }
+    .navbarBottom {
+        display: none;
+    }
+    .line {
+        display: none;
+    }
+    .navbarTitle {
+        display: none;
+    }
+    .navText {
+        display: none;
+    }
+    .fixedRight {
+        position: unset;
+    }
+    .navItem {
+        width: 100%;
+        margin-bottom: 0;
+        align-items: center;
+        justify-content: center;
+        padding-left: .7rem;
+    }
+    .right {
+        display: flex;
+    }
+    .add {
+        position: fixed;
+        background: var(--accent-color);
+        padding: 0;
+        margin: .5rem;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2.4rem;
+        width: 2.4rem;
+        border-radius: .7rem;
+        bottom: 3.5rem;
+        right: 0;
+        font-size: 1.4rem;
+        color: white;
+    }
+    .navIcon {
+        padding: 0;
+    }
+}

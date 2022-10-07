@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../css/register.css"
 import "../css/colors.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
@@ -12,7 +12,7 @@ function RegisterForm() {
             password2: document.getElementById("password_confirm").value,
         }
 
-        if (validation.password == validation.password2) {
+        if (validation.password === validation.password2) {
             return (true);
         } else {
             return (false);
