@@ -1,25 +1,42 @@
-import React from "react"
+import React, { useState } from "react"
+import axios from "axios";
 import "../css/login.css"
 import "../css/colors.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import { SiFacebook as FbLogo } from "react-icons/si";
 import { AiFillTwitterCircle as TwitterLogo } from "react-icons/ai"
-import axios from "axios";
+
 
 function LoginForm() {
+    const handlePlatform = () => {
+        if (localStorage.getItem("platform") === "web") {
+            return (true);
+        }
+        return (false);
+    };
+
     function SetLoginValues() {
         const user = {
             email: document.getElementById("email").value,
-            password: document.getElementById("password").value
+            password: document.getElementById("password").value,
+            server: document.getElementById("server").value
         };
 
-        axios.post('http://localhost:8080/login', { user })
+        axios.post("http://localhost:8080/login", { user })
             .then(res => {
                 console.log(res.data);
             })
             .catch(res => {
                 console.log("Error " + res);
             })
+    }
+
+    function checkMobile() {
+        if (localStorage.getItem("platform") === "web") {
+            return ("http://0.0.0.0:8081");
+        } else {
+            return ("");
+        }
     }
 
     return (
@@ -31,6 +48,7 @@ function LoginForm() {
                         id="email"
                         type="text"
                         placeholder="Email"
+                        required
                     />
                 </fieldset>
                 <fieldset className="box fieldSetFormat">
@@ -39,13 +57,18 @@ function LoginForm() {
                         id="password"
                         type="password"
                         placeholder="Password"
+                        required
                     />
                 </fieldset>
                 <fieldset className="box fieldSetFormat">
                     <input
                         className="box fieldFormat"
                         type="text"
+                        id="server"
                         placeholder="Server Id"
+                        value={checkMobile()}
+                        disabled={handlePlatform()}
+                        required
                     />
                 </fieldset>
             </form>

@@ -14,8 +14,11 @@ const startApp = () => {
 }
 
 if (window.cordova) {
-  document.addEventListener('deviceready', startApp, false);
+  localStorage.setItem("platform", "mobile")
+  document.addEventListener('deviceready', startApp, false)
 } else {
+  localStorage.setItem("url", "http://0.0.0.0:8080")
+  localStorage.setItem("platform", "web")
   startApp()
 }
 
