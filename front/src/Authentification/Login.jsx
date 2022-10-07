@@ -33,7 +33,7 @@ function LoginForm() {
 
     function checkMobile() {
         if (localStorage.getItem("platform") === "web") {
-            return ("http://0.0.0.0:8081");
+            return (localStorage.getItem("url"));
         } else {
             return ("");
         }
@@ -65,7 +65,7 @@ function LoginForm() {
                         className="box fieldFormat"
                         type="text"
                         id="server"
-                        placeholder="Server Id"
+                        placeholder="Server url"
                         value={checkMobile()}
                         disabled={handlePlatform()}
                         required
