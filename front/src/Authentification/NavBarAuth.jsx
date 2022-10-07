@@ -21,13 +21,12 @@ class ButtonNavBar extends Component {
     render() {
         return (
             <div className="navbarAuth">
-                {this.state.types.map((type) => (
-                    <Link to={this.state.links[this.state.types.indexOf(type)]}>
+                {this.state.types.map((type, i) => (
+                    <Link to={this.state.links[this.state.types.indexOf(type)]} key={i}>
                         <button
                             type="button"
                             className={this.state.active === type ? "activeButton" : "passiveButton"}
                             key={type}
-                            active={this.state.active === type}
                             onClick={() => this.switchClass(type)}
                         >
                             {type}
