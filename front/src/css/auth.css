@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+    font-family: 'Poppins', sans-serif
+}
+
+body {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.authContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    width: 70vw;
+}
+
+.authContainer * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    padding-bottom: 2rem;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: bold;
+    padding-bottom: .3rem;
+    color: var(--navbar-color);
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: grey;
+    padding-bottom: .5rem;
+    text-align: center;
+}
+
+.logos {
+    margin-bottom: .5rem;
+}
+
+svg {
+    fill: var(--accent-color);
+    opacity: .8;
+    font-size: 4rem;
+}
+
+svg.bigger {
+    font-size: 4.5rem;
+    margin-left: .8rem;
+}
+
+.fieldFormat {
+    font-size: 1rem;
+    border-radius: .7rem;
+    margin: .5rem;
+    line-height: 1.5;
+    padding: 5px 10px;
+    transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+    border: 2px solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 36px;
+}
+
+.fieldFormat:hover {
+    border-color: #ccc;
+}
+
+.buttonFormat {
+    background: var(--accent-color);
+    font-size: 1.1rem;
+    color: white;
+    border-radius: .5rem;
+    border: none;
+    width: auto;
+    padding: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.buttonFormat:hover {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: 2.5rem;
+    }
+    .subtitle {
+        font-size: 1rem;
+    }
+    .fieldFormat {
+        width: 90%;
+    }
+}

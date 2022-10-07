@@ -4,9 +4,6 @@ import Register from './Authentification/Register.jsx'
 import Login from './Authentification/Login.jsx'
 import Home from './home'
 
-
-import './css/app.css';
-
 function App() {
   return (
     <>
