@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+    before_action :is_admin?, only: [:destroy]
     respond_to :json
     private
     def respond_with(resource, _opts = {})
@@ -9,5 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     def register_failed
       render json: { message: "Signed up failure." }
+    end
+    def is_admin?
+      unless current_user.admin
+        render json: { message: "You are not admin." }, status: :unauthorized
+      end
     end
   end
