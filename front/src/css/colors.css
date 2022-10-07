@@ -1,6 +1,6 @@
 :root {
-    --accent-color: rgba(37, 121, 211, 1);
-    --accent-color-fade: rgba(37, 121, 211, 0.123);
+    --accent-color: rgb(68 97 242);
+    --auth-buttons: rgb(40 64 182);
     --background-color: #1a1c27;
     --navbar-color: #212434;
     --text-color: white;

@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 * {
     font-family: 'Poppins', sans-serif
 }
 
 body {
-    background: white;
+    background-image: url("../images/login_background.png");
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,9 +19,11 @@ body {
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    background: white;
+    background: rgba(255, 255, 255, 0.7);
     border-radius: 1rem;
     width: 70vw;
+    backdrop-filter: blur(8px);
+
 }
 
 .authContainer * {
@@ -39,48 +42,60 @@ body {
     padding-bottom: 2rem;
 }
 
-.title {
-    font-size: 4rem;
-    font-weight: bold;
-    padding-bottom: .3rem;
-    color: var(--navbar-color);
-    text-align: center;
-}
-
 .subtitle {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: grey;
+    margin-top: 2rem;
     padding-bottom: .5rem;
     text-align: center;
 }
 
-.logos {
-    margin-bottom: .5rem;
+.socialNetworks {
+    border: none;
+    border-radius: .5rem;
+    background: white;
+    display: block;
+    padding: .5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: .5rem;
 }
+
+.socialNetworks:hover {
+    cursor: pointer;
+}
+
 
 svg {
-    fill: var(--accent-color);
-    opacity: .8;
-    font-size: 4rem;
+    width: 2rem;
+    height: 2rem;
 }
 
-svg.bigger {
-    font-size: 4.5rem;
-    margin-left: .8rem;
+.twitter {
+    fill: rgb(29 161 242);
 }
 
 .fieldFormat {
     font-size: 1rem;
-    border-radius: .7rem;
+    border-radius: .5rem;
     margin: .5rem;
-    line-height: 1.5;
-    padding: 5px 10px;
+    padding-left: .5rem;
     transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
     border: 2px solid #dee1e2;
     color: rgb(14, 14, 16);
     background: #dee1e2;
     display: block;
     height: 36px;
+    width: 65%;
+}
+
+.fieldFormat:focus {
+    outline: none;
+}
+
+.fieldFormat:disabled {
+    color: rgb(125 125 125);
+    border: none;
 }
 
 .fieldFormat:hover {
@@ -88,15 +103,16 @@ svg.bigger {
 }
 
 .buttonFormat {
-    background: var(--accent-color);
     font-size: 1.1rem;
-    color: white;
-    border-radius: .5rem;
     border: none;
-    width: auto;
-    padding: 1rem;
+    border-radius: .5rem;
+    background: var(--auth-buttons);
+    color: white;
+    display: block;
+    width: 66%;
     padding-top: .5rem;
     padding-bottom: .5rem;
+    box-shadow: rgba(45, 45, 189, 0.81) 0px 7px 29px 0px;
 }
 
 .buttonFormat:hover {
@@ -104,12 +120,11 @@ svg.bigger {
 }
 
 @media only screen and (max-width: 600px) {
-    .title {
-        font-size: 2.5rem;
-    }
+
     .subtitle {
         font-size: 1rem;
     }
+
     .fieldFormat {
         width: 90%;
     }
