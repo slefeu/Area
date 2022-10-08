@@ -1,5 +1,5 @@
-import './css/colors.css'
-import './css/style.css'
+import '../css/colors.css'
+import '../css/style.css'
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 

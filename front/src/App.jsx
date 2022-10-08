@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Register from './Authentification/Register.jsx'
 import Login from './Authentification/Login.jsx'
-import Home from './Home'
-import Create from './Create'
+import Home from './Pages/Home'
+import Create from './Pages/Create'
 
 import './css/app.css';
 

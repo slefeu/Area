@@ -1,7 +1,7 @@
-import './css/colors.css'
-import './css/style.css'
+import '../css/colors.css'
+import '../css/style.css'
 
-import Container from './Container'
+import Container from '../Tools/Container'
 
 import axios from "axios";
 import { AiOutlineCheck } from 'react-icons/ai'
@@ -45,9 +45,9 @@ function CreateForm({json}) {
         <Container title="Create new Widget">
             <div className="row-2 border">
                 <div>General</div>
-                <input type="text" id="name" className="requiered" placeholder="Widget Name"></input>
+                <input type="text" id="name" className="requiered" placeholder="Widget Name" />
             </div>
-            {/* <input type="text" placeholder="Widget Data"></input> */}
+            {/* <input type="text" placeholder="Widget Data" /> */}
             <div className="row-2 border">
                 <div>Actions/Reactions</div>
                 {actions}

@@ -132,9 +132,10 @@ body {
     color: var(--accent-color);
     position: absolute;
     background-color: var(--navbar-light-color);
-    top: -1rem;
+    top: -1.3rem;
     padding-left: .6rem;
     padding-right: .6rem;
+    font-size: 1.2rem;
 }
 
 .btnBig {

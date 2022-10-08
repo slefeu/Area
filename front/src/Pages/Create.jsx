@@ -1,10 +1,10 @@
-import './css/colors.css'
-import './css/style.css'
+import '../css/colors.css'
+import '../css/style.css'
 
-import Navbar from './Navbar'
-import Load from './Load'
+import Navbar from '../Tools/Navbar'
+import Load from '../Tools/Load'
+import Error from '../Tools/Error'
 import CreateForm from './CreateForm'
-import Error from './Error'
 
 import { useState, useEffect } from 'react'
 import axios from 'axios'
