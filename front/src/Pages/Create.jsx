@@ -20,7 +20,7 @@ function Create() {
 
     return (
         <>
-            <Navbar />
+            <Navbar currentPage="Create" />
             <div className="content">
                 {element}
             </div>

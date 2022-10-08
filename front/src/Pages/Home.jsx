@@ -20,7 +20,7 @@ function Home() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar currentPage="Home"/>
             <div className="content">
                 {element}
             </div>
