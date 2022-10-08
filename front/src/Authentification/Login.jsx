@@ -5,15 +5,10 @@ import "../css/auth.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import { AiOutlineEyeInvisible as EyeIcon } from "react-icons/ai"
+import handlePlatform from "./Platform.jsx"
+import checkMobile from "./Mobile.jsx"
 
 function LoginForm() {
-    const handlePlatform = () => {
-        if (localStorage.getItem("platform") === "web") {
-            return (true);
-        }
-        return (false);
-    };
 
     function SetLoginValues() {
         const user = {
@@ -40,20 +35,12 @@ function LoginForm() {
             })
     }
 
-    function checkMobile() {
-        if (localStorage.getItem("platform") === "web") {
-            return (localStorage.getItem("url"));
-        } else {
-            return ("");
-        }
-    }
-
     return (
         <>
             <form className="form">
                 <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
                 <input className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
-                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} required icon={<EyeIcon></EyeIcon>} />
+                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} required />
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>
         </>
