@@ -15,7 +15,7 @@ function Navbar() {
 
             <div className="navbarMiddle">
                 <NavItem icon={<AiFillHome />} name="Home" link="/home" />
-                <NavItem icon={<AiOutlinePlus />} name="Create" classes="add" link="/create"/>
+                <NavItem icon={<AiOutlinePlus />} name="Create" classes="cornerBtn" link="/create"/>
 
                 <div className="line"></div>
 

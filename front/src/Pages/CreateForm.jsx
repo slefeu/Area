@@ -53,7 +53,7 @@ function CreateForm({json}) {
                 {actions}
                 {reactions}
             </div>
-            <button onClick={submit} className="btnBig"><AiOutlineCheck /></button>
+            <button onClick={submit} className="btnBig cornerBtn"><AiOutlineCheck /></button>
         </Container>
     );
 }

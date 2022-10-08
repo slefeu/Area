@@ -91,10 +91,6 @@
     display: none;
 }
 
-.add {
-    transition-duration: .5s;
-}
-
 @media only screen and (max-width: 600px) {
     .navbar {
         flex-direction: row;
@@ -136,7 +132,7 @@
     .right {
         display: flex;
     }
-    .add {
+    .cornerBtn {
         position: fixed;
         background: var(--accent-color);
         padding: 0;
@@ -154,6 +150,11 @@
         color: var(--text-color);
         box-shadow: 0 .2rem .5rem rgb(24, 45, 77);
         z-index: 11;
+        transition-duration: .3s;
+    }
+    .cornerBtn:hover {
+        scale: 1.05;
+        color: white;
     }
     .navIcon {
         padding: 0;
