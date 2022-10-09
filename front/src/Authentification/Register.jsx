@@ -46,7 +46,6 @@ function Register() {
                 <button className="buttonFormat" onClick={SetRegisterValues}>
                     Register
                 </button>
-
             </div>
         </div>
     );
