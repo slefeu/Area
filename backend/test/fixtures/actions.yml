@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  klass: MyString
-  options: 
-  reaction: one
+  service: MyString
+  class: MyString
+  widget: one
 
 two:
-  klass: MyString
-  options: 
-  reaction: two
+  service: MyString
+  class: MyString
+  widget: two

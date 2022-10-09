@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class SendMailHandler
+class SendMailCommandHandler
   def initialize
   end
 
   def call(attributs)
-    puts "Send Mail Handler"
     # TODO do something with options
+    puts "Send Mail Command Handler"
   end
 end

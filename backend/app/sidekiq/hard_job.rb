@@ -6,7 +6,8 @@ class HardJob
   def perform(*args)
     User.all.each do |user|
       puts user.inspect
-      user.actions.each do |action|
+      user.widgets.each do |widget|
+        action = widget.action
         if Bus_actions.call(action.klass, action.options)
           reaction = action.reaction
           Bus_reactions.call(reaction.klass, reaction.options)
