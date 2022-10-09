@@ -3,14 +3,13 @@ import '../css/colors.css'
 
 import NavItem from './NavItem'
 
-import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout } from 'react-icons/ai'
+import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout } from "react-icons/ai"
 
 function Navbar({ currentPage }) {
 
 
     return (
         <div className="navbar">
-        
             <div className="navbarTop">
                 <h1 className="navbarTitle">AREA</h1>
             </div>
@@ -25,12 +24,12 @@ function Navbar({ currentPage }) {
                 <NavItem icon={<AiFillSetting />} name="Settings" classes={`wip ${currentPage === "Settings" ? "active" : ""}`}/>
 
                 <NavItem icon={<AiOutlineUser />} name="Profil" classes={`right wip ${currentPage === "Profil" ? "active" : ""}`} />
-                <NavItem icon={<AiOutlineLogout />} classes={`right wip`}/>
+                <NavItem icon={<AiOutlineLogout />} classes={`right`} link="/logout"/>
             </div>
 
             <div className="navbarBottom">
                 <NavItem icon={<AiOutlineUser />} name="Profil" classes={`wip ${currentPage === "Profil" ? "active" : ""}`} />
-                <NavItem icon={<AiOutlineLogout />} classes={`fixedRight wip`}/>
+                <NavItem icon={<AiOutlineLogout />} classes={`fixedRight`} link="/logout"/>
             </div>
         </div>
     )
