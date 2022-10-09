@@ -12,7 +12,8 @@ class ActionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create action" do
     assert_difference("Action.count") do
-      post actions_url, params: { action: { klass: @action.klass, options: @action.options, reaction_id: @action.reaction_id } }, as: :json
+      post actions_url,
+params: { action: { klass: @action.klass, options: @action.options, reaction_id: @action.reaction_id } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +25,8 @@ class ActionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update action" do
-    patch action_url(@action), params: { action: { klass: @action.klass, options: @action.options, reaction_id: @action.reaction_id } }, as: :json
+    patch action_url(@action),
+params: { action: { klass: @action.klass, options: @action.options, reaction_id: @action.reaction_id } }, as: :json
     assert_response :success
   end
 

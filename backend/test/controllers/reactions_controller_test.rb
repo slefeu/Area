@@ -24,7 +24,8 @@ class ReactionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update reaction" do
-    patch reaction_url(@reaction), params: { reaction: { klass: @reaction.klass, options: @reaction.options } }, as: :json
+    patch reaction_url(@reaction), params: { reaction: { klass: @reaction.klass, options: @reaction.options } },
+as: :json
     assert_response :success
   end
 
