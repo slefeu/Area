@@ -4,7 +4,7 @@ import "../css/auth.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import axios from "axios"
 import handlePlatform from "./Platform.jsx"
-import checkMobile from "./Platform.jsx"
+import checkMobile from "./Mobile.jsx"
 
 function Register() {
 
@@ -21,16 +21,13 @@ function Register() {
 
         localStorage.setItem("url", document.getElementById("server").value);
 
-        // faire la gestion d'erreur = récup les messages d'erreur et faire un
-        //document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
-        //faire des contours en rouge !
         axios.post('http://localhost:8080/users', user)
             .then(res => {
-                // aller sur la page login
-                console.log(res.data)
+                window.location.href = "/login";
             })
-            .catch(res => {
-                console.log(res);
+            .catch(err => {
+                console.log(err);
+                //change the border of the input that is wrong in red
             })
     }
 
@@ -43,7 +40,7 @@ function Register() {
                 <input className="fieldFormat" id="email" type="text" placeholder="Email" required />
                 <input className="fieldFormat" id="password" type="password" placeholder="Password" required />
                 <input className="fieldFormat" id="password_confirm" type="password" placeholder="Confirm Password" required />
-                <input className="fieldFormat" id="server" type="text" placeholder="Server URL" required value={checkMobile()} disabled={handlePlatform()} />
+                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} />
             </form>
             <button className="buttonFormat" onClick={SetRegisterValues}>
                 Register
