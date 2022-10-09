@@ -1,18 +1,18 @@
-import './css/colors.css'
-import './css/style.css'
+import "./css/colors.css"
+import "./css/style.css"
 
-import Navbar from './navbar'
-import Load from './load'
-import Container from './container'
+import Navbar from "./navbar"
+import Load from "./load"
+import Container from "./container"
 
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 function Home() {
     const [element, setElement] = useState(<Load/>)
 
     useEffect(() => {
-        axios.get(localStorage.getItem('url') + '/about.json')
+        axios.get(localStorage.getItem("url") + "/about.json")
         .then(function (res) {
             console.log(res.data)
             setElement(<Container
