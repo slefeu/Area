@@ -10,7 +10,9 @@ import checkMobile from "./Mobile.jsx"
 
 function LoginForm() {
 
-    function SetLoginValues() {
+    async function SetLoginValues(evt) {
+        evt.preventDefault();
+
         const user = {
             "user": {
                 "email": document.getElementById("email").value,
@@ -20,19 +22,20 @@ function LoginForm() {
 
         localStorage.setItem("url", document.getElementById("server").value);
 
-        axios.post(localStorage.getItem("url") + "/users/sign_in.json", user)
-            .then(res => {
-                //aller dans le dashboard
-                //stocker le token
-                console.log(res);
-                console.log(res.data);
+        await axios.post(
+            localStorage.getItem("url") + "/users/sign_in.json",
+            user)
+            .then(response => {
+                const token = response.headers["authorization"].replace("Bearer ", "");
+                localStorage.setItem("token", token);
+                window.location.href = "/home";
             })
-            .catch(res => {
-                // faire la gestion d'erreur = récup les messages d'erreur et faire un
-                //document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
-                //faire des contours en rouge ! mettre que le compte existe pas
-                console.log("Error " + res);
-            })
+            .catch(error => {
+                console.log("Error " + error);
+                //do red borders on elements that don't work
+                // document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
+
+            });
     }
 
     return (
