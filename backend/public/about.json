@@ -10,25 +10,25 @@
                 "name": "each_day",
                 "description": "Each day ...",
                 "options": {
-                    "last_day": ""
+                    "last_day": "string"
                 }
             }, {
                 "name": "each_month",
                 "description": "Each month...",
                 "options": {
-                    "last_month": ""
+                    "last_month": "string"
                 }
             }, {
                 "name": "each_hour",
                 "description": "Each hour...",
                 "options": {
-                    "last_hour": ""
+                    "last_hour": "string"
                 }
             }, {
                 "name": "at_hour",
                 "description": "At such time ...",
                 "options": {
-                    "hour": ""
+                    "hour": "string"
                 }
             }],
             "reactions": []
@@ -54,7 +54,11 @@
             "reactions": [{
                 "name": "send_email",
                 "description": "An email is sent to the selected person/people",
-                "options": {}
+                "options": {
+                    "receiver": "string",
+                    "object": "string",
+                    "message": "string"
+                }
             }]
         }, {
             "name": "twitter",
@@ -78,11 +82,15 @@
             "reactions": [{
                 "name": "send_tweet",
                 "description": "A tweet is posted on your tweetline",
-                "options": {}
+                "options": {
+                    "content": "string"
+                }
             }, {
                 "name": "follow_user",
                 "description": "Follow the selected user",
-                "options": {}
+                "options": {
+                    "user_name": "string"
+                }
             }]
         }, {
             "name": "nasa",
