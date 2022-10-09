@@ -8,7 +8,7 @@ class User < ApplicationRecord
               length: { minimum: 4, maximum: 254 }
 
   # Associations
-  has_many :actions
+  has_many :widgets
 
   # Devise gem authentication
   devise :database_authenticatable,

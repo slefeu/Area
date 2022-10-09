@@ -1,5 +1,5 @@
 class Action < ApplicationRecord
   # Associations
+  belongs_to :widget
   has_one :reaction
-  belongs_to :user
 end

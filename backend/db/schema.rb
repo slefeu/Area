@@ -15,12 +15,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_142140) do
   enable_extension "plpgsql"
 
   create_table "actions", force: :cascade do |t|
-    t.string "klass"
-    t.jsonb "options"
+    t.string "klass", null: false
+    t.jsonb "options", null: false
+    t.bigint "widget_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_actions_on_user_id"
+    t.index ["widget_id"], name: "index_actions_on_widget_id"
   end
 
   create_table "jwt_denylist", force: :cascade do |t|
@@ -30,8 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_142140) do
   end
 
   create_table "reactions", force: :cascade do |t|
-    t.string "klass"
-    t.jsonb "options"
+    t.string "klass", null: false
+    t.jsonb "options", null: false
     t.bigint "action_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -53,6 +53,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_142140) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "actions", "users"
+  create_table "widgets", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_widgets_on_user_id"
+  end
+
+  add_foreign_key "actions", "widgets"
   add_foreign_key "reactions", "actions"
+  add_foreign_key "widgets", "users"
 end

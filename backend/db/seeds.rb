@@ -16,11 +16,19 @@ if User.count == 0
   end
 end
 
+# Widget
+widgets= [{ name: "Name", user_id: User.first.id }]
+if Widget.count == 0
+  widgets.each do |widget|
+    Widget.create!(name: widget[:name], user_id: widget[:user_id])
+  end
+end
+
 # Actions
-actions = [{ klass: "EachDay", options: {}, user_id: User.first.id }]
+actions = [{ klass: "EachDay", options: {}, widget_id: Widget.first.id }]
 if Action.count == 0
   actions.each do |action|
-    Action.create!(klass: action[:klass], options: action[:options], user_id: action[:user_id])
+    Action.create!(klass: action[:klass], options: action[:options], widget_id: action[:widget_id])
   end
 end
 
