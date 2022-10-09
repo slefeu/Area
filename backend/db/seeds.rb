@@ -27,7 +27,7 @@ if Widget.count == 0
 end
 
 # Actions
-actions = [{ klass: "EachDay", options: {}, widget_id: Widget.first.id }]
+actions = [{ klass: "each_day", options: {}, widget_id: Widget.first.id }]
 if Action.count == 0
   actions.each do |action|
     Action.create!(klass: action[:klass], options: action[:options], widget_id: action[:widget_id])
@@ -35,7 +35,7 @@ if Action.count == 0
 end
 
 # Reactions
-reactions = [{ klass: "SendMail", options: {}, action_id: Action.first.id }]
+reactions = [{ klass: "send_mail", options: {}, action_id: Action.first.id }]
 if Reaction.count == 0
   reactions.each do |reaction|
     Reaction.create!(klass: reaction[:klass], options: reaction[:options], action_id: reaction[:action_id])

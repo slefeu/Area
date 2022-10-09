@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EachDay
+class EachDayCommand
   def initialize(attributs)
     @action_id = attributs[:action_id]
   end

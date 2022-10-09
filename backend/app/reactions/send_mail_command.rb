@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SendMail
+class SendMailCommand
   def initialize(attributs)
     @reaction_id = attributs[:reaction_id]
   end
