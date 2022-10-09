@@ -1,5 +1,5 @@
 class ActionSerializer < ActiveModel::Serializer
-  attributes :id, :options, :name
+  attributes :id, :name, :options
 
   def name
     object.klass
