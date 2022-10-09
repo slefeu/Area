@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  def signout
+    sign_out current_user
+  end
+
   # GET /users/1
   def show
     render json: @user, include: "*.*.*"

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :actions
   resources :widgets
 
+  delete 'signout', to: 'users#signout'
+
   get "current_user", to: "users#show_current_user"
 
   devise_for :users, defaults: { format: :json }, controllers: { sessions: "users/sessions" }
