@@ -1,4 +1,5 @@
 class WidgetsController < ApplicationController
+  before_action :user_logged?, only: [ :create ]
   before_action :set_widget, only: %i[ show update destroy ]
 
   # GET /widgets
@@ -15,13 +16,29 @@ class WidgetsController < ApplicationController
 
   # POST /widgets
   def create
-    @widget = Widget.new(widget_params)
+    # Create Widget
+    @widget = Widget.new(name: widget_params[:name], user_id: current_user.id)
+    action_params = widget_params[:action]
+    reaction_params = widget_params[:reaction]
 
-    if @widget.save
-      render json: @widget, status: :created, location: @widget
-    else
-      render json: @widget.errors, status: :unprocessable_entity
+    unless action_params && reaction_params && @widget.save
+      render json: @widget.errors, status: :unprocessable_entity and return
     end
+
+    # Create Action
+    @action = Action.new(klass: action_params[:name], options: action_params[:options], widget_id: @widget.id)
+
+    unless @action.save
+      render json: @action.errors, status: :unprocessable_entity and return
+    end
+
+    # Create Reaction
+    @reaction = Reaction.new(klass: reaction_params[:name], options: reaction_params[:options], action_id: @action.id)
+    unless @reaction.save
+      render json: @reaction.errors, status: :unprocessable_entity and return
+    end
+
+    render json: @widget, status: :created, location: @widget
   end
 
   # PATCH/PUT /widgets/1
@@ -35,6 +52,11 @@ class WidgetsController < ApplicationController
 
   # DELETE /widgets/1
   def destroy
+    @action = @widget.action
+    @reaction = @action.reaction
+
+    @reaction.destroy
+    @action.destroy
     @widget.destroy
   end
 
@@ -46,6 +68,6 @@ class WidgetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def widget_params
-      params.require(:widget).permit(:name, :user_id)
+      params.require(:widget).permit(:name, action: {}, reaction: {})
     end
 end
