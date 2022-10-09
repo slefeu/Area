@@ -7,6 +7,7 @@ import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
 import handlePlatform from "./Platform.jsx"
 import checkMobile from "./Mobile.jsx"
+import { Navigate } from 'react-router-dom';
 
 function LoginForm() {
 
@@ -51,6 +52,10 @@ function LoginForm() {
 }
 
 function Login() {
+    console.log(localStorage.getItem('token'))
+
+    if (localStorage.getItem('token')) {return (<Navigate to="/home" />)}
+
     return (
         <div className="background">
             <div className="authContainer">

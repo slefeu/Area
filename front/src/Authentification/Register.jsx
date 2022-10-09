@@ -5,8 +5,10 @@ import ButtonNavBar from "./NavBarAuth.jsx"
 import axios from "axios"
 import handlePlatform from "./Platform.jsx"
 import checkMobile from "./Mobile.jsx"
+import { Navigate } from 'react-router-dom';
 
 function Register() {
+    if (localStorage.getItem('token')) {return (<Navigate to="/home" />)}
 
     function SetRegisterValues() {
         var user = {
@@ -21,7 +23,7 @@ function Register() {
 
         localStorage.setItem("url", document.getElementById("server").value);
 
-        axios.post('http://localhost:8080/users', user)
+        axios.post(localStorage.getItem("url") + '/users', user)
             .then(res => {
                 window.location.href = "/login";
             })
