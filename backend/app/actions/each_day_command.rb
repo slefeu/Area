@@ -2,7 +2,7 @@
 
 class EachDayCommand
   def initialize(attributs)
-    @action_id = attributs[:action_id]
+    @action_id = attributs["action_id"]
   end
 
   def to_h

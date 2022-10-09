@@ -52,11 +52,6 @@ class WidgetsController < ApplicationController
 
   # DELETE /widgets/1
   def destroy
-    @action = @widget.action
-    @reaction = @action.reaction
-
-    @reaction.destroy
-    @action.destroy
     @widget.destroy
   end
 

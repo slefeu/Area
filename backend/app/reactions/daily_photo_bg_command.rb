@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SendMailCommand
+class DailyPhotoBgCommand
   def initialize(attributs)
     @reaction_id = attributs["reaction_id"]
     @user_id = Reaction.find(@reaction_id).action.widget.user.id
