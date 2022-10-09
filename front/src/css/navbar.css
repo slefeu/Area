@@ -73,6 +73,14 @@
     color: var(--accent-color)
 }
 
+.navItem.active {
+    background: var(--navbar-light-color);
+    border-left: solid var(--accent-color) .3rem;
+    color: var(--accent-color);
+    font-weight: bold;
+    padding-left: 1.2rem;
+}
+
 .navbarBottom .navItem {
     margin-bottom: 0;
 }
@@ -91,10 +99,6 @@
     display: none;
 }
 
-.add {
-    transition-duration: .5s;
-}
-
 @media only screen and (max-width: 600px) {
     .navbar {
         flex-direction: row;
@@ -110,6 +114,7 @@
     .navbarMiddle {
         flex-direction: row;
         width: 100%;
+        flex: 1;
     }
     .navbarBottom {
         display: none;
@@ -119,6 +124,21 @@
     }
     .navbarTitle {
         display: none;
+    }
+    .navItem.active.cornerBtn {
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        padding-left: 0rem;
+    }
+    .navItem.active:not(.cornerBtn) {
+        background: none;
+        background: var(--navbar-light-color);
+        border-left: none;
+        border-bottom: solid var(--accent-color) .2rem;
+        color: var(--accent-color);
+        padding-bottom: .35rem;
+        padding: 0rem;
     }
     .navText {
         display: none;
@@ -131,12 +151,13 @@
         margin-bottom: 0;
         align-items: center;
         justify-content: center;
-        padding-left: .7rem;
+        padding: 0rem;
+        font-size: 1.8rem;
     }
     .right {
         display: flex;
     }
-    .add {
+    .cornerBtn {
         position: fixed;
         background: var(--accent-color);
         padding: 0;
@@ -154,6 +175,11 @@
         color: var(--text-color);
         box-shadow: 0 .2rem .5rem rgb(24, 45, 77);
         z-index: 11;
+        transition-duration: .3s;
+    }
+    .cornerBtn:hover {
+        scale: 1.05;
+        color: white;
     }
     .navIcon {
         padding: 0;

@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Register from './Authentification/Register.jsx'
 import Login from './Authentification/Login.jsx'
-import Home from './home'
-
+import Home from './Pages/Home'
+import Create from './Pages/Create'
 
 import './css/app.css';
 
@@ -16,6 +16,7 @@ function App() {
             <Route path='/login' element={<Login/>} />
             <Route path='/register' element={<Register/>} />
             <Route path='/home' element={<Home/>} />
+            <Route path='/create' element={<Create/>} />
         </Routes>
       </BrowserRouter>
     </>
