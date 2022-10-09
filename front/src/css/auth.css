@@ -4,7 +4,7 @@
     font-family: 'Poppins', sans-serif
 }
 
-body {
+.background {
     background-image: url("../images/login_background.png");
     background-size: cover;
     display: flex;

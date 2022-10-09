@@ -32,20 +32,22 @@ function Register() {
     }
 
     return (
-        <div className="authContainer">
-            <ButtonNavBar active="Register" classPicked="activeButton" />
-            <form className="form">
-                <input className="fieldFormat" id="first_name" type="email" placeholder="First name" required />
-                <input className="fieldFormat" id="last_name" type="text" placeholder="Last Name" required />
-                <input className="fieldFormat" id="email" type="text" placeholder="Email" required />
-                <input className="fieldFormat" id="password" type="password" placeholder="Password" required />
-                <input className="fieldFormat" id="password_confirm" type="password" placeholder="Confirm Password" required />
-                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} />
-            </form>
-            <button className="buttonFormat" onClick={SetRegisterValues}>
-                Register
-            </button>
+        <div className="background">
+            <div className="authContainer">
+                <ButtonNavBar active="Register" classPicked="activeButton" />
+                <form className="form">
+                    <input className="fieldFormat" id="first_name" type="email" placeholder="First name" required />
+                    <input className="fieldFormat" id="last_name" type="text" placeholder="Last Name" required />
+                    <input className="fieldFormat" id="email" type="text" placeholder="Email" required />
+                    <input className="fieldFormat" id="password" type="password" placeholder="Password" required />
+                    <input className="fieldFormat" id="password_confirm" type="password" placeholder="Confirm Password" required />
+                    <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} />
+                </form>
+                <button className="buttonFormat" onClick={SetRegisterValues}>
+                    Register
+                </button>
 
+            </div>
         </div>
     );
 }

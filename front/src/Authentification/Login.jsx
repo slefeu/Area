@@ -52,17 +52,19 @@ function LoginForm() {
 
 function Login() {
     return (
-        <div className="authContainer">
-            <ButtonNavBar active="Login" classPicked="activeButton" />
-            <LoginForm></LoginForm>
-            <div className="subtitle">Or continue with</div>
-            <div>
-                <button className="socialNetworks">
-                    <GoogleLogo />
-                </button>
-                <button className="socialNetworks">
-                    <TwitterLogo className="twitter" />
-                </button>
+        <div className="background">
+            <div className="authContainer">
+                <ButtonNavBar active="Login" classPicked="activeButton" />
+                <LoginForm></LoginForm>
+                <div className="subtitle">Or continue with</div>
+                <div>
+                    <button className="socialNetworks">
+                        <GoogleLogo />
+                    </button>
+                    <button className="socialNetworks">
+                        <TwitterLogo className="twitter" />
+                    </button>
+                </div>
             </div>
         </div>
     );
