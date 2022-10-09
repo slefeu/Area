@@ -238,9 +238,9 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
-  httparty (~> 0.20.0)
   devise
   devise-jwt
+  httparty (~> 0.20.0)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors (~> 1.1.1)

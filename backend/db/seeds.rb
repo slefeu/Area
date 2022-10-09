@@ -7,8 +7,10 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # Users
-users = [{ first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "12345",
-admin: true }]
+users = [
+  { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "12345", admin: true },
+  { first_name: "Kevin", last_name: "Gros", email: "grosKevin@gmail.com", password: "12345", admin: false }
+  ]
 if User.count == 0
   users.each do |user|
     User.create!(first_name: user[:first_name], last_name: user[:last_name], email: user[:email],

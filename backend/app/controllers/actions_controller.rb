@@ -46,6 +46,6 @@ class ActionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def action_params
-      params.require(:action).permit(:klass, :options, :reaction_id)
+      params.require(:action).permit(:service, :class, :widget_id)
     end
 end
