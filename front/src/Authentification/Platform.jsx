@@ -1,7 +1,4 @@
-import React from "react";
-
-
-const handlePlatform = () => {
+function handlePlatform() {
     if (localStorage.getItem("platform") === "web") {
         return (true);
     }
