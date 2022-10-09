@@ -1,14 +1,13 @@
-import './css/navbar.css'
-import './css/colors.css'
+import "./css/navbar.css"
+import "./css/colors.css"
 
-import NavItem from './navItem'
+import NavItem from "./navItem"
 
-import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout } from 'react-icons/ai'
+import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout } from "react-icons/ai"
 
 function Navbar() {
     return (
         <div className="navbar">
-        
             <div className="navbarTop">
                 <h1 className="navbarTitle">AREA</h1>
             </div>
@@ -23,12 +22,12 @@ function Navbar() {
                 <NavItem icon={<AiFillSetting />} name="Settings" />
 
                 <NavItem icon={<AiOutlineUser />} name="Profil" classes="right" />
-                <NavItem icon={<AiOutlineLogout />} name="" classes="right"/>
+                <NavItem icon={<AiOutlineLogout />} name="" classes="right" link="/logout"/>
             </div>
 
             <div className="navbarBottom">
                 <NavItem icon={<AiOutlineUser />} name="Profil" />
-                <NavItem icon={<AiOutlineLogout />} name="" classes="fixedRight"/>
+                <NavItem icon={<AiOutlineLogout />} name="" classes="fixedRight" link="/logout"/>
             </div>
         </div>
     )

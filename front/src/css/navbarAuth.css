@@ -19,8 +19,9 @@ a {
     margin: .5rem;
 }
 
-.button:hover {
+.button:hover:not(.active) {
     color: var(--accent-color);
+
 }
 
 .button.active {
