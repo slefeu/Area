@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
 
 import Register from "./Authentification/Register.jsx"
 import Login from "./Authentification/Login.jsx"
@@ -18,7 +18,7 @@ function checkAuth(path) {
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={checkAuth("login")} />
           <Route path="/login" element={checkAuth("login")} />
@@ -26,7 +26,7 @@ function App() {
           <Route path="/home" element={checkAuth("home")} />
           <Route path="/logout" element={<LogoutUser />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
