@@ -17,11 +17,24 @@ function Home() {
         if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />)}
 
         AXIOS.get(localStorage.getItem('url') + '/current_user')
-        .then(function (res) {
-            console.log(res.data)
-            setElement(<Container title="Widget Title" data="Description" />) 
-        })
-        .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page."/>) });
+            .then(function (res) {
+
+                var widgets = res.data.widgets.map((w) => {
+                    return (
+                        <Container title={ w.name } data={`${w.action.name} => ${w.reaction.name}`}key={w.name} />
+                    )
+                })
+
+                if (res.data.background !== null) {
+                    setElement(<>
+                        <Container key="front_background" type="biggerContainer">
+                            <img src={res.data.background} />
+                        </Container>
+                        {widgets}
+                    </>)
+                } else { setElement(widgets) }
+            })
+            .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page."/>) });
       }, []);
 
     return (
