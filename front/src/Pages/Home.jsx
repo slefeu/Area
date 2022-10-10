@@ -8,22 +8,43 @@ import Container from '../Tools/Container'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
-import axios from 'axios'
+import AXIOS from "../Tools/Client.jsx"
 
 function Home() {
-    const [element, setElement] = useState(<Load/>)
+    const [element, setElement] = useState(<Load />)
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />)}
+        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
-        axios.get(localStorage.getItem('url') + '/widget')
-        .then(function (res) { setElement(<Container title="Widget Title" data="Description" />) })
-        .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page."/>) });
-      }, []);
+        const token = "Bearer " + localStorage.getItem("token");
+        const url = localStorage.getItem("url") + "/current_user";
+        const values = {
+            headers: {
+                Authorization: token,
+            }
+        }
+        AXIOS.get(url, values)
+            .then(function (res) {
+                var widgets = res.data.widgets.map((w) => {
+                    return (
+                        <Container title={w.name} data={`${w.action.name} => ${w.reaction.name}`} key={w.name} />
+                    )
+                })
+                if (res.data.background !== null) {
+                    setElement(<>
+                        <Container key="front_background" type="biggerContainer">
+                            <img alt="Background from the user" src={res.data.background} />
+                        </Container>
+                        {widgets}
+                    </>)
+                } else { setElement(widgets) }
+            })
+            .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page." />) });
+    }, []);
 
     return (
         <div>
-            <Navbar currentPage="Home"/>
+            <Navbar currentPage="Home" />
             <div className="content">
                 {element}
             </div>

@@ -2,9 +2,7 @@ import React from "react";
 import "../css/colors.css"
 import "../css/auth.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
-import axios from "axios"
-import handlePlatform from "./Platform.jsx"
-import checkMobile from "./Mobile.jsx"
+import AXIOS from "../Tools/Client.jsx"
 import { Navigate } from 'react-router-dom';
 
 function Register() {
@@ -21,9 +19,10 @@ function Register() {
             }
         }
 
-        localStorage.setItem("url", document.getElementById("server").value);
+        if (localStorage.getItem("platform") !== "web")
+            localStorage.setItem("url", document.getElementById("server").value);
 
-        axios.post(localStorage.getItem("url") + '/users', user)
+        AXIOS.post(localStorage.getItem("url") + '/users', user)
             .then(res => {
                 window.location.href = "/login";
             })
@@ -43,7 +42,7 @@ function Register() {
                     <input className="fieldFormat" id="email" type="text" placeholder="Email" required />
                     <input className="fieldFormat" id="password" type="password" placeholder="Password" required />
                     <input className="fieldFormat" id="password_confirm" type="password" placeholder="Confirm Password" required />
-                    <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} />
+                    <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? {display: 'none'} : {display: 'flex'}} />
                 </form>
                 <button className="buttonFormat" onClick={SetRegisterValues}>
                     Register
