@@ -9,8 +9,6 @@ import Container from '../Tools/Container'
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
 import AXIOS from "../Tools/Client.jsx"
-import { AxiosHeaders } from 'axios'
-// import axios from "axios"
 
 function Home() {
     const [element, setElement] = useState(<Load />)
@@ -35,7 +33,7 @@ function Home() {
                 if (res.data.background !== null) {
                     setElement(<>
                         <Container key="front_background" type="biggerContainer">
-                            <img src={res.data.background} />
+                            <img alt="Loading image ..." src={res.data.background} />
                         </Container>
                         {widgets}
                     </>)

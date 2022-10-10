@@ -5,8 +5,7 @@ import Container from '../Tools/Container'
 
 import AXIOS from "../Tools/Client.jsx"
 import { AiOutlineCheck } from 'react-icons/ai'
-import { useState, useEffect } from 'react'
-import { useFetcher } from 'react-router-dom'
+import { useState } from 'react'
 
 function CreateForm({ json }) {
 
@@ -21,9 +20,7 @@ function CreateForm({ json }) {
             element.actions.forEach(elem => {
                 if (elem.name === data) {
                     var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
-                    // useEffect(() => {
                     setActionsMore(<div id="inputAction" className="row-2 border"><div>Action Option</div>{temp}</div>)
-                    // })
                 }
             })
         })
@@ -37,9 +34,7 @@ function CreateForm({ json }) {
             element.reactions.forEach(elem => {
                 if (elem.name === data) {
                     var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
-                    // useEffect(() => {
                     setReactionsMore(<div id="inputReaction" className="row-2 border"><div>Reaction Option</div>{temp}</div>)
-                    // })
                 }
             })
         })
