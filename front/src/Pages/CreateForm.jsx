@@ -56,7 +56,7 @@ function CreateForm({json}) {
     useEffect(() => {
         moreInputAction()
         moreInputReaction()
-    }, [])
+    })
 
     /**
      * It takes the values of the form and sends them to the server

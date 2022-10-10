@@ -10,25 +10,25 @@
                 "name": "each_day",
                 "description": "Each day ...",
                 "options": {
-                    "last_day": "string"
+                    "last_day": "text"
                 }
             }, {
                 "name": "each_month",
                 "description": "Each month...",
                 "options": {
-                    "last_month": "string"
+                    "last_month": "text"
                 }
             }, {
                 "name": "each_hour",
                 "description": "Each hour...",
                 "options": {
-                    "last_hour": "string"
+                    "last_hour": "text"
                 }
             }, {
                 "name": "at_hour",
                 "description": "At such time ...",
                 "options": {
-                    "hour": "string"
+                    "hour": "text"
                 }
             }],
             "reactions": []
@@ -38,7 +38,7 @@
                 "name": "temparature_change",
                 "description": "When the temperature outside change ...",
                 "options": {}
-            } , {
+            }, {
                 "name": "weather_change",
                 "description": "When the weather outside change ...",
                 "options": {}
@@ -55,9 +55,9 @@
                 "name": "send_email",
                 "description": "An email is sent to the selected person/people",
                 "options": {
-                    "receiver": "string",
-                    "object": "string",
-                    "message": "string"
+                    "receiver": "text",
+                    "object": "text",
+                    "message": "text"
                 }
             }]
         }, {
@@ -83,13 +83,13 @@
                 "name": "send_tweet",
                 "description": "A tweet is posted on your tweetline",
                 "options": {
-                    "content": "string"
+                    "content": "text"
                 }
             }, {
                 "name": "follow_user",
                 "description": "Follow the selected user",
                 "options": {
-                    "user_name": "string"
+                    "user_name": "text"
                 }
             }]
         }, {
