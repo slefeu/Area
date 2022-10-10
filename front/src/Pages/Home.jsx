@@ -8,7 +8,7 @@ import Container from '../Tools/Container'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
-import axios from 'axios'
+import AXIOS from "../Tools/Client.jsx"
 
 function Home() {
     const [element, setElement] = useState(<Load/>)
@@ -16,8 +16,11 @@ function Home() {
     useEffect(() => {
         if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />)}
 
-        axios.get(localStorage.getItem('url') + '/widget')
-        .then(function (res) { setElement(<Container title="Widget Title" data="Description" />) })
+        AXIOS.get(localStorage.getItem('url') + '/current_user')
+        .then(function (res) {
+            console.log(res.data)
+            setElement(<Container title="Widget Title" data="Description" />) 
+        })
         .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page."/>) });
       }, []);
 

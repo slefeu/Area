@@ -1,4 +1,4 @@
-import axios from "axios";
+import AXIOS from "../Tools/Client.jsx"
 import { Navigate } from 'react-router-dom';
 import Load from '../Tools/Load'
 import { useState, useEffect } from 'react'
@@ -8,14 +8,14 @@ function LogoutUser() {
 
     useEffect(() => {
         const token = "Bearer " + localStorage.getItem("token");
-        const url = localStorage.getItem("url") + "/users/sign_out.json";
+        const url = localStorage.getItem("url") + "/signout";
         const values = {
             headers: {
             Authorization: token,
             }
         }
 
-        axios.delete(url, values)
+        AXIOS.delete(url, values)
             .then(res => {
                 localStorage.removeItem("token");
                 console.log("success");

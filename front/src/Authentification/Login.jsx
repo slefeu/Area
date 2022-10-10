@@ -1,13 +1,13 @@
 import React from "react"
-import axios from "axios";
-import "../css/colors.css"
-import "../css/auth.css"
-import ButtonNavBar from "./NavBarAuth.jsx"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import handlePlatform from "./Platform.jsx"
-import checkMobile from "./Mobile.jsx"
 import { Navigate } from 'react-router-dom';
+
+import "../css/colors.css"
+import "../css/auth.css"
+
+import ButtonNavBar from "./NavBarAuth.jsx"
+import AXIOS from "../Tools/Client.jsx"
 
 function LoginForm() {
 
@@ -21,9 +21,10 @@ function LoginForm() {
             }
         };
 
-        localStorage.setItem("url", document.getElementById("server").value);
+        if (localStorage.getItem("platform") !== "web")
+            localStorage.setItem("url", document.getElementById("server").value);
 
-        await axios.post(
+        await AXIOS.create({ "sameSite": "None; Secure" }).post(
             localStorage.getItem("url") + "/users/sign_in.json",
             user)
             .then(response => {
@@ -32,7 +33,7 @@ function LoginForm() {
                 window.location.href = "/home";
             })
             .catch(error => {
-                console.log("Error " + error);
+                console.log({error});
                 //do red borders on elements that don't work
                 // document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
 
@@ -44,7 +45,7 @@ function LoginForm() {
             <form className="form">
                 <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
                 <input className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
-                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" value={checkMobile()} disabled={handlePlatform()} required />
+                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? {display: 'none'} : {display: 'flex'}} required />
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>
         </>
