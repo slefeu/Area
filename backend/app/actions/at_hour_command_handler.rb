@@ -14,7 +14,7 @@ class AtHourCommandHandler
 
     resultat = target_time < current_time
 
-    ToDie.append(attributs[:widget_id]) if resultat
+    # ToDie.append(attributs[:widget_id]) if resultat
 
     resultat
   end

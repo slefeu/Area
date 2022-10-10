@@ -8,7 +8,7 @@ import CreateForm from './CreateForm'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
-import axios from 'axios'
+import AXIOS from "../Tools/Client.jsx"
 
 function Create() {
     const [element, setElement] = useState(<Load/>)
@@ -16,7 +16,7 @@ function Create() {
     useEffect(() => {
         if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />)}
 
-        axios.get(localStorage.getItem('url') + '/about.json')
+        AXIOS.get(localStorage.getItem('url') + '/about.json')
             .then(function (res) { setElement(<CreateForm json={res.data}/>) })
             .catch(function (err) { setElement(<Error msg="La requête vers le serveur a échouée." error={err} />) });
       }, []);
