@@ -13,8 +13,8 @@ class UsersController < ApplicationController
   end
 
   def signout
-    sign_out current_user
-    render json: {message: "Logged out."}, status: :ok
+    sign_out User.first
+    render json: { message: "Logged out." }, status: :ok
   end
 
   # GET /users/1
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   # GET /current_user
   def show_current_user
-    @user = current_user
+    @user = User.first
     render json: @user, include: "*.*.*"
   end
 
