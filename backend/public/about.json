@@ -6,82 +6,116 @@
         "current_time": 1531680780,
         "services": [{
             "name": "calendar",
-            "actions": [],
-            "reactions": [{
-                "name": "everyday",
-                "description": "Everyday ..."
+            "actions": [{
+                "name": "each_day",
+                "description": "Each day ...",
+                "options": {
+                    "last_day": "text"
+                }
             }, {
-                "name": "everymonth",
-                "description": "Every month..."
+                "name": "each_month",
+                "description": "Each month...",
+                "options": {
+                    "last_month": "text"
+                }
             }, {
-                "name": "everyhour",
-                "description": "Every hour..."
+                "name": "each_hour",
+                "description": "Each hour...",
+                "options": {
+                    "last_hour": "text"
+                }
             }, {
                 "name": "at_hour",
-                "description": "At such time ..."
-            }]
+                "description": "At such time ...",
+                "options": {
+                    "hour": "text"
+                }
+            }],
+            "reactions": []
         }, {
             "name": "weather",
-            "actions": [],
-            "reactions": [{
+            "actions": [{
                 "name": "temparature_change",
-                "description": "When the temperature outside change ..."
-            } , {
+                "description": "When the temperature outside change ...",
+                "options": {}
+            }, {
                 "name": "weather_change",
-                "description": "When the weather outside change ..."
-            }]
+                "description": "When the weather outside change ...",
+                "options": {}
+            }],
+            "reactions": []
         }, {
             "name": "gmail",
             "actions": [{
-                "name": "send_email",
-                "description": "An email is sent to the selected person/people"
+                "name": "email_received",
+                "description": "When an email is received in the inbox ...",
+                "options": {}
             }],
             "reactions": [{
-                "name": "email-received",
-                "description": "When an email is received in the inbox ..."
+                "name": "send_email",
+                "description": "An email is sent to the selected person/people",
+                "options": {
+                    "receiver": "text",
+                    "object": "text",
+                    "message": "text"
+                }
             }]
         }, {
             "name": "twitter",
             "actions": [{
-                "name": "send_tweet",
-                "description": "A tweet is posted on your tweetline"
+                "name": "tweet_liked",
+                "description": "When you like a tweet ...",
+                "options": {}
             }, {
-                "name": "follow_user",
-                "description": "Follow the selected user"
+                "name": "new_follower",
+                "description": "When someone follow you ...",
+                "options": {}
+            }, {
+                "name": "new_tl",
+                "description": "When a new tweet appear in your tweetline ...",
+                "options": {}
+            }, {
+                "name": "get_mentionned",
+                "description": "When someone mention you ...",
+                "options": {}
             }],
             "reactions": [{
-                "name": "tweet-liked",
-                "description": "When you like a tweet ..."
+                "name": "send_tweet",
+                "description": "A tweet is posted on your tweetline",
+                "options": {
+                    "content": "text"
+                }
             }, {
-                "name": "new-follower",
-                "description": "When someone follow you ..."
-            }, {
-                "name": "new-tl",
-                "description": "When a new tweet appear in your tweetline ..."
-            }, {
-                "name": "get-mentionned",
-                "description": "When someone mention you ..."
+                "name": "follow_user",
+                "description": "Follow the selected user",
+                "options": {
+                    "user_name": "text"
+                }
             }]
         }, {
             "name": "nasa",
-            "actions": [{
+            "actions": [],
+            "reactions": [{
                 "name": "daily_photo_bg",
-                "description": "Set the daily photography from the NASA as background"
+                "description": "Set the daily photography from the NASA as background",
+                "options": {}
             }, {
                 "name": "daily_photo_twitter",
-                "description": "Post the daily photography from the NASA on Twitter"
+                "description": "Post the daily photography from the NASA on Twitter",
+                "options": {}
             }, {
                 "name": "daily_photo_mail",
-                "description": "Send by email the photography from the NASA"
-            }],
-            "reactions": []
+                "description": "Send by email the photography from the NASA",
+                "options": {}
+            }]
         }, {
             "name": "spotify",
-            "actions": [{
+            "actions": [],
+            "reactions": [{
                 "name": "like_playlist",
-                "description": "Archive every song liked in a playlist"
-            }],
-            "reactions": []
+                "description": "Archive every song liked in a playlist",
+                "options": {}
+            }]
         }]
     }
 }

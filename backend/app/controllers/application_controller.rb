@@ -11,8 +11,13 @@ class ApplicationController < ActionController::API
 
 
   protected
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name admin])
+    end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name admin])
-  end
+    def user_logged?
+      unless user_signed_in?
+        render json: { "error": "You need to be logged" }, status: :unauthorized
+      end
+    end
 end

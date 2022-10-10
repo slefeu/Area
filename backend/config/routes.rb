@@ -3,12 +3,20 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "application#about"
 
-  devise_for :users, defaults: { format: :json }, :controllers => {:sessions => "users/sessions"}
-  #devise_for :admin
+  get "about.json", to: "application#about"
+
+  resources :reactions
+  resources :actions
+  resources :widgets
+
+  delete 'signout', to: 'users#signout'
+
+  get "current_user", to: "users#show_current_user"
+
+  devise_for :users, defaults: { format: :json }, controllers: { sessions: "users/sessions" }
+  # devise_for :admin
   resources :users, only: [:index, :show, :destroy]
 
-
-  get "about.json", to: "application#about"
   # Nasa service
   scope :nasa do
     get "apod", to: "nasa#apod"

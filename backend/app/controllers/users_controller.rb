@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :user_logged?, only: [ :show_current_user ]
   before_action :set_user, only: %i[ show update destroy ]
-  #before_action :authenticate_user!
   before_action :is_admin?, only: [:destroy]
 
   # GET /users
@@ -12,9 +12,20 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  def signout
+    sign_out User.first
+    render json: { message: "Logged out." }, status: :ok
+  end
+
   # GET /users/1
   def show
-    render json: @user
+    render json: @user, include: "*.*.*"
+  end
+
+  # GET /current_user
+  def show_current_user
+    @user = current_user
+    render json: @user, include: "*.*.*"
   end
 
   # DELETE /users/1
