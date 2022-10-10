@@ -23,10 +23,10 @@ class HardJob
     end
 
     def destroy_widget_job
-      ToDie.each do |widget_id|
+      WidgetToKill.each do |widget_id|
         Widget.find(widget_id).destroy
       end
 
-      ToDie.clear
+      WidgetToKill.clear
     end
 end

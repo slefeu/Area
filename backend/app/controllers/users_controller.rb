@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   def signout
-    sign_out User.first
+    sign_out curren_user
     render json: { message: "Logged out." }, status: :ok
   end
 
