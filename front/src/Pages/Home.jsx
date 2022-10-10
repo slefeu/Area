@@ -33,7 +33,7 @@ function Home() {
                 if (res.data.background !== null) {
                     setElement(<>
                         <Container key="front_background" type="biggerContainer">
-                            <img alt="Loading image ..." src={res.data.background} />
+                            <img alt="Background from the user" src={res.data.background} />
                         </Container>
                         {widgets}
                     </>)
