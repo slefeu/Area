@@ -9,22 +9,29 @@ import Container from '../Tools/Container'
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
 import AXIOS from "../Tools/Client.jsx"
+import { AxiosHeaders } from 'axios'
+// import axios from "axios"
 
 function Home() {
-    const [element, setElement] = useState(<Load/>)
+    const [element, setElement] = useState(<Load />)
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />)}
+        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
-        AXIOS.get(localStorage.getItem('url') + '/current_user')
+        const token = "Bearer " + localStorage.getItem("token");
+        const url = localStorage.getItem("url") + "/current_user";
+        const values = {
+            headers: {
+                Authorization: token,
+            }
+        }
+        AXIOS.get(url, values)
             .then(function (res) {
-
                 var widgets = res.data.widgets.map((w) => {
                     return (
-                        <Container title={ w.name } data={`${w.action.name} => ${w.reaction.name}`}key={w.name} />
+                        <Container title={w.name} data={`${w.action.name} => ${w.reaction.name}`} key={w.name} />
                     )
                 })
-
                 if (res.data.background !== null) {
                     setElement(<>
                         <Container key="front_background" type="biggerContainer">
@@ -34,12 +41,12 @@ function Home() {
                     </>)
                 } else { setElement(widgets) }
             })
-            .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page."/>) });
-      }, []);
+            .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page." />) });
+    }, []);
 
     return (
         <div>
-            <Navbar currentPage="Home"/>
+            <Navbar currentPage="Home" />
             <div className="content">
                 {element}
             </div>

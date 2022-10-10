@@ -8,7 +8,7 @@ import { AiOutlineCheck } from 'react-icons/ai'
 import { useState, useEffect } from 'react'
 import { useFetcher } from 'react-router-dom'
 
-function CreateForm({json}) {
+function CreateForm({ json }) {
 
     const [actionsMore, setActionsMore] = useState(<div className="row-2 border"><div>Action Option</div></div>)
     const [reactionsMore, setReactionsMore] = useState(<div className="row-2 border"><div>Reaction Option</div></div>)
@@ -22,7 +22,7 @@ function CreateForm({json}) {
                 if (elem.name === data) {
                     var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
                     // useEffect(() => {
-                    setActionsMore( <div id="inputAction" className="row-2 border"><div>Action Option</div>{temp}</div> )
+                    setActionsMore(<div id="inputAction" className="row-2 border"><div>Action Option</div>{temp}</div>)
                     // })
                 }
             })
@@ -38,7 +38,7 @@ function CreateForm({json}) {
                 if (elem.name === data) {
                     var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
                     // useEffect(() => {
-                    setReactionsMore( <div id="inputReaction" className="row-2 border"><div>Reaction Option</div>{temp}</div> )
+                    setReactionsMore(<div id="inputReaction" className="row-2 border"><div>Reaction Option</div>{temp}</div>)
                     // })
                 }
             })
@@ -46,37 +46,34 @@ function CreateForm({json}) {
     }
 
     var actions = json.server.services.map((elem) => {
-        var act = elem.actions.map((i) => { return ( <option value={i.name} key={i.name}>{i.description}</option> ) })
-        return ( act )
+        var act = elem.actions.map((i) => { return (<option value={i.name} key={i.name}>{i.description}</option>) })
+        return (act)
     })
 
     var reactions = json.server.services.map((elem) => {
-        var reac = elem.reactions.map((i) => { return ( <option value={i.name} key={i.name}>{i.description}</option> ) })
-        return ( reac )
+        var reac = elem.reactions.map((i) => { return (<option value={i.name} key={i.name}>{i.description}</option>) })
+        return (reac)
     })
 
     actions = <select name="reactionsList" id="actionsList" className="requiered" onChange={moreInputAction}>{actions}</select>
     reactions = <select name="actionsList" id="reactionsList" className="requiered" onChange={moreInputReaction}>{reactions}</select>
 
-    // useEffect(() => {
-    //     moreInputAction()
-    //     moreInputReaction()
-    // })
-
     /**
      * It takes the values of the form and sends them to the server
      */
     function submit() {
+        const token = "Bearer " + localStorage.getItem("token");
+        const url = localStorage.getItem("url") + "/widgets";
         var widget = {
             "widget": {
                 "name": document.getElementById("name").value,
                 "action": {
-                "name": document.getElementById("actionsList").value,
-                "options": {}
+                    "name": document.getElementById("actionsList").value,
+                    "options": {}
                 },
                 "reaction": {
-                "name": document.getElementById("reactionsList").value,
-                "options": {}
+                    "name": document.getElementById("reactionsList").value,
+                    "options": {}
                 }
             }
         }
@@ -94,12 +91,13 @@ function CreateForm({json}) {
                 widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
             }
         }
-
-        console.log(widget)
-
-        AXIOS.post( localStorage.getItem("url") + "/widgets", widget)
+        AXIOS.post(url, widget, {
+            headers: {
+                Authorization: token,
+            }
+        })
             .then(res => { console.log(res) })
-            .catch(res => { console.log("Error " + res)})
+            .catch(res => { console.log("Error " + res) })
     }
 
     return (

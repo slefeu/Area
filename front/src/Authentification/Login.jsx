@@ -53,8 +53,6 @@ function LoginForm() {
 }
 
 function Login() {
-    console.log(localStorage.getItem('token'))
-
     if (localStorage.getItem('token')) {return (<Navigate to="/home" />)}
 
     return (

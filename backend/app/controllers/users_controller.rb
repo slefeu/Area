@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   # GET /current_user
   def show_current_user
-    @user = User.first
+    @user = current_user
     render json: @user, include: "*.*.*"
   end
 

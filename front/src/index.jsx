@@ -6,7 +6,6 @@ import "./css/colors.css"
 import "./css/index.css"
 
 const startApp = () => {
-    // console.log(localStorage.getItem("url"))
     const root = ReactDOM.createRoot(document.getElementById("root"))
     root.render(<React.StrictMode>
         <AuthProvider>

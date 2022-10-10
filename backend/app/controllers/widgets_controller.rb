@@ -17,7 +17,7 @@ class WidgetsController < ApplicationController
   # POST /widgets
   def create
     # Create Widget
-    @widget = Widget.new(name: widget_params[:name], user_id: User.first.id)
+    @widget = Widget.new(name: widget_params[:name], user_id: current_user.id)
     action_params = widget_params[:action]
     reaction_params = widget_params[:reaction]
 
