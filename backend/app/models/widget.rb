@@ -10,7 +10,7 @@ class Widget < ApplicationRecord
   has_one :reaction, through: :action
 
   def destroy_children
-    self.reaction.destroy
-    self.action.destroy
+    self.reaction&.destroy
+    self.action&.destroy
   end
 end
