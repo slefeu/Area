@@ -3,6 +3,7 @@
 Rails.application.reloader.to_prepare do
   Router = {}
   WidgetToKill = []
+
   Router[EachDayCommand] = EachDayCommandHandler.new
   Router[SendMailCommand] = SendMailCommandHandler.new
   Router[AtHourCommand] = AtHourCommandHandler.new

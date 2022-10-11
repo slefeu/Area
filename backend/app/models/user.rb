@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # Relations
+  # Association
   has_many :widgets
 
   # Validattions
