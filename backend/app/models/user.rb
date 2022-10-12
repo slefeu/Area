@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # Association
-  has_many :widgets
+  # Callbacks
+  before_destroy :destroy_children
 
   # Validattions
   validates :email,
     format: { with: /(.+)@(.+)/, message: "Email invalid"  },
               uniqueness: { case_sensitive: false },
               length: { minimum: 4, maximum: 254 }
+
+  # Associations
+  has_many :widgets
 
   # Scope
   scope :administrators, -> { where(admin: true) }
@@ -18,4 +21,9 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          :registerable,
          jwt_revocation_strategy: JwtDenylist
+
+  def destroy_children
+    self.reaction&.destroy
+    self.action&.destroy
+  end
 end

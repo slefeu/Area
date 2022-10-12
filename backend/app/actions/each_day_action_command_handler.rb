@@ -1,4 +1,4 @@
-class EachDayCommandHandler
+class EachDayActionCommandHandler
   def initialize
   end
 

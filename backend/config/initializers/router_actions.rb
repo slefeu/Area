@@ -2,6 +2,6 @@
 
 Rails.application.reloader.to_prepare do
   RouterAction = {}
-  RouterAction[EachDayCommand] = EachDayCommandHandler.new
-  RouterAction[AtHourCommand] = AtHourCommandHandler.new
+  RouterAction[EachDayActionCommand] = EachDayActionCommandHandler.new
+  RouterAction[AtHourActionCommand] = AtHourActionCommandHandler.new
 end

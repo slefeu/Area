@@ -2,6 +2,6 @@
 
 Rails.application.reloader.to_prepare do
   RouterReaction = {}
-  RouterReaction[SendMailCommand] = SendMailCommandHandler.new
-  RouterReaction[DailyPhotoBgCommand] = DailyPhotoBgCommandHandler.new
+  RouterReaction[SendMailReactionCommand] = SendMailReactionCommandHandler.new
+  RouterReaction[DailyPhotoBgReactionCommand] = DailyPhotoBgReactionCommandHandler.new
 end

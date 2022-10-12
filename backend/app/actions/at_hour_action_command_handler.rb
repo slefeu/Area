@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AtHourCommandHandler
+class AtHourActionCommandHandler
   def initialize
   end
 
@@ -14,7 +14,8 @@ class AtHourCommandHandler
 
     resultat = target_time < current_time
 
-    # WidgetToKill.append(attributs[:widget_id]) if resultat
+    # Widget_to_kill.append(attributs[:widget_id]) if resultat
+    # Widget.find(attributs[:widget_id]).desactivate
 
     resultat
   end

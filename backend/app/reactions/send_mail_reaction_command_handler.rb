@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SendMailCommandHandler
+class SendMailReactionCommandHandler
   def initialize
   end
 

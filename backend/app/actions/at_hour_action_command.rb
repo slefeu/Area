@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AtHourCommand
+class AtHourActionCommand
   def initialize(attributs)
     @action_id = attributs["action_id"]
     @widget_id = Action.find(@action_id).widget.id
