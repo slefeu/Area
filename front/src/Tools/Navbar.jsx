@@ -1,12 +1,13 @@
 import '../css/navbar.css'
 import '../css/colors.css'
 
-import NavItem from './NavItem'
+import {NavItem, NavButton} from './NavItem'
+import SwitchTheme from './SwitchTheme'
 
-import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout } from "react-icons/ai"
+import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout, AiFillEdit } from "react-icons/ai"
 
 function Navbar({ currentPage }) {
-
+    SwitchTheme()
 
     return (
         <div className="navbar">
@@ -30,6 +31,7 @@ function Navbar({ currentPage }) {
             <div className="navbarBottom">
                 <NavItem icon={<AiOutlineUser />} name="Profil" classes={`wip ${currentPage === "Profil" ? "active" : ""}`} />
                 <NavItem icon={<AiOutlineLogout />} classes={`fixedRight`} link="/logout"/>
+                <NavButton icon={<AiFillEdit />} fun={SwitchTheme}>theme</NavButton>
             </div>
         </div>
     )

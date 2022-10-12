@@ -17,18 +17,11 @@ function Home() {
         if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
         const token = "Bearer " + localStorage.getItem("token");
-        const url = localStorage.getItem("url") + "/current_user";
-        const values = {
-            headers: {
-                Authorization: token,
-            }
-        }
-        AXIOS.get(url, values)
+    
+        AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(function (res) {
                 var widgets = res.data.widgets.map((w) => {
-                    return (
-                        <Container title={w.name} data={`${w.action.name} => ${w.reaction.name}`} key={w.name} />
-                    )
+                    return <Container title={w.name} data={`${w.action.name} => ${w.reaction.name}`} key={w.name} />
                 })
                 if (res.data.background !== null) {
                     setElement(<>

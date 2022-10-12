@@ -151,9 +151,9 @@
         font-size: 1rem;
     }
     body {
-        background-size: 100%;
+        /* background-size: 100%; */
         animation: none;
-        background-size: cover;
+        /* background-size: cover; */
     }
     .authContainer {
         scale: 1;

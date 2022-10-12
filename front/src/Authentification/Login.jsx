@@ -36,7 +36,6 @@ function LoginForm() {
                 console.log({error});
                 //do red borders on elements that don't work
                 // document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
-
             });
     }
 

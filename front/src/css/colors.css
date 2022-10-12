@@ -1,11 +1,27 @@
-:root {
+.theme-dark {
     --accent-color: rgb(68 97 242);
     --auth-buttons: rgb(40 64 182);
     --background-color: #1a1c27;
     --navbar-color: #212434;
     --text-color: white;
+    --text-color-invert: white;
     --navbar-light-color: #2a2f3e;
     --error-text: #f70c37;
     --error-background: #f70c373b;
     --input-color: #1E202E;
+    --input-text: white;
+}
+
+.theme-light {
+    --accent-color: rgb(100, 125, 248);
+    --auth-buttons: rgb(122, 142, 241);
+    --background-color: #ffffff;
+    --navbar-color: #ffffff;
+    --text-color: rgb(77, 77, 77);
+    --text-color-invert: white;
+    --navbar-light-color: #ffffff;
+    --error-text: #f70c37;
+    --error-background: #f70c373b;
+    --input-color: #e0edff;
+    --input-text: black;
 }
