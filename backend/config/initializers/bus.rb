@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "router_actions"
+require_relative "router_reactions"
+
 Rails.application.reloader.to_prepare do
-  Router = {}
-  WidgetToKill = []
+  Widget_to_kill = WidgetToKill.new
 
-  Router[EachDayCommand] = EachDayCommandHandler.new
-  Router[SendMailCommand] = SendMailCommandHandler.new
-  Router[AtHourCommand] = AtHourCommandHandler.new
-  Router[DailyPhotoBgCommand] = DailyPhotoBgCommandHandler.new
-
-  Bus_actions = BusActions.new(Router)
-  Bus_reactions = BusReactions.new(Router)
+  Bus_actions = BusActions.new(RouterAction)
+  Bus_reactions = BusReactions.new(RouterReaction)
 end

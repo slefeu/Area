@@ -7,7 +7,8 @@ class BusReactions
 
   def call(klass, options)
     klass = klass.camelize + "Command"
-    reaction = klass.constantize.send(:new, options)
+
+    reaction = klass.constantize&.send(:new, options)
     router[reaction.class].call reaction.to_h
   end
 

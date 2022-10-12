@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "sidekiq-scheduler"
 
 class HardJob
@@ -5,7 +7,7 @@ class HardJob
 
   def perform(*args)
     user_job
-    destroy_widget_job
+    Widget_to_kill.call
   end
 
   private
@@ -20,13 +22,5 @@ class HardJob
         end
         puts user.inspect
       end
-    end
-
-    def destroy_widget_job
-      WidgetToKill.each do |widget_id|
-        Widget.find(widget_id).destroy
-      end
-
-      WidgetToKill.clear
     end
 end
