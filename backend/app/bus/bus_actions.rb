@@ -6,9 +6,7 @@ class BusActions
   end
 
   def call(klass, options)
-    klass = klass.camelize + "Command"
-
-    action = klass.constantize.send(:new, options)
+    action = klass.constantize&.send(:new, options)
     router[action.class].call action.to_h
   end
 

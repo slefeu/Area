@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class SendMailCommand
-  def initialize(attributs)
-    @reaction_id = attributs["reaction_id"]
+class SendMailReactionCommand
+  def initialize(options)
+    @reaction_id = options["reaction_id"]
     @user_id = Reaction.find(@reaction_id).action.widget.user.id
   end
 

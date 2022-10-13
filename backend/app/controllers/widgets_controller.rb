@@ -29,12 +29,14 @@ class WidgetsController < ApplicationController
     @action = Action.new(klass: action_params[:name], options: action_params[:options], widget_id: @widget.id)
 
     unless @action.save
+      @widget.destroy
       render json: @action.errors, status: :unprocessable_entity and return
     end
 
     # Create Reaction
     @reaction = Reaction.new(klass: reaction_params[:name], options: reaction_params[:options], action_id: @action.id)
     unless @reaction.save
+      @widget.destroy
       render json: @reaction.errors, status: :unprocessable_entity and return
     end
 
