@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class AtHourActionCommand
-  def initialize(attributs)
-    @action_id = attributs["action_id"]
+  def initialize(options)
+    @action_id = options["action_id"]
     @widget_id = Action.find(@action_id).widget.id
-    @hour = attributs["hour"]
+    @hour = options["hour"]
   end
 
   def to_h

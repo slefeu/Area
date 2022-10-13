@@ -4,7 +4,7 @@ class SendMailReactionCommandHandler
   def initialize
   end
 
-  def call(attributs)
+  def call(attributes)
     # TODO do something with options
     puts "Send Mail Command Handler"
   end

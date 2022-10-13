@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class DailyPhotoBgReactionCommand
-  def initialize(attributs)
-    @reaction_id = attributs["reaction_id"]
+  def initialize(options)
+    @reaction_id = options["reaction_id"]
     @user_id = Reaction.find(@reaction_id).action.widget.user.id
   end
 

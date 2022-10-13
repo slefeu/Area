@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class EachDayActionCommand
-  def initialize(attributs)
-    @action_id = attributs["action_id"]
+  def initialize(options)
+    @action_id = options["action_id"]
   end
 
   def to_h
