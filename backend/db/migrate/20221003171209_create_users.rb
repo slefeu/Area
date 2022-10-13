@@ -6,12 +6,10 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :email, null: false
       t.string :background
       t.boolean :admin, null: false, default: false
-
-      t.timestamps
-
-      #omniauth NEED TO CHECK THIS
       t.string :provider, null: false
       t.string :p_uid, null: false
+
+      t.timestamps
     end
   end
 end

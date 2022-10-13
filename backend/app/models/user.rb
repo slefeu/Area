@@ -22,14 +22,14 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtDenylist
 
   def self.from_omniauth(auth)
-      where(provider: auth.provider).first_or_create do |user|
+    where(provider: auth.provider).find_or_create_by(p_uid: auth.uid) do |user|
       user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name # assuming the user model has a name
-      user.username = auth.info.nickname # assuming the user model has a username
+      user.password = Devise.friendly_token
+      user.first_name = auth.info.first_name # assuming the user model has a username
+      user.last_name = auth.info.last_name # assuming the user model has a username
       user.provider = auth.provider
       user.p_uid = auth.uid
-      #user.image = auth.info.image # assuming the user model has an image
-      end
+      # user.image = auth.info.image # assuming the user model has an image
     end
+  end
 end
