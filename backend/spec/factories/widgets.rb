@@ -11,7 +11,7 @@
 #
 FactoryBot.define do
   factory :widget do
-    name { "WidgetName" }
+    name { FFaker::Name.unique.name }
     user_id { create(:user).id }
   end
 end

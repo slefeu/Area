@@ -20,7 +20,7 @@ class Reaction < ApplicationRecord
   belongs_to :action
 
   def klass_exist?
-    (klass.camelize+"Command").constantize
+    (klass.camelize+"ReactionCommand").constantize
   rescue NameError => e
     errors.add(:reaction, "Reaction '#{klass}' doesn't exist")
     false
@@ -34,6 +34,6 @@ class Reaction < ApplicationRecord
   end
 
   def klass_command
-    klass.camelize+"Command"
+    klass.camelize+"ReactionCommand"
   end
 end

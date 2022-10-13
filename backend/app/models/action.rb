@@ -21,7 +21,7 @@ class Action < ApplicationRecord
   has_one :reaction
 
   def klass_exist?
-    (klass.camelize+"Command").constantize
+    (klass.camelize+"ActionCommand").constantize
   rescue NameError => e
     errors.add(:action, "Action '#{klass}' doesn't exist")
     false
@@ -35,6 +35,6 @@ class Action < ApplicationRecord
   end
 
   def klass_command
-    klass.camelize+"Command"
+    klass.camelize+"ActionCommand"
   end
 end
