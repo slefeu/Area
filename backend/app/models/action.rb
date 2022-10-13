@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: actions
+#
+#  id         :bigint           not null, primary key
+#  klass      :string           not null
+#  options    :jsonb            not null
+#  widget_id  :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Action < ApplicationRecord
   # Callbacks
   after_create :add_id_informations

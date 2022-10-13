@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: reactions
+#
+#  id         :bigint           not null, primary key
+#  klass      :string           not null
+#  options    :jsonb            not null
+#  action_id  :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Reaction < ApplicationRecord
   # Callbacks
   after_create :add_id_informations
