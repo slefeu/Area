@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-class ActionToDisable
+class WidgetToDisable
   def initialize
     @liste = []
   end
 
-  def append(action_id)
-    @liste.append(action_id)
+  def append(widget_id)
+    @liste.append(widget_id)
   end
 
   def call
-    @liste.each do |action_id|
-      Action.find(action_id)&.disactive
+    @liste.each do |widget_id|
+      Widget.find(action_id)&.disactive
     end
 
     @liste.clear

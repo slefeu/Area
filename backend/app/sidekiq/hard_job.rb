@@ -7,7 +7,9 @@ class HardJob
 
   def perform(*args)
     user_job
+
     Widget_to_kill.call
+    Widget_to_disable.call
   end
 
   private
@@ -17,10 +19,10 @@ class HardJob
           next unless widget.active
 
           action = widget.action
-          if Bus_actions.call(action.klass_command, action.options)
-            reaction = action.reaction
-            Bus_reactions.call(reaction.klass_command, reaction.options)
-          end
+          next unless Bus_actions.call(action.klass_command, action.options)
+
+          reaction = action.reaction
+          Bus_reactions.call(reaction.klass_command, reaction.options)
         end
         puts user.inspect
       end
