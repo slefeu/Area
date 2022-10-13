@@ -8,6 +8,10 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.boolean :admin, null: false, default: false
 
       t.timestamps
+
+      #omniauth NEED TO CHECK THIS
+      t.string :provider, null: false
+      t.string :p_uid, null: false
     end
   end
 end

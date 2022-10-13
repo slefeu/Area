@@ -276,8 +276,8 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :twitter, 'TWITTER_API_PUBLIC', 'TWITTER_API_SECRET'
-  config.omniauth :google_oauth2, 'GOOGLE_API_PUBLIC', 'GOOGLE_API_SECRET'
+  config.omniauth :twitter, ENV['TWITTER_API_PUBLIC'], ENV['TWITTER_API_SECRET']
+  config.omniauth :google_oauth2, ENV['GOOGLE_API_PUBLIC'], ENV['GOOGLE_API_SECRET']
   OmniAuth.config.allowed_request_methods = [:get]
 
   # ==> Warden configuration
