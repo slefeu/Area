@@ -65,6 +65,10 @@ services:
     environment:
       - DATABASE_HOST=db
       - DEVISE_JWT_SECRET_KEY=a6ad96230292468e9bdb2b5d97206d8e6526fb706485e495dfdce612d73f23cfd2bb392c4ef9167688913008db0c6e68cdaf859534829eab5967605e4b357fdf
+      - TWITTER_API_PUBLIC=XeKpWymoE8bwWLElXHJVyMD4W
+      - TWITTER_API_SECRET=APP_SECRyEvZGxqYCFhqRVQtlxWnusyojL0tVsI2VDNQY3dpTpd0y5ijFJET
+      - GOOGLE_API_PUBLIC=1061180127786-d3bjg8hpvod3276plgs0mkj2f00u4fam.apps.googleusercontent.com
+      - GOOGLE_API_SECRET=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
     volumes:
       - ./backend/:/rails-app
       - bundle:/bundle
