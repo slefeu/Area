@@ -15,9 +15,7 @@ class HardJob
   private
     def user_job
       User.all.each do |user|
-        user.widgets.each do |widget|
-          next unless widget.active
-
+        user.widgets.activated.each do |widget|
           action = widget.action
           next unless Bus_actions.call(action.klass_command, action.options)
 

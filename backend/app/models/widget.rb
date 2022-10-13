@@ -24,6 +24,9 @@ class Widget < ApplicationRecord
   has_one :action
   has_one :reaction, through: :action
 
+  # Scopes
+  scope :activated, -> { where(active: true) }
+
   def disactivate
     self.active = false
     self.save
