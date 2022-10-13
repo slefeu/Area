@@ -61,7 +61,7 @@ group :development, :test do
   gem "factory_bot", "~> 6.2.1"
   gem "factory_bot_rails", "~> 6.2.0"
   gem "ffaker", "2.18"
-  gem "annotate"
+  gem "annotate", "3.2.0"
 end
 
 group :development do
