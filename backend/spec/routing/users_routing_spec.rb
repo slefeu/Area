@@ -12,7 +12,7 @@ RSpec.describe UsersController, type: :routing do
 
 
     it "routes to #create" do
-      expect(post: "/users").to route_to("devise/registrations#create", format: :json)
+      expect(post: "/users").to route_to("devise/registrations#create")
     end
 
     it "routes to #destroy" do
