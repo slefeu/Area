@@ -17,10 +17,12 @@ class HardJob
       User.all.each do |user|
         user.widgets.activated.each do |widget|
           action = widget.action
-          next unless Bus_actions.call(action.klass_command, action.options)
+          action_cmd = action.klass_command.constantize.send(:new, action.options)
+          next unless Bus_actions << action_cmd
 
           reaction = action.reaction
-          Bus_reactions.call(reaction.klass_command, reaction.options)
+          reaction_cmd = reaction.klass_command.constantize.send(:new, reaction.options)
+          Bus_reactions << reaction_cmd
         end
         puts user.inspect
       end

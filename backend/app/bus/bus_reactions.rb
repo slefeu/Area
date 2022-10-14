@@ -5,10 +5,10 @@ class BusReactions
     @router = router
   end
 
-  def call(klass, options)
-    reaction = klass.constantize&.send(:new, options)
-    router[reaction.class].call reaction.to_h
+  def send_command(cmd)
+    router[cmd.class].call cmd.to_h
   end
 
+  alias << send_command
   attr_accessor :router
 end
