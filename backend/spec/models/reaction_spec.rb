@@ -17,8 +17,26 @@
 #
 #  fk_rails_...  (action_id => actions.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Reaction, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "create a reaction valid" do
+    let(:id) { 509081 }
+    subject { create(:reaction, id: id) }
+
+    it "should persist an reaction" do
+      expect { subject }.to change(Reaction, :count).by(1)
+    end
+
+    it "has already an id in options" do
+      expect(subject.options["reaction_id"]).to eq(id)
+    end
+
+    it "has a klass valid" do
+      reaction = subject.klass_command
+      options = subject.options
+
+      expect(reaction.constantize.send(:new, options)).to_not be_nil
+    end
+  end
 end

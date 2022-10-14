@@ -17,8 +17,30 @@
 #
 #  fk_rails_...  (widget_id => widgets.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Action, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "create a action valid" do
+    let(:id) { 509081 }
+    subject { create(:action, id: id) }
+
+    it "should persist an action" do
+      expect { subject }.to change(Action, :count).by(1)
+    end
+
+    it "has already an id in options" do
+      expect(subject.options["action_id"]).to eq(id)
+    end
+
+    it "has an association to an reaction" do
+      expect(subject).to respond_to(:reaction)
+    end
+
+    it "has a klass valid" do
+      action = subject.klass_command
+      options = subject.options
+
+      expect(action.constantize.send(:new, options)).to_not be_nil
+    end
+  end
 end

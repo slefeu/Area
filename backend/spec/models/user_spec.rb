@@ -22,8 +22,22 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "create a user valid" do
+    subject { create(:user) }
+
+    it "should persist a new user" do
+      expect { subject }.to change(User, :count).by(1)
+    end
+
+    it "should not be admin" do
+      expect(subject.admin).to be_falsey
+    end
+
+    it "has a relation to widgets" do
+      expect(subject).to respond_to(:widgets)
+    end
+  end
 end
