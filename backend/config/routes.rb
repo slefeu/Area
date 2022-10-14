@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   # config/routes.rb
 
   root to: "home#index"
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   # ##cancel for tests
 
@@ -14,15 +13,16 @@ Rails.application.routes.draw do
 
   # ##get "about.json", to: "application#about"
 
-  resources :reactions
-  resources :actions
+  resources :reactions, only: [:index, :show]
+  resources :actions, only: [:index, :show]
   resources :widgets
 
   delete "signout", to: "users#signout"
 
   get "current_user", to: "users#show_current_user"
 
-  # ##devise_for :users, defaults: { format: :json }, controllers: { sessions: "users/sessions" }
+  devise_for :users, defaults: { format: :json },
+                    controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
   # devise_for :admin
   resources :users, only: [:index, :show, :destroy]
 
