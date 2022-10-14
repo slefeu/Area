@@ -5,13 +5,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # config/routes.rb
 
-  root to: "home#index"
+  #root to: "home#index"
 
   # ##cancel for tests
 
   # ##root "application#about"
 
-  # ##get "about.json", to: "application#about"
+  get "about.json", to: "application#about"
 
   resources :reactions, only: [:index, :show]
   resources :actions, only: [:index, :show]
