@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.reloader.to_prepare do
-  RouterReaction = {}
-  RouterReaction[SendMailReactionCommand] = SendMailReactionCommandHandler.new
-  RouterReaction[DailyPhotoBgReactionCommand] = DailyPhotoBgReactionCommandHandler.new
+  RouterReaction = Router.new
+  RouterReaction.resolve(command: SendMailReactionCommand, handler: SendMailReactionCommandHandler.new)
+  RouterReaction.resolve(command: DailyPhotoBgReactionCommand, handler: DailyPhotoBgReactionCommandHandler.new)
 end

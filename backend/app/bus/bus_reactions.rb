@@ -6,7 +6,7 @@ class BusReactions
   end
 
   def send_command(cmd)
-    router[cmd.class].call cmd.to_h
+    router.route(cmd).call cmd.to_h
   end
 
   alias << send_command
