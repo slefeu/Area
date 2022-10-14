@@ -5,17 +5,24 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  admin                  :boolean          default(FALSE), not null
+#  background             :string
+#  email                  :string           not null
+#  encrypted_password     :string           default(""), not null
 #  first_name             :string           not null
 #  last_name              :string           not null
-#  email                  :string           not null
-#  background             :string
-#  admin                  :boolean          default(FALSE), not null
+#  p_uid                  :string           not null
+#  provider               :string           not null
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
   # Callbacks
@@ -52,6 +59,7 @@ class User < ApplicationRecord
       user.p_uid = auth.uid
       # user.image = auth.info.image # assuming the user model has an image
     end
+  end
 
   def destroy_children
     self.reaction&.destroy
