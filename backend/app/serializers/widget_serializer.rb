@@ -18,7 +18,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class WidgetSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :active
 
   has_one :action
   has_one :reaction, through: :action
