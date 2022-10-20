@@ -33,7 +33,7 @@ function CreateForm({ json }) {
     }
 
     /* A function that is called when the user selects an action. It will then display the options for
-        the action. */
+    the action. */
     function moreInputReaction() {
         var data = document.getElementById("reactionsList").value;
         json.server.services.forEach(element => {
@@ -89,23 +89,25 @@ function CreateForm({ json }) {
             }
         }
 
-        var actionOptions = document.getElementById("inputAction")
-        for (var i = 1; i < actionOptions.children.length; i++) {
-            if (actionOptions.children[i].value !== "") {
-                widget.widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
+        try {
+            var actionOptions = document.getElementById("inputAction")
+            for (var i = 1; i < actionOptions.children.length; i++) {
+                if (actionOptions.children[i].value !== "")
+                    widget.widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
             }
-        }
 
-        var reactionOptions = document.getElementById("inputReaction")
-        for (var j = 1; j < reactionOptions.children.length; j++) {
-            if (reactionOptions.children[j].value !== "") {
-                widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
+        } catch (err) { var actionOptions = null }
+
+        try {
+            var reactionOptions = document.getElementById("inputReaction")
+            for (var j = 1; j < reactionOptions.children.length; j++) {
+                if (reactionOptions.children[j].value !== "")
+                    widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
             }
-        }
+        } catch (err) { var reactionOptions = null }
+
         AXIOS.post(url, widget, { headers: { Authorization: token,} })
-            .then(res => { 
-                document.getElementById("name").value = ""
-             })
+            .then(res => { window.location.href = "/home" })
             .catch(res => { console.log("Error " + res) })
     }
 

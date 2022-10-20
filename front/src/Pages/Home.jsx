@@ -5,6 +5,7 @@ import Navbar from '../Tools/Navbar'
 import Error from '../Tools/Error'
 import Load from '../Tools/Load'
 import Container from '../Tools/Container'
+import Widget from '../Tools/Widget'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
@@ -20,9 +21,7 @@ function Home() {
     
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(function (res) {
-                var widgets = res.data.widgets.map((w) => {
-                    return <Container title={w.name} data={`${w.action.name} => ${w.reaction.name}`} key={w.name} />
-                })
+                var widgets = res.data.widgets.map((w) => { return <Widget w={w} /> })
                 if (res.data.background !== null) {
                     setElement(<>
                         <Container key="front_background" type="biggerContainer">
