@@ -1,5 +1,5 @@
 class WidgetsController < ApplicationController
-  before_action :user_logged?, only: [ :create ]
+  before_action :user_logged?, only: %i[ create update destroy ]
   before_action :set_widget, only: %i[ show update destroy ]
 
   # GET /widgets
@@ -21,7 +21,10 @@ class WidgetsController < ApplicationController
     action_params = widget_params[:action]
     reaction_params = widget_params[:reaction]
 
-    unless action_params && reaction_params && @widget.save
+    unless action_params && reaction_params
+      render json: { message: "Params missing" }, status: :unprocessable_entity and return
+    end
+    unless @widget.save
       render json: @widget.errors, status: :unprocessable_entity and return
     end
 
@@ -45,11 +48,32 @@ class WidgetsController < ApplicationController
 
   # PATCH/PUT /widgets/1
   def update
-    if @widget.update(widget_params)
-      render json: @widget
-    else
-      render json: @widget.errors, status: :unprocessable_entity
+    action_params = widget_params[:action]
+    reaction_params = widget_params[:reaction]
+
+    # Check params
+    unless @widget
+      render json: { message: "Widget with id #{params[:id]} not found" }, status: :not_found and return
     end
+
+    # Update Widget
+    unless @widget.update(widget_params)
+      render json: @widget.errors, status: :unprocessable_entity and return
+    end
+
+    # Update Action
+    action = @widget.action
+    if action_params && !action.update(klass: action_params[:name])
+      render json: action.errors, status: :un and return
+    end
+
+    # Update Reaction
+    reaction = action.reaction
+    if reaction_params && !reaction.update(klass: reaction_params[:name])
+      render json: reaction.errors, status: :un and return
+    end
+
+    render json: @widget, status: :ok, location: @widget
   end
 
   # DELETE /widgets/1

@@ -21,5 +21,9 @@ FactoryBot.define do
   factory :widget do
     name { FFaker::Name.unique.name }
     user_id { create(:user).id }
+
+    factory :widget_complet do
+      action { create(:action) }
+    end
   end
 end
