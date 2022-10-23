@@ -3,8 +3,19 @@ class EachDayActionCommandHandler
   end
 
   def call(attributes)
-    # TODO check if it's a new day and update last_day of action
     puts "Each Day Command Handler"
-    true
+
+    time_info = HTTParty.get("https://api.timezonedb.com/v2.1/get-time-zone?key=MLW9WKV7JEUS&format=json&by=position&lat=44.8404&lng=-0.5805")
+    today = time_info["formatted"].to_time
+    last_day = attributes[:last_day].to_time
+    result = today > last_day
+
+    if result
+      action = Action.find(attributes[:action_id])
+      today = today.to_date.next
+      action.options["last_day"] = today.to_s
+      action.save
+    end
+    result
   end
 end
