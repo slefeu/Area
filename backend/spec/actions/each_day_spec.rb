@@ -12,6 +12,7 @@ RSpec.describe EachDayActionCommand do
         expect(handler.call(command.to_h, mocked_response)).to eq(true)
       end
     end
+
     context "when the last day is today" do
       let(:options)  { { "action_id" => action.id, "last_day" => (Date.today).to_s } }
       it "returns false" do
@@ -20,6 +21,7 @@ RSpec.describe EachDayActionCommand do
         expect(handler.call(command.to_h, mocked_response)).to eq(false)
       end
     end
+
     context "when the last day is tomorrow" do
       let(:options)  { { "action_id" => action.id, "last_day" => (Date.today+1).to_s } }
       it "returns false" do
@@ -28,6 +30,7 @@ RSpec.describe EachDayActionCommand do
         expect(handler.call(command.to_h, mocked_response)).to eq(false)
       end
     end
+
     context "when the last day is undefined" do
       let(:options)  { { "action_id" => action.id } }
       it "returns true" do
