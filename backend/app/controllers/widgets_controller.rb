@@ -57,7 +57,7 @@ class WidgetsController < ApplicationController
     end
 
     # Update Widget
-    unless @widget.update(widget_params)
+    unless @widget.update(name: widget_params[:name])
       render json: @widget.errors, status: :unprocessable_entity and return
     end
 
@@ -69,7 +69,7 @@ class WidgetsController < ApplicationController
 
     # Update Reaction
     reaction = action.reaction
-    if reaction_params && !reaction.update(klass: reaction_params[:name], options: action_params[:options])
+    if reaction_params && !reaction.update(klass: reaction_params[:name], options: reaction_params[:options])
       render json: reaction.errors, status: :unprocessable_entity and return
     end
 
