@@ -57,7 +57,7 @@ class WidgetsController < ApplicationController
     end
 
     # Update Widget
-    unless @widget.update(name: widget_params[:name])
+    unless @widget.update(name: widget_params[:name], active: widget_params[:active])
       render json: @widget.errors, status: :unprocessable_entity and return
     end
 
@@ -89,6 +89,6 @@ class WidgetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def widget_params
-      params.require(:widget).permit(:name, :user_id, action: {}, reaction: {})
+      params.require(:widget).permit(:name, :active, :user_id, action: {}, reaction: {})
     end
 end
