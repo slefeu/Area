@@ -5,6 +5,9 @@
     "homepage": "./",
     "dependencies": {
         "@babel/core": "^7.16.0",
+        "@emotion/react": "^11.10.4",
+        "@emotion/styled": "^11.10.4",
+        "@mui/material": "^5.10.9",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
         "@svgr/webpack": "^6.3.1",
         "@testing-library/jest-dom": "^5.16.5",

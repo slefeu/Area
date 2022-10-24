@@ -1,8 +1,11 @@
-import React from "react";
 import "../css/colors.css"
 import "../css/auth.css"
+
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
+import { Error } from '../Tools/Notif'
+
+import React from "react";
 import { Navigate } from 'react-router-dom';
 
 function Register() {
@@ -23,13 +26,8 @@ function Register() {
             localStorage.setItem("url", document.getElementById("server").value);
 
         AXIOS.post(localStorage.getItem("url") + '/users', user)
-            .then(res => {
-                window.location.href = "/login";
-            })
-            .catch(err => {
-                console.log(err);
-                //change the border of the input that is wrong in red
-            })
+            .then(res => { window.location.href = "/login"; })
+            .catch(err => { Error({"res": err}) })
     }
 
     return (

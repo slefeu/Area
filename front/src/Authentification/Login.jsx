@@ -8,6 +8,7 @@ import "../css/auth.css"
 
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
+import { Error } from '../Tools/Notif'
 
 function LoginForm() {
 
@@ -32,12 +33,7 @@ function LoginForm() {
                 localStorage.setItem("token", token);
                 window.location.href = "/home";
             })
-            .catch(error => {
-                console.log({error});
-                //do red borders on elements that don't work
-                // document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
-
-            });
+            .catch(error => { Error({"res": error}) });
     }
 
     return (

@@ -2,10 +2,11 @@ import '../css/colors.css'
 import '../css/style.css'
 
 import Container from '../Tools/Container'
+import { Error } from '../Tools/Notif'
 
 import AXIOS from "../Tools/Client.jsx"
 import { AiOutlineCheck } from 'react-icons/ai'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function CreateForm({ json }) {
 
@@ -16,29 +17,45 @@ function CreateForm({ json }) {
     the action. */
     function moreInputAction() {
         var data = document.getElementById("actionsList").value;
+
         json.server.services.forEach(element => {
             element.actions.forEach(elem => {
                 if (elem.name === data) {
-                    var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
-                    setActionsMore(<div id="inputAction" className="row-2 border"><div>Action Option</div>{temp}</div>)
+                    if (Object.keys(elem.options).length === 0) {
+                        setActionsMore(<div></div>)
+                    } else {
+                        var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
+                        setActionsMore(<div id="inputAction" className="row-2 border"><div>Action Option</div>{temp}</div>)
+                    }
+                    return
                 }
             })
         })
     }
 
     /* A function that is called when the user selects an action. It will then display the options for
-        the action. */
+    the action. */
     function moreInputReaction() {
         var data = document.getElementById("reactionsList").value;
         json.server.services.forEach(element => {
             element.reactions.forEach(elem => {
                 if (elem.name === data) {
-                    var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
-                    setReactionsMore(<div id="inputReaction" className="row-2 border"><div>Reaction Option</div>{temp}</div>)
+                    if (Object.keys(elem.options).length === 0) {
+                        setReactionsMore(<div></div>)
+                    } else {
+                        var temp = Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
+                        setReactionsMore(<div id="inputReaction" className="row-2 border"><div>Reaction Option</div>{temp}</div>)
+                    }
+                    return
                 }
             })
         })
     }
+
+    useEffect(() => {
+        moreInputAction()
+        moreInputReaction()
+    }, [])
 
     var actions = json.server.services.map((elem) => {
         var act = elem.actions.map((i) => { return (<option value={i.name} key={i.name}>{i.description}</option>) })
@@ -73,26 +90,26 @@ function CreateForm({ json }) {
             }
         }
 
-        var actionOptions = document.getElementById("inputAction")
-        for (var i = 1; i < actionOptions.children.length; i++) {
-            if (actionOptions.children[i].value !== "") {
-                widget.widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
+        try {
+            var actionOptions = document.getElementById("inputAction")
+            for (var i = 1; i < actionOptions.children.length; i++) {
+                if (actionOptions.children[i].value !== "")
+                    widget.widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
             }
-        }
 
-        var reactionOptions = document.getElementById("inputReaction")
-        for (var j = 1; j < reactionOptions.children.length; j++) {
-            if (reactionOptions.children[j].value !== "") {
-                widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
+        } catch (err) { var actionOptions = null }
+
+        try {
+            var reactionOptions = document.getElementById("inputReaction")
+            for (var j = 1; j < reactionOptions.children.length; j++) {
+                if (reactionOptions.children[j].value !== "")
+                    widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
             }
-        }
-        AXIOS.post(url, widget, {
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => { console.log(res) })
-            .catch(res => { console.log("Error " + res) })
+        } catch (err) { var reactionOptions = null }
+
+        AXIOS.post(url, widget, { headers: { Authorization: token,} })
+            .then(res => { window.location.href = "/home" })
+            .catch(res => { Error({"res": res}) })
     }
 
     return (

@@ -21,7 +21,6 @@ a {
 
 .button:hover:not(.active) {
     color: var(--accent-color);
-
 }
 
 .button.active {
@@ -40,7 +39,6 @@ a {
 }
 
 @media only screen and (max-width: 600px) {
-
     .button {
         font-size: 1rem;
     }
