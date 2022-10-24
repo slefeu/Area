@@ -3,8 +3,8 @@ import '../css/style.css'
 
 import Navbar from '../Tools/Navbar'
 import Load from '../Tools/Load'
-import Error from '../Tools/Error'
 import CreateForm from './CreateForm'
+import { Error } from '../Tools/Notif'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ function Create() {
 
         AXIOS.get(localStorage.getItem('url') + '/about.json')
             .then(function (res) { setElement(<CreateForm json={res.data}/>) })
-            .catch(function (err) { setElement(<Error msg="La requête vers le serveur a échouée." error={err} />) });
+            .catch(function (err) { Error({"res": err}) });
       }, []);
 
     return (

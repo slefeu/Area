@@ -2,10 +2,10 @@ import '../css/colors.css'
 import '../css/style.css'
 
 import Navbar from '../Tools/Navbar'
-import Error from '../Tools/Error'
 import Load from '../Tools/Load'
 import Container from '../Tools/Container'
 import Widget from '../Tools/Widget'
+import { Error } from '../Tools/Notif'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ function Home() {
         const token = "Bearer " + localStorage.getItem("token");
     
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
-            .then(function (res) {
+            .then(res => {
                 var widgets = res.data.widgets.map((w) => { return <Widget w={w} /> })
                 if (res.data.background !== null) {
                     setElement(<>
@@ -31,7 +31,7 @@ function Home() {
                     </>)
                 } else { setElement(widgets) }
             })
-            .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page." />) });
+            .catch(err => { Error({"res": err}) });
     }, []);
 
     return (

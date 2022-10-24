@@ -2,7 +2,7 @@ import '../css/colors.css'
 import '../css/style.css'
 
 import Container from '../Tools/Container'
-import SetNotif from '../Tools/Notif'
+import { Error } from '../Tools/Notif'
 
 import AXIOS from "../Tools/Client.jsx"
 import { AiOutlineCheck } from 'react-icons/ai'
@@ -108,11 +108,8 @@ function CreateForm({ json }) {
         } catch (err) { var reactionOptions = null }
 
         AXIOS.post(url, widget, { headers: { Authorization: token,} })
-            .then(res => {
-                SetNotif({"title": "Widget created", "body": "Your widget has been created"})
-                // window.location.href = "/home"
-            })
-            .catch(res => { })
+            .then(res => { window.location.href = "/home" })
+            .catch(res => { Error({"res": res}) })
     }
 
     return (
