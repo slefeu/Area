@@ -28,7 +28,7 @@ RSpec.describe Action, type: :model do
       expect { subject }.to change(Action, :count).by(1)
     end
 
-    it "has already an id in options" do
+    it "has an id in options on creation" do
       expect(subject.options["action_id"]).to eq(id)
     end
 

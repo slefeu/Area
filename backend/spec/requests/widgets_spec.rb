@@ -97,8 +97,10 @@ RSpec.describe "/widgets", type: :request do
         { name: "New Name" }
       }
 
+      before { sign_in(create(:user)) }
+
       it "updates the requested widget" do
-        widget = Widget.create! valid_attributes
+        widget = create(:widget_complet)
         patch widget_url(widget),
               params: { widget: new_attributes }, headers: valid_headers, as: :json
         widget.reload
@@ -106,7 +108,8 @@ RSpec.describe "/widgets", type: :request do
       end
 
       it "renders a JSON response with the widget" do
-        widget = Widget.create! valid_attributes
+        # widget = Widget.create! valid_attributes
+        widget = create(:widget_complet)
         patch widget_url(widget),
               params: { widget: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
@@ -115,8 +118,11 @@ RSpec.describe "/widgets", type: :request do
     end
 
     context "with invalid parameters" do
+      before { sign_in(create(:user)) }
+
       it "renders a JSON response with errors for the widget" do
-        widget = Widget.create! valid_attributes
+        # widget = Widget.create! valid_attributes
+        widget = create(:widget_complet)
         patch widget_url(widget),
               params: { widget: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
@@ -126,6 +132,8 @@ RSpec.describe "/widgets", type: :request do
   end
 
   describe "DELETE /destroy" do
+    before { sign_in(create(:user)) }
+
     it "destroys the requested widget" do
       widget = Widget.create! valid_attributes
       expect {
