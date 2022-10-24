@@ -1,5 +1,3 @@
-import setNotif from "./Notif"
-
 function SwitchTheme() {
     localStorage.setItem("theme", localStorage.getItem("theme") === "theme-dark" ? "theme-light" : "theme-dark")
 

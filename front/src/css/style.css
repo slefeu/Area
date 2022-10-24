@@ -264,9 +264,41 @@ body {
     text-align: left;
     justify-content: flex-start;
     width: 100%;
-    font-style: italic;
     font-size: .85rem;
     opacity: .7;
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+}
+
+.tagTitle {
+    padding-right: .5rem;
+    font-weight: bold;
+}
+
+.tag {
+    border: solid var(--accent-color) .12rem;
+    color: var(--accent-color);
+    padding-left: .4rem;
+    padding-right: .4rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    transition-duration: .3s;
+    white-space: nowrap;
+    font-style: italic;
+}
+
+.tag:hover {
+    filter: brightness(1.5);
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {

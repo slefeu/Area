@@ -90,22 +90,24 @@ function CreateForm({ json }) {
             }
         }
 
+        var actionOptions = null
         try {
-            var actionOptions = document.getElementById("inputAction")
+            actionOptions = document.getElementById("inputAction")
             for (var i = 1; i < actionOptions.children.length; i++) {
                 if (actionOptions.children[i].value !== "")
                     widget.widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
             }
 
-        } catch (err) { var actionOptions = null }
+        } catch (err) { actionOptions = null }
 
+        var reactionOptions = null
         try {
-            var reactionOptions = document.getElementById("inputReaction")
+            reactionOptions = document.getElementById("inputReaction")
             for (var j = 1; j < reactionOptions.children.length; j++) {
                 if (reactionOptions.children[j].value !== "")
                     widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
             }
-        } catch (err) { var reactionOptions = null }
+        } catch (err) { reactionOptions = null }
 
         AXIOS.post(url, widget, { headers: { Authorization: token,} })
             .then(res => { window.location.href = "/home" })
