@@ -64,13 +64,13 @@ class WidgetsController < ApplicationController
     # Update Action
     action = @widget.action
     if action_params && !action.update(klass: action_params[:name], options: action_params[:options])
-      render json: action.errors, status: :un and return
+      render json: action.errors, status: :unprocessable_entity and return
     end
 
     # Update Reaction
     reaction = action.reaction
     if reaction_params && !reaction.update(klass: reaction_params[:name], options: action_params[:options])
-      render json: reaction.errors, status: :un and return
+      render json: reaction.errors, status: :unprocessable_entity and return
     end
 
     render json: @widget, status: :ok, location: @widget
