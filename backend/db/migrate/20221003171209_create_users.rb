@@ -6,6 +6,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :email, null: false
       t.string :background
       t.boolean :admin, null: false, default: false
+      t.string :provider
+      t.string :p_uid
 
       t.timestamps
     end

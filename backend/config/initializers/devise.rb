@@ -20,7 +20,7 @@ Devise.setup do |config|
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = ENV["DEVISE_JWT_SECRET_KEY"]
     jwt.request_formats = {
       user: [:json],
     }
@@ -29,7 +29,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  #config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  # config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -41,7 +41,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -183,7 +183,8 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 6..128
+  config.password_length = 6..128 if Rails.env.production?
+  config.password_length = 1..128 if Rails.env.development? || Rails.env.test?
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
@@ -276,7 +277,9 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :twitter, ENV["TWITTER_API_PUBLIC"], ENV["TWITTER_API_SECRET"]
+  config.omniauth :google_oauth2, ENV["GOOGLE_API_PUBLIC"], ENV["GOOGLE_API_SECRET"]
+  OmniAuth.config.allowed_request_methods = [:get]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
