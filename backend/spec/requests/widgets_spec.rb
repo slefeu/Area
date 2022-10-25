@@ -16,6 +16,7 @@ RSpec.describe "/widgets", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Widget. As you add validations to Widget, be sure to
   # adjust the attributes here as well.
+
   let(:valid_attributes) { attributes_for(:widget) }
 
   let(:valid_attributes_for_post) {
@@ -108,24 +109,10 @@ RSpec.describe "/widgets", type: :request do
       end
 
       it "renders a JSON response with the widget" do
-        # widget = Widget.create! valid_attributes
         widget = create(:widget_complet)
         patch widget_url(widget),
               params: { widget: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      before { sign_in(create(:user)) }
-
-      it "renders a JSON response with errors for the widget" do
-        # widget = Widget.create! valid_attributes
-        widget = create(:widget_complet)
-        patch widget_url(widget),
-              params: { widget: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end

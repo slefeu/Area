@@ -5,11 +5,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # config/routes.rb
 
-  #root to: "home#index"
-
-  # ##cancel for tests
-
-  # ##root "application#about"
+  root "application#about"
 
   get "about.json", to: "application#about"
 
@@ -30,4 +26,8 @@ Rails.application.routes.draw do
   scope :nasa do
     get "apod", to: "nasa#apod"
   end
+
+  # Path for documentation
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
 end

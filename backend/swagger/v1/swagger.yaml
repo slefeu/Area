@@ -1,0 +1,62 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/widgets":
+    post:
+      summary: Create a widget
+      tags:
+      - Widgets
+      parameters: []
+      responses:
+        '201':
+          description: widget created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New Background at 16h
+                action:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: at_hour
+                    options:
+                      type: object
+                      properties: {}
+                      example:
+                        hour: '16:00:00'
+                  required:
+                  - name
+                  - options
+                reaction:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: daily_photo_bg
+                    options:
+                      type: object
+                      properties: {}
+                      example: {}
+                  required:
+                  - name
+                  - options
+              required:
+              - name
+              - action
+              - reaction
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:8080
