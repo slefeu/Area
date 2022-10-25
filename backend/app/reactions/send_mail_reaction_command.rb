@@ -11,6 +11,7 @@ class SendMailReactionCommand
   end
 
   def to_h
-    { reaction_id: @reaction_id, user_id: @user_id, token_refreshed: @token_refreshed, to: @to, subject: @subject, body: @body }
+    { reaction_id: @reaction_id, user_id: @user_id, token_refreshed: @token_refreshed, to: @to, subject: @subject,
+body: @body }
   end
 end
