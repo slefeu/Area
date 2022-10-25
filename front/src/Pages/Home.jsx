@@ -10,6 +10,7 @@ import { Error } from '../Tools/Notif'
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
 import AXIOS from "../Tools/Client.jsx"
+import { Modal } from '../Tools/Modal'
 
 function Home() {
     const [element, setElement] = useState(<Load />)
@@ -36,6 +37,7 @@ function Home() {
 
     return (
         <div>
+            <Modal id="widgetEdit"/>
             <Navbar currentPage="Home" />
             <div className="content">
                 {element}

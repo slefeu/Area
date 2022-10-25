@@ -64,7 +64,7 @@ body {
 }
 
 .biggerContainer {
-    transition-duration: 1s;
+    transition-duration: .5s;
     padding: 0;
     width: 100%;
     min-width: none;
@@ -81,8 +81,8 @@ body {
 
 .biggerContainer:focus,
 .biggerContainer:hover {
-    height: fit-content;
-    max-height: 80vh;
+    /* height: fit-content; */
+    height: 90vh;
 }
 
 @keyframes fadeIn {

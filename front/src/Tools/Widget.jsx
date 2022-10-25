@@ -1,6 +1,7 @@
 import Container from "./Container";
-import AXIOS from "../Tools/Client.jsx"
-import { Error } from '../Tools/Notif'
+import AXIOS from "./Client.jsx"
+import { Error } from './Notif'
+import { ShowModal, SetModal } from "./Modal";
 
 import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 
@@ -16,6 +17,18 @@ function Widget({ w }) {
                 catch (e) {}
              })
             .catch(res => { Error({"res": res}) })
+    }
+
+    function editThis(id) {
+        SetModal({
+            "id": "widgetEdit",
+            "content": `<div>
+                <h1>Widget edit</h1>
+                <p>Widget id: ${id}</p>
+            </div>`
+        })
+        
+        ShowModal({id: "widgetEdit"})
     }
 
     var optionsAction = Object.keys(w.action.options).map((elem) => {
@@ -34,7 +47,7 @@ function Widget({ w }) {
             <div className="containerContent"><span className="tagTitle">{w.action.name}</span>{optionsAction}</div>
             <div className="containerContent"><span className="tagTitle">{w.reaction.name}</span>{optionsReaction}</div>
             <div className="funZone">
-                <button className="button" onClick={() => { console.log(`edit widget ${w.id}`) }}><AiFillEdit /></button>
+                <button className="button" onClick={() => { editThis(w.id) }}><AiFillEdit /></button>
                 <button className="button" onClick={() => { removeThis(w.id) }}><AiFillDelete /></button>
             </div>
         </Container>
