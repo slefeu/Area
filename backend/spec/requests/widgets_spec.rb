@@ -27,7 +27,7 @@ RSpec.describe "/widgets", type: :request do
   }
 
   let(:invalid_attributes) {
-    { name: 23, user_id: "a" }
+    { name: 23, user_id: "a", active: true }
   }
 
   # This should return the minimal set of values that should be in the headers
@@ -94,7 +94,7 @@ RSpec.describe "/widgets", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        { name: "New Name" }
+        { name: "New Name", active: true }
       }
 
       before { sign_in(create(:user)) }
@@ -113,19 +113,6 @@ RSpec.describe "/widgets", type: :request do
         patch widget_url(widget),
               params: { widget: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      before { sign_in(create(:user)) }
-
-      it "renders a JSON response with errors for the widget" do
-        # widget = Widget.create! valid_attributes
-        widget = create(:widget_complet)
-        patch widget_url(widget),
-              params: { widget: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
