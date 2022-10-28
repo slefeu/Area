@@ -28,7 +28,7 @@ RSpec.describe Reaction, type: :model do
       expect { subject }.to change(Reaction, :count).by(1)
     end
 
-    it "has already an id in options" do
+    it "has an id in options on creation" do
       expect(subject.options["reaction_id"]).to eq(id)
     end
 
