@@ -22,10 +22,10 @@ function Home() {
     
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(res => {
-                var widgets = res.data.widgets.map((w) => { return <Widget w={w} /> })
+                var widgets = res.data.widgets.map((w) => { return <Widget key={Math.random()} w={w} /> })
                 if (res.data.background !== null) {
                     setElement(<>
-                        <Container key="front_background" type="biggerContainer">
+                        <Container type="biggerContainer">
                             <img alt="Background from the user" src={res.data.background} />
                         </Container>
                         {widgets}

@@ -3,8 +3,11 @@ import '../css/style.css'
 import '../css/modal.css'
 
 import React from "react"
+import ReactDOM from "react-dom/client"
 
 import { AiOutlineClose } from "react-icons/ai"
+
+export var Modals = {}
 
 export function ShowModal( {id} ) {
     const modal = document.getElementById(id)
@@ -28,10 +31,12 @@ export function HideModal( {id} ) {
 
 export function SetModal({ id, content }) {
     var modal = document.getElementById(id)
-    if (modal === null) return
-
     var temp = document.getElementById(id + "Content")
-    temp.innerHTML = content
+
+    if (modal === null || temp == null) return
+    if (Modals[id] === undefined) { Modals[id] = ReactDOM.createRoot(temp) }
+    
+    Modals[id].render(content)
 }
 
 export function Modal( {id} ) {

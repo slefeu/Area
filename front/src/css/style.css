@@ -245,6 +245,13 @@ body {
     height: unset;
 }
 
+.widget.true {}
+
+.widget.false {
+    opacity: .5;
+    filter: blur(1px);
+}
+
 .widget .containerTitle {
     font-size: 1.7rem;
     color: var(--text-color);

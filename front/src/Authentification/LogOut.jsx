@@ -20,7 +20,6 @@ function LogoutUser() {
         AXIOS.delete(url, values)
             .then(res => {
                 localStorage.removeItem("token");
-                console.log("success");
                 setElement(<Navigate to="/login" />)
             })
             .catch((error) => {
