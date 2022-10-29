@@ -6,11 +6,11 @@ import Load from '../Tools/Load'
 import Container from '../Tools/Container'
 import Widget from '../Tools/Widget'
 import { Error } from '../Tools/Notif'
+import AXIOS from "../Tools/Client.jsx"
+import GenerateKey from '../Tools/Key'
 
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
-import AXIOS from "../Tools/Client.jsx"
-import { Modal } from '../Tools/Modal'
 
 function Home() {
     const [element, setElement] = useState(<Load />)
@@ -22,10 +22,10 @@ function Home() {
     
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(res => {
-                var widgets = res.data.widgets.map((w) => { return <Widget key={Math.random()} w={w} /> })
+                var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
                 if (res.data.background !== null) {
                     setElement(<>
-                        <Container type="biggerContainer">
+                        <Container key="front_background" type="biggerContainer">
                             <img alt="Background from the user" src={res.data.background} />
                         </Container>
                         {widgets}
@@ -37,7 +37,6 @@ function Home() {
 
     return (
         <div>
-            <Modal id="widgetEdit"/>
             <Navbar currentPage="Home" />
             <div className="content">
                 {element}

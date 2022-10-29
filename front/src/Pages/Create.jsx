@@ -19,7 +19,7 @@ function Create() {
         AXIOS.get(localStorage.getItem('url') + '/about.json')
             .then(function (res) { setElement(<CreateForm json={res.data}/>) })
             .catch(function (err) { Error({"res": err}) });
-      }, []);
+    }, []);
 
     return (
         <>

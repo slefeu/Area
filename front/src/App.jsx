@@ -5,6 +5,7 @@ import Login from "./Authentification/Login.jsx"
 import LogoutUser from "./Authentification/LogOut.jsx"
 import Home from "./Pages/Home.jsx"
 import Create from "./Pages/Create.jsx"
+import Edit from "./Pages/Edit.jsx"
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/logout" element={<LogoutUser />} />
                 <Route path='/create' element={<Create/>} />
+                <Route path='/edit/:id' element={<Edit/>} />
             </Routes>
         </HashRouter>
         </>

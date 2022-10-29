@@ -29,9 +29,10 @@ export function Error( {title, res, msg} ) {
 
     if (type === undefined) {
         switch (temp) {
-            case 401: type = "No access. Please log in again to continue"; break
-            case 404: type = "Server not found. Please restart the application"; break
-            default: type = "An error occured. Please try again later"; break
+            case 401: type = "No access. Please log in again to continue."; break
+            case 404: type = "Server not found. Please restart the application."; break
+            case 422: type = "Invalid Informations. Please change request data and retry."; break
+            default: type = "An error occured. Please try again later."; break
         }
     }
 

@@ -7,7 +7,7 @@ function Container({children, title, data, type, style, id}) {
     var childrenDiv = children === undefined ? "" : children
 
     return (
-        <div key={Math.random()} id={id} className={`container ${type}`} style={style}>
+        <div id={id} className={`container ${type}`} style={style}>
             {titleDiv}
             {dataDiv}
             {childrenDiv}
