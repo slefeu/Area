@@ -29,7 +29,7 @@ function Navbar({ currentPage }) {
             </div>
 
             <div className="navbarBottom">
-                <NavItem icon={<AiOutlineUser />} name="Profil" classes={`${currentPage === "Profil" ? "active" : ""}`} />
+                <NavItem icon={<AiOutlineUser />} name="Profil" classes={`${currentPage === "Profil" ? "active" : ""}`} link="/profil" />
                 <NavItem icon={<AiOutlineLogout />} classes={`fixedRight`} link="/logout" />
             </div>
         </div>
