@@ -24,13 +24,24 @@ a {
 }
 
 .button.active {
-    background: white;
+    background: var(--background-color);
     border-radius: 1.3rem;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: .3rem;
     padding-bottom: .3rem;
-    box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
+    box-shadow: var(--shadow);
+}
+
+.themeButton {
+    border: none;
+    color: none;
+    background: none;
+}
+
+svg {
+    height: 1.5rem;
+    width: 1.5rem;
 }
 
 .navbarAuth {
