@@ -42,8 +42,8 @@ function UserProfil() {
         const token = "Bearer " + localStorage.getItem("token");
 
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
-            .then(function (res) { setElement(<DisplayUserInfos data={res.data} />) })
-            .catch(function (err) { setElement(<Error msg="Erreur, " error={err} />) });
+            .then(res => { setElement(<DisplayUserInfos data={res.data} />) })
+            .catch(error => { Error({ "res": error }) });
     }, []);
 
     return (

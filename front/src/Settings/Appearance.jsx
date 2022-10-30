@@ -27,7 +27,6 @@ function ChangeTheme() {
                 className="navItem">
                 <div className="txt">{"Dark theme"}</div>
             </button>
-
         </Container>
     );
 }

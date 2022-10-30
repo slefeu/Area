@@ -19,7 +19,7 @@ function Home() {
         if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
         const token = "Bearer " + localStorage.getItem("token");
-    
+
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(res => {
                 var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
