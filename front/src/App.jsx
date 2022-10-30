@@ -6,21 +6,28 @@ import LogoutUser from "./Authentification/LogOut.jsx"
 import Home from "./Pages/Home.jsx"
 import Create from "./Pages/Create.jsx"
 import Edit from "./Pages/Edit.jsx"
+import UserProfil from "./Settings/UserProfil.jsx"
+import Appearance from "./Settings/Appearance.jsx"
+import Identification from "./Settings/Identification.jsx"
 
 function App() {
     return (
         <>
-        <HashRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/logout" element={<LogoutUser />} />
-                <Route path='/create' element={<Create/>} />
-                <Route path='/edit/:id' element={<Edit/>} />
-            </Routes>
-        </HashRouter>
+            <HashRouter>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/logout" element={<LogoutUser />} />
+                    <Route path='/create' element={<Create />} />
+                    <Route path='/edit/:id' element={<Edit />} />
+                    <Route path='/create' element={<Create />} />
+                    <Route path='/profil' element={<UserProfil />} />
+                    <Route path='/identification' element={<Identification />} />
+                    <Route path='/appearance' element={<Appearance />} />
+                </Routes>
+            </HashRouter>
         </>
     );
 }

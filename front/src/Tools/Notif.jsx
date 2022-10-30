@@ -19,10 +19,10 @@ export function Error( {title, res, msg} ) {
     try {
         type = Object.keys(res.response.data.errors).map((e) => {
             var temp = ""
-    
+
             res.response.data.errors[e].forEach((elem) => { temp += elem + ", " })
             temp = temp.slice(0, -2)
-    
+
             return `<b>${e}</b>: ${temp}`
         })
     } catch (e) { type = res.response.data.error }
