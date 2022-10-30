@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Navigate } from "react-router-dom"
+import { AiOutlineCheck } from "react-icons/ai"
 
 import SwitchTheme from "../Tools/SwitchTheme"
 import Load from "../Tools/Load"
@@ -7,7 +8,16 @@ import SettingsNavBar from "./SettingsNavBar"
 import Container from "../Tools/Container"
 
 function ChangeTheme() {
-    const SelectTheme = (selected) => {
+
+    const [picked, setPicked] = useState("Light");
+
+    const handlePickChange = (picked) => {
+        setPicked(picked);
+    }
+
+    const SelectTheme = () => {
+        let selected = picked === "Light" ? "theme-light" : "theme-dark";
+
         if (localStorage.getItem("theme") !== selected) {
             localStorage.setItem("theme", selected)
             document.documentElement.className = localStorage.getItem("theme")
@@ -17,16 +27,12 @@ function ChangeTheme() {
     return (
         <Container>
             <div className="pageTitle">Select your Theme</div>
-            <button
-                onClick={() => SelectTheme("theme-light")}
-                className="navItem">
-                <div className="txt">{"Light theme"}</div>
-            </button>
-            <button
-                onClick={() => SelectTheme("theme-dark")}
-                className="navItem">
-                <div className="txt">{"Dark theme"}</div>
-            </button>
+
+            <select name="selection" value={picked} onChange={event => handlePickChange(event.target.value)}>
+                <option>Light</option>
+                <option>Dark</option>
+            </select>
+            <button onClick={SelectTheme} className="btnBig cornerBtn"><AiOutlineCheck /></button>
         </Container>
     );
 }

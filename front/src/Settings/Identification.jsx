@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Navigate } from 'react-router-dom';
+import { AiOutlineCheck } from "react-icons/ai";
 
 import Container from '../Tools/Container'
 import AXIOS from "../Tools/Client"
@@ -30,15 +31,15 @@ function UserIdentification({ data }) {
             </div>
             <div className="column border">
                 <div>Email address</div>
-                <input type="text" readOnly="readonly" className="disabledInput" placeholder={data.email} />
+                <input type="text" readOnly="readonly" placeholder={data.email} />
             </div>
-            <div className=" column border">
+            <div className="column border padding">
                 <div> Want to change your Password ? </div>
-                <input type="password" id="password" className="disabledInput" placeholder="Your old Password" />
-                <input type="password" id="password_reset" className="disabledInput" placeholder="Enter new Password" />
-                <input type="password" id="confirm" className="disabledInput" placeholder="Confirm new Password" />
+                <input type="password" id="password" placeholder="Your old Password" />
+                <input type="password" id="password_reset" placeholder="Enter new Password" />
+                <input type="password" id="confirm" placeholder="Confirm new Password" />
             </div>
-            <button onClick={SetLoginValues} className="btn">Save</button>
+            <button onClick={SetLoginValues} className="btnBig cornerBtn"><AiOutlineCheck /></button>
         </Container>
     );
 }

@@ -18,15 +18,15 @@ function DisplayUserInfos({ data }) {
             </div>
             <div className="column border">
                 <div>First name</div>
-                <input type="text" readOnly="readonly" className="disabledInput" placeholder={data.first_name} />
+                <input type="text" readOnly="readonly" placeholder={data.first_name} />
             </div>
             <div className="column border">
                 <div>Last name</div>
-                <input type="text" readOnly="readonly" className="disabledInput" placeholder={data.last_name} />
+                <input type="text" readOnly="readonly" placeholder={data.last_name} />
             </div>
             <div className="column border">
                 <div>Email address</div>
-                <input type="text" readOnly="readonly" className="disabledInput" placeholder={data.email} />
+                <input type="text" readOnly="readonly" placeholder={data.email} />
             </div>
         </Container>
     );
