@@ -10,7 +10,7 @@ RSpec.describe "api/widgets", type: :request do
     post "Create a widget" do
       tags "Widgets"
       consumes "application/json"
-      parameter name: :Authorization, in: :header, type: :string
+      security [bearer: {}]
       parameter name: :widget, in: :body, schema: {
         type: :object,
         properties: {
