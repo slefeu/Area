@@ -10,13 +10,13 @@ import AXIOS from "../Tools/Client.jsx"
 import GenerateKey from '../Tools/Key'
 
 import { useState, useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
+import SwitchTheme from '../Tools/SwitchTheme'
 
 function Home() {
-    const [element, setElement] = useState(<Load />)
+    SwitchTheme();
 
+    const [element, setElement] = useState(<Load />)
     useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
         const token = "Bearer " + localStorage.getItem("token");
 
@@ -32,7 +32,9 @@ function Home() {
                     </>)
                 } else { setElement(widgets) }
             })
-            .catch(err => { Error({"res": err}) });
+            .catch(err => {
+                Error({ "res": err })
+            });
     }, []);
 
     return (
