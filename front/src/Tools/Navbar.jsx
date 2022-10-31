@@ -2,11 +2,12 @@ import "../css/navbar.css"
 import "../css/colors.css"
 
 import { NavItem } from "./NavItem"
+import SwitchTheme from "./SwitchTheme"
 
 import { AiFillHome, AiOutlinePlus, AiFillBook, AiFillSetting, AiOutlineUser, AiOutlineLogout } from "react-icons/ai"
 
 function Navbar({ currentPage }) {
-
+    SwitchTheme()
     return (
         <div className="navbar">
             <div className="navbarTop">
