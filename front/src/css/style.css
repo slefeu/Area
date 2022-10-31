@@ -63,6 +63,33 @@ body {
     position: relative;
 }
 
+.editContainer {
+    /* border: solid var(--accent-color) .2rem; */
+    z-index: 100;
+    min-width: none;
+    flex: 1 100%;
+    position: fixed;
+    width: calc(100% - 5rem);
+    min-height: none;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 0 100vh rgba(1, 1, 8, 0.753);
+    transition-duration: .3s;
+    padding: 1rem;
+    margin: 1.5rem;
+    padding-top: 2rem;
+    opacity: 1;
+}
+
+.editContainer.widget {
+    align-items: center;
+}
+
+.editContainer.widget.false {
+    filter: none;
+    opacity: 1;
+}
+
 .biggerContainer {
     transition-duration: .5s;
     padding: 0;
@@ -79,10 +106,8 @@ body {
     border-radius: .7rem;
 }
 
-.biggerContainer:focus,
-.biggerContainer:hover {
-    /* height: fit-content; */
-    height: 90vh;
+.biggerContainer:active {
+    height: calc(100vh - 7.5rem);
 }
 
 @keyframes fadeIn {
@@ -150,7 +175,6 @@ body {
 }
 
 .container select {
-    /* display: flex; */
     color: var(--input-text);
     background: var(--input-color);
     border: none;
@@ -210,20 +234,49 @@ body {
 
 .funZone {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     height: fit-content;
     position: absolute;
     top: 0;
     right: 0;
-    padding: .5rem;
+    gap: .2rem;
+    height: 100%;
+    border-top-right-radius: .7rem;
+    border-bottom-right-radius: .7rem;
+    background: var(--navbar-color);
+    padding-left: .2rem;
+    padding-right: .2rem;
 }
 
 .funZone button {
     margin: 0;
     padding: 0;
-    padding-left: .1rem;
-    padding-right: .1rem;
+}
+
+.editContainer .funZone {
+    flex-direction: row;
+    height: fit-content;
+    width: fit-content;
+    bottom: 0;
+    left: unset;
+    right: 0;
+    top: unset;
+    border-radius: .7rem;
+    padding: .8rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    margin: .5rem;
+    gap: 1rem;
+}
+
+.editContainer .funZone .button {
+    font-size: 1.5rem;
+    transition-duration: .2s;
+}
+
+.editContainer .funZone .button:hover {
+    scale: 1.05;
 }
 
 .funZone svg {
@@ -243,6 +296,12 @@ body {
     justify-content: unset;
     align-items: unset;
     height: unset;
+    transition-duration: .3s;
+}
+
+.widget.false {
+    opacity: .5;
+    filter: blur(1px);
 }
 
 .widget .containerTitle {
@@ -321,13 +380,28 @@ body {
         justify-content: center;
         align-items: center;
         width: 100%;
+    }
+    .container input,
+    .modal input {
+        width: 92%;
+    }
+    .container select,
+    .modal select {
+        width: 100%;
+    }
+    .editContainer .funZone {
+        position: fixed;
+        bottom: 4.6rem;
+        left: 0;
+        height: 3.5rem;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .funZone {
         padding-left: .5rem;
         padding-right: .5rem;
     }
-    .container input {
-        width: 92%;
-    }
-    .container select {
-        width: 100%;
+    .funZone .button {
+        font-size: 1.5rem;
     }
 }

@@ -6,23 +6,23 @@ import Load from '../Tools/Load'
 import Container from '../Tools/Container'
 import Widget from '../Tools/Widget'
 import { Error } from '../Tools/Notif'
+import AXIOS from "../Tools/Client.jsx"
+import GenerateKey from '../Tools/Key'
 
 import { useState, useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
-import AXIOS from "../Tools/Client.jsx"
-import { Modal } from '../Tools/Modal'
+import SwitchTheme from '../Tools/SwitchTheme'
 
 function Home() {
-    const [element, setElement] = useState(<Load />)
+    SwitchTheme();
 
+    const [element, setElement] = useState(<Load />)
     useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
         const token = "Bearer " + localStorage.getItem("token");
-    
+
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(res => {
-                var widgets = res.data.widgets.map((w) => { return <Widget w={w} /> })
+                var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
                 if (res.data.background !== null) {
                     setElement(<>
                         <Container key="front_background" type="biggerContainer">
@@ -32,12 +32,13 @@ function Home() {
                     </>)
                 } else { setElement(widgets) }
             })
-            .catch(err => { Error({"res": err}) });
+            .catch(err => {
+                Error({ "res": err })
+            });
     }, []);
 
     return (
         <div>
-            <Modal id="widgetEdit"/>
             <Navbar currentPage="Home" />
             <div className="content">
                 {element}

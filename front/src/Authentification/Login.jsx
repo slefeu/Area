@@ -1,14 +1,15 @@
 import React from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
 import "../css/colors.css"
 import "../css/auth.css"
 
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
-import { Error } from '../Tools/Notif'
+import Error from "../Tools/Notif"
+import SwitchTheme from "../Tools/SwitchTheme";
 
 function LoginForm() {
 
@@ -33,7 +34,7 @@ function LoginForm() {
                 localStorage.setItem("token", token);
                 window.location.href = "/home";
             })
-            .catch(error => { Error({"res": error}) });
+            .catch(error => { Error({ "res": error }) });
     }
 
     return (
@@ -41,7 +42,7 @@ function LoginForm() {
             <form className="form">
                 <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
                 <input className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
-                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? {display: 'none'} : {display: 'flex'}} required />
+                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? { display: "none" } : { display: "flex" }} required />
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>
         </>
@@ -49,12 +50,13 @@ function LoginForm() {
 }
 
 function Login() {
-    if (localStorage.getItem('token')) {return (<Navigate to="/home" />)}
+    if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
+    SwitchTheme();
 
     return (
         <div className="background">
             <div className="authContainer">
-                <ButtonNavBar active="Login" classPicked="activeButton" />
+                <ButtonNavBar active="Login" classPicked="activeButton" dark={localStorage.getItem("theme") === "theme-dark" ? true : false} />
                 <LoginForm></LoginForm>
                 <div className="subtitle">Or continue with</div>
                 <div>

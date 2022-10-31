@@ -1,13 +1,13 @@
 import '../css/style.css'
 
-function Container({children, title, data, type, style, id, key}) {
+function Container({children, title, data, type, style, id}) {
 
     var dataDiv = data === undefined ? "" : <div className="containerContent">{data}</div>
     var titleDiv = title === undefined ? "" : <div className="containerTitle">{title}</div>
     var childrenDiv = children === undefined ? "" : children
 
     return (
-        <div key={key} id={id} className={`container ${type}`} style={style}>
+        <div id={id} className={`container ${type}`} style={style}>
             {titleDiv}
             {dataDiv}
             {childrenDiv}
