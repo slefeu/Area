@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react"
-import { Navigate } from "react-router-dom"
+import { useState } from "react"
 import { AiOutlineSave } from "react-icons/ai"
 
-import Load from "../Tools/Load"
-import SwitchTheme from "../Tools/SwitchTheme"
 import SettingsNavBar from "./SettingsNavBar"
 import Container from "../Tools/Container"
 import AXIOS from "../Tools/Client"
+import SwitchTheme from "../Tools/SwitchTheme"
 
 function HandleKey() {
 
@@ -31,35 +29,34 @@ function HandleKey() {
 
     return (
         <Container>
-            <div className="pageTitle">Want to add a new service ?</div>
-            <div className="column border padding">
-                <div>Select the service</div>
+            <div className="pageTitle">Add a service</div>
+            <div className="column row-2 border padding">
+                <div>Select</div>
                 <select name="selection" value={picked} onChange={event => handleKeyChange(event.target.value)}>
                     <option>Google</option>
                     <option>Twitter</option>
                 </select>
 
                 <input type="text" id="key_value" placeholder="Enter your API key" />
-                <button onClick={SetKeyValues} className="btnBig cornerBtn"><AiOutlineSave /></button>
             </div>
+            <button onClick={SetKeyValues} className="btnBig cornerBtn"><AiOutlineSave /></button>
         </Container>
     );
 }
 
 function APIPage() {
-    const [element, setElement] = useState(<Load />)
+    const token = "Bearer " + localStorage.getItem("token");
 
-    useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
-        else { setElement(<HandleKey />) }
-    }, []);
-    SwitchTheme()
+    SwitchTheme();
+    AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
+        .then()
+        .catch(err => { Error({ "res": err }) });
 
     return (
         <>
             <SettingsNavBar currentPage="API" />
             <div className="content">
-                {element}
+                <HandleKey />
             </div>
         </>
     );

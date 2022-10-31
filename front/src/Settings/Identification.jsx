@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { Navigate } from 'react-router-dom';
 import { AiOutlineCheck } from "react-icons/ai";
 
 import Container from '../Tools/Container'
@@ -7,6 +6,7 @@ import AXIOS from "../Tools/Client"
 import Load from "../Tools/Load"
 import Error from "../Tools/Notif"
 import SettingsNavBar from "./SettingsNavBar"
+import SwitchTheme from "../Tools/SwitchTheme";
 
 function UserIdentification({ data }) {
 
@@ -27,14 +27,14 @@ function UserIdentification({ data }) {
     return (
         <Container>
             <div className="pageTitle">
-                {data.first_name + "'s Login information"}
+                {data.first_name + "'s Login"}
             </div>
-            <div className="column border">
+            <div className="column row-2 border margin">
                 <div>Email address</div>
                 <input type="text" readOnly="readonly" placeholder={data.email} />
             </div>
-            <div className="column border padding">
-                <div> Want to change your Password ? </div>
+            <div className="column row-2 border padding">
+                <div> Want to change Password ? </div>
                 <input type="password" id="password" placeholder="Your old Password" />
                 <input type="password" id="password_reset" placeholder="Enter new Password" />
                 <input type="password" id="confirm" placeholder="Confirm new Password" />
@@ -45,11 +45,10 @@ function UserIdentification({ data }) {
 }
 
 function Identification() {
+    SwitchTheme();
     const [element, setElement] = useState(<Load />)
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
-
         const token = "Bearer " + localStorage.getItem("token");
 
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })

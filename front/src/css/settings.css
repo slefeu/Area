@@ -1,15 +1,31 @@
 .column {
-    display: flex;
     flex-direction: column;
-    justify-content: left;
-    width: 100%;
-    flex: 1 50%;
-    margin: 1rem;
+}
+
+.container input {
+    color: var(--input-text);
+    background: var(--input-color);
+    border: none;
+    padding: .8rem;
+    margin: .5rem;
+    border-radius: .5rem;
+}
+
+.container .column input {
+    width: unset;
+}
+
+.container .column select {
+    width: unset;
 }
 
 .padding {
     padding-bottom: .5rem;
     padding-top: 1rem;
+}
+
+.margin {
+    margin-bottom: 2rem;
 }
 
 .pageTitle {
@@ -45,17 +61,17 @@
 }
 
 .txt {
-   font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 @media only screen and (max-width: 600px) {
+
     .column {
-        display: flex;
-        flex-direction: column;
-        justify-content: left;
-        align-items: center;
-        width: 100%;
-        padding-left: .5rem;
-        padding-right: .5rem;
+        justify-content: unset;
+        align-items: unset;
+    }
+
+    .pageTitle {
+        margin-bottom: 1rem;
     }
 }
