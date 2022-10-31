@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
   # devise_for :admin
-  resources :users, only: [:index, :show, :destroy]
+  resources :users, only: [:index, :show, :update, :destroy]
 
   # Nasa service
   scope :nasa do
