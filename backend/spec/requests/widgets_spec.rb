@@ -28,7 +28,7 @@ RSpec.describe "/widgets", type: :request do
   }
 
   let(:invalid_attributes) {
-    { name: 23, user_id: "a" }
+    { name: 23, user_id: "a", active: true }
   }
 
   # This should return the minimal set of values that should be in the headers
@@ -95,7 +95,7 @@ RSpec.describe "/widgets", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        { name: "New Name" }
+        { name: "New Name", active: true }
       }
 
       before { sign_in(create(:user)) }

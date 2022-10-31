@@ -1,44 +1,26 @@
-import '../css/colors.css'
-import '../css/style.css'
-
-import Container from '../Tools/Container'
-import { Error } from '../Tools/Notif'
-
-import AXIOS from "../Tools/Client.jsx"
 import { AiOutlineCheck } from 'react-icons/ai'
 import { useState, useEffect } from 'react'
 
-function CreateForm({ json }) {
+import AXIOS from "../Tools/Client.jsx"
+import Load from '../Tools/Load'
 
+function EditContainer({ widget, json }) {
     const [actionsMore, setActionsMore] = useState(<div className="row-2 border"><div>Action Option</div></div>)
     const [reactionsMore, setReactionsMore] = useState(<div className="row-2 border"><div>Reaction Option</div></div>)
 
-    /**
-     * It takes the values of the form and sends them to the server
-     */
     function submit() {
-        const token = "Bearer " + localStorage.getItem("token");
-        const url = localStorage.getItem("url") + "/widgets";
-        var widget = {
-            "widget": {
-                "name": document.getElementById("name").value,
-                "action": {
-                    "name": document.getElementById("actionsList").value,
-                    "options": {}
-                },
-                "reaction": {
-                    "name": document.getElementById("reactionsList").value,
-                    "options": {}
-                },
-                "active": true
-            }
-        }
+        const token = "Bearer " + localStorage.getItem("token")
+        const url = localStorage.getItem("url") + "/widgets/" + widget.id
+
+        widget.name = document.getElementById("name").value
+        widget.action.name = document.getElementById("actionsList").value
+        widget.reaction.name = document.getElementById("reactionsList").value
 
         try {
             var actionOptions = document.getElementById("inputAction")
             for (var i = 1; i < actionOptions.children.length; i++) {
                 if (actionOptions.children[i].value !== "")
-                    widget.widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
+                    widget.action.options[actionOptions.children[i].placeholder] = actionOptions.children[i].value
             }
         } catch (err) {}
 
@@ -46,12 +28,12 @@ function CreateForm({ json }) {
             var reactionOptions = document.getElementById("inputReaction")
             for (var j = 1; j < reactionOptions.children.length; j++) {
                 if (reactionOptions.children[j].value !== "")
-                    widget.widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
+                    widget.reaction.options[reactionOptions.children[j].placeholder] = reactionOptions.children[j].value
             }
         } catch (err) {}
 
-        AXIOS.post(url, widget, { headers: { Authorization: token,} })
-            .then(res => { window.location.href = "/home" })
+        AXIOS.patch(url, {"widget" : widget}, { headers: { Authorization: token,} })
+            .then(res => { window.location.reload() })
             .catch(res => { Error({"res": res}) })
     }
 
@@ -66,7 +48,9 @@ function CreateForm({ json }) {
                     if (Object.keys(elem.options).length === 0) { setActionsMore(<div></div>) }
                     else {
                         setActionsMore(<div id="inputAction" className="row-2 border"><div>Action Option</div>{
-                            Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
+                            Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e} defaultValue={
+                                widget.action.options[e] ? widget.action.options[e] : ""
+                            }></input> })
                         }</div>)
                     }
                     return
@@ -85,7 +69,11 @@ function CreateForm({ json }) {
                     if (Object.keys(elem.options).length === 0) { setReactionsMore(<div></div>) }
                     else {
                         setReactionsMore(<div id="inputReaction" className="row-2 border"><div>Reaction Option</div>{
-                            Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
+                            Object.keys(elem.options).map((e) => {
+                                return <input type={elem.options[e]} placeholder={e} key={e} defaultValue={
+                                    widget.reaction.name === elem.name ? widget.reaction.options[e] : ""
+                                }></input>
+                            })
                         }</div>)
                     }
                     return
@@ -101,20 +89,20 @@ function CreateForm({ json }) {
     }, [])
 
     return (
-        <Container title="Create new Widget">
+        <>
             <div className="row-2 border">
-                <div>General</div>
-                <input type="text" id="name" className="requiered" placeholder="Widget Name" />
+                <div>Edit Widget n°{widget.id}</div>
+                <input type="text" id="name" className="requiered" placeholder="Widget Name" defaultValue={widget.name}/>
             </div>
             <div className="row-2 border">
                 <div>Actions/Reactions</div>
-                <select name="reactionsList" id="actionsList" className="requiered" onChange={moreInputAction}>{
+                <select name="reactionsList" id="actionsList" className="requiered" onChange={moreInputAction} defaultValue={widget.action.name}>{
                     json.server.services.map((elem) => {
                         var act = elem.actions.map((i) => { return (<option value={i.name} key={i.name}>{i.description}</option>) })
                         return (act)
                     })
                 }</select>
-                <select name="actionsList" id="reactionsList" className="requiered" onChange={moreInputReaction}>{
+                <select name="actionsList" id="reactionsList" className="requiered" onChange={moreInputReaction} defaultValue={widget.reaction.name}>{
                     json.server.services.map((elem) => {
                         var reac = elem.reactions.map((i) => { return (<option value={i.name} key={i.name}>{i.description}</option>) })
                         return (reac)
@@ -124,8 +112,19 @@ function CreateForm({ json }) {
             {actionsMore}
             {reactionsMore}
             <button onClick={submit} className="btnBig cornerBtn"><AiOutlineCheck /></button>
-        </Container>
+        </>
     );
 }
 
-export default CreateForm
+export default function Edit({ widget }) {
+    const [elementE, setElementE] = useState(<Load/>)
+
+    useEffect(() => {
+        AXIOS.get(localStorage.getItem('url') + '/about.json')
+            .then(function (res) { setElementE(<EditContainer json={res.data} widget={widget}/>) })
+            .catch(function (err) { Error({"res": err}) });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return ( <>{elementE}</> )
+}

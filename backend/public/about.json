@@ -57,7 +57,8 @@
                 "options": {
                     "receiver": "text",
                     "object": "text",
-                    "message": "text"
+                    "message": "text",
+                    "refresh_token": "text"
                 }
             }]
         }, {

@@ -127,6 +127,11 @@ GEM
       raabro (~> 1.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    gmail (0.7.1)
+      gmail_xoauth (>= 0.3.0)
+      mail (>= 2.2.1)
+    gmail_xoauth (0.4.2)
+      oauth (>= 0.3.6)
     hashie (5.0.0)
     httparty (0.20.0)
       mime-types (~> 3.0)
@@ -163,6 +168,8 @@ GEM
     net-smtp (0.3.2)
       net-protocol
     nio4r (2.5.8)
+    nokogiri (1.13.8-aarch64-linux)
+      racc (~> 1.4)
     nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
     oauth (1.1.0)
@@ -331,6 +338,7 @@ GEM
     zeitwerk (2.6.1)
 
 PLATFORMS
+  aarch64-linux-musl
   x86_64-linux
 
 DEPENDENCIES
@@ -344,6 +352,7 @@ DEPENDENCIES
   factory_bot (~> 6.2.1)
   factory_bot_rails (~> 6.2.0)
   ffaker (= 2.18)
+  gmail (~> 0.7.1)
   httparty (~> 0.20.0)
   omniauth
   omniauth-google-oauth2
@@ -366,4 +375,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.3.23
+   2.3.24
