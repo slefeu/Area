@@ -22,6 +22,9 @@ Rails.application.routes.draw do
   get "current_user", to: "users#show_current_user"
   get "users/reset_token", to: "users#reset_token"
 
+  # oauth2
+  get "user/refresh_token", to: "users#refresh_token"
+
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
   # devise_for :admin

@@ -12,6 +12,11 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  # GET REFRESH_TOKEN
+  def refresh_token
+    render json: refresh_token
+  end
+
   def signout
     sign_out current_user
     render json: { message: "Logged out." }, status: :ok
