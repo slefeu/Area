@@ -13,6 +13,7 @@ export default function SetNotif({ title, body, type }) {
 
 
 export function Error({ title, res, msg }) {
+
     var temp = res?.response?.status
     var type = ""
 

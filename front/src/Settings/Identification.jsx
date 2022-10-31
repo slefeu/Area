@@ -8,19 +8,30 @@ import Error from "../Tools/Notif"
 import SettingsNavBar from "./SettingsNavBar"
 import SwitchTheme from "../Tools/SwitchTheme";
 
-function UserIdentification({ data }) {
+function UserIdentification({ data, token }) {
+    const [reset_token, setElement] = useState("")
+
+    useEffect(() => {
+        AXIOS.get(localStorage.getItem("url") + "/users/reset_token/", { headers: { Authorization: token } })
+            .then(function (res) { setElement(res.data) })
+            .catch(function (err) { Error({ "res": err }) })
+    }, [token]);
+
 
     async function SetLoginValues(evt) {
         evt.preventDefault();
 
         const infos = {
-            "password": document.getElementById("password").value,
-            "password_reset": document.getElementById("password_reset").value,
-            "password_reset_confirm": document.getElementById("confirm").value
+            "user": {
+                "current_password": document.getElementById("password").value,
+                "password": document.getElementById("password_reset").value,
+                "password_confirm": document.getElementById("confirm").value,
+                "reset_password_token": reset_token
+            }
         };
 
-        await AXIOS.patch(localStorage.getItem("url") + "/users/password/edit", infos)      //wrong path
-            .then(res => { Error({ "title": "Success", "msg": "Password changed" }) })
+        await AXIOS.put(localStorage.getItem("url") + "/users/password.json", infos)
+            .then(res => { Error({ "title": "Success", "body": "Password changed" }) })
             .catch(error => { Error({ "res": error }) });
     }
 
@@ -52,7 +63,7 @@ function Identification() {
         const token = "Bearer " + localStorage.getItem("token");
 
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
-            .then(res => { setElement(<UserIdentification data={res.data} />) })
+            .then(res => { setElement(<UserIdentification data={res.data} token={token} />) })
             .catch(error => { Error({ "res": error }) });
     }, []);
 
