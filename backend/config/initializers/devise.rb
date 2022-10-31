@@ -281,6 +281,9 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, ENV["GOOGLE_API_PUBLIC"], ENV["GOOGLE_API_SECRET"]
   OmniAuth.config.allowed_request_methods = [:get]
 
+  # Config to disable flash
+  config.navigational_formats = []
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

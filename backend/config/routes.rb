@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # config/routes.rb
 
-  #root to: "home#index"
+  # root to: "home#index"
 
   # ##cancel for tests
 
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   delete "signout", to: "users#signout"
 
   get "current_user", to: "users#show_current_user"
+  get "users/reset_token", to: "users#reset_token"
 
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
