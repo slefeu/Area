@@ -9,10 +9,30 @@ paths:
       summary: Create a widget
       tags:
       - Widgets
+      security:
+      - bearer: {}
       parameters: []
       responses:
         '201':
           description: widget created
+          content:
+            application/json:
+              examples:
+                example_request:
+                  value:
+                    id: 45
+                    name: New background at 16h
+                    active: true
+                    action:
+                      id: 8
+                      name: at_hour
+                      options:
+                        action_id: 8
+                        hour: '16:00:00'
+                    reaction:
+                      id: 8
+                      name: daily_photo_bg
+                      options: {}
         '422':
           description: invalid request
       requestBody:
@@ -21,40 +41,126 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                  example: New Background at 16h
-                action:
+                widget:
                   type: object
                   properties:
                     name:
                       type: string
-                      example: at_hour
-                    options:
+                      example: New Background at 16h
+                    action:
                       type: object
-                      properties: {}
-                      example:
-                        hour: '16:00:00'
+                      properties:
+                        name:
+                          type: string
+                          example: at_hour
+                        options:
+                          type: object
+                          properties: {}
+                          example:
+                            hour: '16:00:00'
+                      required:
+                      - name
+                      - options
+                    reaction:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: daily_photo_bg
+                        options:
+                          type: object
+                          properties: {}
+                          example: {}
+                      required:
+                      - name
+                      - options
                   required:
                   - name
-                  - options
-                reaction:
+                  - action
+                  - reaction
+  "/widgets/{id}":
+    patch:
+      summary: Update a widget
+      tags:
+      - Widgets
+      security:
+      - bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: widget modified
+          content:
+            application/json:
+              examples:
+                example_request:
+                  value:
+                    id: 45
+                    name: Other name
+                    active: true
+                    action:
+                      id: 8
+                      name: each_day
+                      options:
+                        action_id: 8
+                    reaction:
+                      id: 8
+                      name: daily_photo_bg
+                      options: {}
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                widget:
                   type: object
                   properties:
                     name:
                       type: string
-                      example: daily_photo_bg
-                    options:
+                      example: Other name
+                    active:
+                      type: boolean
+                      example: true
+                    action:
                       type: object
-                      properties: {}
-                      example: {}
+                      properties:
+                        name:
+                          type: string
+                          example: each_day
+                        options:
+                          type: object
+                          properties: {}
+                          example: {}
+                      required:
+                      - name
+                      - active
+                      - options
                   required:
-                  - name
-                  - options
-              required:
-              - name
-              - action
-              - reaction
+                  - active
+    delete:
+      summary: Destroy widget
+      tags:
+      - Widgets
+      security:
+      - bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: widget deleted
+        '404':
+          description: widget not found
 servers:
 - url: http://{defaultHost}
   variables:
