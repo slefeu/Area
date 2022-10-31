@@ -175,7 +175,6 @@ body {
 }
 
 .container select {
-    /* display: flex; */
     color: var(--input-text);
     background: var(--input-color);
     border: none;
