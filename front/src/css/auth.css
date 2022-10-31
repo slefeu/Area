@@ -12,8 +12,6 @@
     height: 100vh;
     width: 100vw;
     backdrop-filter: blur(10px);
-    /* background-size: 200% 200%; */
-    /* animation: gradient 120s linear infinite; */
 }
 
 @keyframes gradient {
@@ -34,7 +32,7 @@
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--background-color-fade);
     border-radius: 1rem;
     scale: 1.1;
     animation: linear .5s opacity;
@@ -80,7 +78,7 @@
 .socialNetworks {
     border: none;
     border-radius: .5rem;
-    background: white;
+    background: var(--background-color);
     display: block;
     padding: .5rem;
     padding-left: 2rem;
@@ -107,9 +105,9 @@
     margin: .5rem;
     padding-left: .5rem;
     transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
-    border: 2px solid #dee1e2;
-    color: rgb(14, 14, 16);
-    background: #dee1e2;
+    border: 2px solid var(--input-color);
+    color: var(--input-text);
+    background: var(--input-color);
     display: block;
     height: 36px;
     width: 80%;
@@ -119,13 +117,8 @@
     outline: none;
 }
 
-.fieldFormat:disabled {
-    color: rgb(125 125 125);
-    border: none;
-}
-
 .fieldFormat:hover {
-    border-color: #ccc;
+    border-color: var(--border-hover);
 }
 
 .buttonFormat {
@@ -137,7 +130,7 @@
     display: block;
     width: auto;
     padding: .5rem 3rem .5rem 3rem;
-    box-shadow: rgba(45, 45, 189, 0.81) 0px 7px 29px 0px;
+    box-shadow: rgba(45, 45, 189, 0.81) 0px 7px 20px 0px;
     transition-duration: .3s;
 }
 
@@ -151,9 +144,7 @@
         font-size: 1rem;
     }
     body {
-        /* background-size: 100%; */
         animation: none;
-        /* background-size: cover; */
     }
     .authContainer {
         scale: 1;
