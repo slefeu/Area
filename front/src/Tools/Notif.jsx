@@ -1,8 +1,6 @@
 import '../css/notif.css'
 import '../css/colors.css'
 
-import { useNavigate } from 'react-router-dom'
-
 export function SetNotif({ title, body, type }) {
     try { document.getElementById("notif").remove() } catch (e) { }
 
@@ -14,15 +12,8 @@ export function SetNotif({ title, body, type }) {
 }
 
 export function Error({ title, res, msg }) {
-    // const navigate = useNavigate()
     var temp = res?.response?.status
     var type = ""
-
-    if (temp === 401 && localStorage.getItem("token")) {
-        localStorage.removeItem("token")
-        // navigate("/login")
-        return
-    }
 
     if (res?.response?.data?.errors) { res.response.data.errors.forEach((e) => { type += `${e}<br/>` }) }
     else {
@@ -35,7 +26,10 @@ export function Error({ title, res, msg }) {
             })
         } catch (e) {
             switch (temp) {
-                case 401: type = "No access. Please log in again to continue."; break
+                case 401:
+                    type = "No access. Please log in again to continue.";
+                    localStorage.removeItem("token")
+                    break
                 case 404: type = "Server not found. Please restart the application."; break
                 default: type = "An error occured. Please try again later."; break
             }
