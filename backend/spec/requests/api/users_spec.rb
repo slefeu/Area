@@ -7,7 +7,7 @@ RSpec.describe "api/users", type: :request do
   path "/users" do
     get "Get all user" do
       tags "Users as admin"
-      consumes "application/json"
+      produces "application/json"
       security [bearer: {}]
 
       response "200", "ok" do
@@ -46,6 +46,7 @@ RSpec.describe "api/users", type: :request do
                   ]
         run_test!
       end
+
       response "401", "unauthorized" do
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
@@ -63,6 +64,7 @@ RSpec.describe "api/users", type: :request do
   path "/current_user" do
     get "Get current user" do
       tags "Users"
+      produces "application/json"
       security [bearer: {}]
 
       response "200", "ok" do
@@ -70,6 +72,7 @@ RSpec.describe "api/users", type: :request do
                   id: 1,
                   first_name: "Adam",
                   last_name: "Smasher",
+                  email: "adam.smasher@email.com",
                   admin: false,
                   background: "https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg",
                   widgets: [
@@ -103,6 +106,196 @@ RSpec.describe "api/users", type: :request do
                   error: "You need to be logged"
                 }
 
+        run_test!
+      end
+    end
+  end
+
+  path "/users/{id}" do
+    get "Get information user" do
+      tags "Users as admin"
+      produces "application/json"
+      security [bearer: {}]
+      parameter name: :id, in: :path, type: :string
+
+      response "200", "ok" do
+        example "application/json", :example, {
+                  id: 1,
+                  first_name: "Adam",
+                  last_name: "Smasher",
+                  email: "adam.smasher@email.com",
+                  admin: false,
+                  background: "https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg",
+                  widgets: [
+                    {
+                      id: 41,
+                      name: "New background at 16h",
+                      active: false,
+                      action: {
+                        id: 4,
+                        name: "at_hour",
+                        options: {
+                          hour: "16:00:00",
+                          action_id: 4
+                        }
+                      },
+                      reaction: {
+                        id: 3,
+                        name: "daily_photo_bg",
+                        options: {
+                          reaction_id: 3
+                        }
+                      }
+                    }
+                  ]
+                }
+
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                  error: "You need to be logged"
+                }
+
+        example "application/json", :your_not_admin, {
+                  error: "You are not admin."
+                }
+
+        run_test!
+      end
+    end
+
+    patch "Update user information" do
+      tags "Users as admin"
+      consumes "application/json"
+      produces "application/json"
+      security [bearer: {}]
+      parameter name: :id, in: :path, type: :string
+      parameter name: :user, in: :body, schema: {
+            type: :object,
+            properties: {
+              user: {
+                type: :object,
+                properties: {
+                  email: { type: :string, example: "jean.michelle@email.com" }
+                }
+              }
+            }
+        }
+
+      response "200", "ok" do
+        let!(:user) { { user: { email: "jean.michelle@email.com" } } }
+
+        example "application/json", :example, {
+                  id: 1,
+                  first_name: "Adam",
+                  last_name: "Smasher",
+                  email: "jean.michelle@email.com",
+                  admin: false,
+                  background: "https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg",
+                  widgets: [
+                    {
+                      id: 41,
+                      name: "New background at 16h",
+                      active: false,
+                      action: {
+                        id: 4,
+                        name: "at_hour",
+                        options: {
+                          hour: "16:00:00",
+                          action_id: 4
+                        }
+                      },
+                      reaction: {
+                        id: 3,
+                        name: "daily_photo_bg",
+                        options: {
+                          reaction_id: 3
+                        }
+                      }
+                    }
+                  ]
+                }
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                  error: "You need to be logged"
+                }
+
+        example "application/json", :your_not_admin, {
+                  error: "You are not admin."
+                }
+
+        run_test!
+      end
+    end
+
+    delete "Delete user" do
+      tags "Users as admin"
+      produces "application/json"
+      parameter name: :id, in: :path, type: :string
+
+      response "204", "delete user" do
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                    error: "You need to be logged"
+                }
+
+        example "application/json", :your_not_admin, {
+                    error: "You are not admin."
+                }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/users/reset_token" do
+    get "Reset and send new token hashed" do
+      tags "Users"
+      produces "application/json"
+
+      response "200", "ok" do
+        example "application/json", :example, {
+                  token: "897987ee7f0ed983570d19c17aab94a8cde3c4e53c57e3fb7f6366948997155b"
+                }
+
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                  error: "You need to be logged"
+                }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/signout" do
+    delete "Sign out current user" do
+      tags "Connection"
+      produces "application/json"
+
+      response "200", "ok" do
+        example "application/json", :example, {
+                  message: "Logged out"
+                }
+
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                error: "You need to be logged"
+                }
         run_test!
       end
     end

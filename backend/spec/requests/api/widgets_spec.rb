@@ -4,13 +4,11 @@ require "swagger_helper"
 require "rails_helper"
 
 RSpec.describe "api/widgets", type: :request do
-  before { create(:widget_complet, id: 1) }
-  let!(:id) { 1 }
-
   path "/widgets" do
     post "Create a widget" do
       tags "Widgets"
       consumes "application/json"
+      produces "application/json"
       security [bearer: {}]
       parameter name: :widget, in: :body, schema: {
         type: :object,
@@ -103,6 +101,7 @@ RSpec.describe "api/widgets", type: :request do
     patch "Update a widget" do
       tags "Widgets"
       consumes "application/json"
+      produces "application/json"
       security [bearer: {}]
       parameter name: :id, in: :path, type: :string
       parameter name: :widget, in: :body, schema: {
@@ -167,6 +166,7 @@ RSpec.describe "api/widgets", type: :request do
     delete "Destroy widget" do
       tags "Widgets"
       security [bearer: {}]
+      produces "application/json"
       parameter name: :id, in: :path, type: :string
 
       response "204", "widget deleted" do

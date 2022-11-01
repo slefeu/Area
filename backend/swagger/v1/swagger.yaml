@@ -68,6 +68,7 @@ paths:
                     id: 1
                     first_name: Adam
                     last_name: Smasher
+                    email: adam.smasher@email.com
                     admin: false
                     background: https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg
                     widgets:
@@ -85,6 +86,191 @@ paths:
                         name: daily_photo_bg
                         options:
                           reaction_id: 3
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+  "/users/{id}":
+    get:
+      summary: Get information user
+      tags:
+      - Users as admin
+      security:
+      - bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 1
+                    first_name: Adam
+                    last_name: Smasher
+                    email: adam.smasher@email.com
+                    admin: false
+                    background: https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg
+                    widgets:
+                    - id: 41
+                      name: New background at 16h
+                      active: false
+                      action:
+                        id: 4
+                        name: at_hour
+                        options:
+                          hour: '16:00:00'
+                          action_id: 4
+                      reaction:
+                        id: 3
+                        name: daily_photo_bg
+                        options:
+                          reaction_id: 3
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+                your_not_admin:
+                  value:
+                    error: You are not admin.
+    patch:
+      summary: Update user information
+      tags:
+      - Users as admin
+      security:
+      - bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 1
+                    first_name: Adam
+                    last_name: Smasher
+                    email: jean.michelle@email.com
+                    admin: false
+                    background: https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg
+                    widgets:
+                    - id: 41
+                      name: New background at 16h
+                      active: false
+                      action:
+                        id: 4
+                        name: at_hour
+                        options:
+                          hour: '16:00:00'
+                          action_id: 4
+                      reaction:
+                        id: 3
+                        name: daily_photo_bg
+                        options:
+                          reaction_id: 3
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+                your_not_admin:
+                  value:
+                    error: You are not admin.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: jean.michelle@email.com
+    delete:
+      summary: Delete user
+      tags:
+      - Users as admin
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: delete user
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+                your_not_admin:
+                  value:
+                    error: You are not admin.
+  "/users/reset_token":
+    get:
+      summary: Reset and send new token hashed
+      tags:
+      - Users
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    token: 897987ee7f0ed983570d19c17aab94a8cde3c4e53c57e3fb7f6366948997155b
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+  "/signout":
+    delete:
+      summary: Sign out current user
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    message: Logged out
         '401':
           description: unauthorized
           content:
