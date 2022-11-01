@@ -19,8 +19,7 @@
     width: unset;
 }
 
-.padding {
-    padding-bottom: .5rem;
+.padding-top {
     padding-top: 1rem;
 }
 
@@ -38,26 +37,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: center;
-}
-
-.btn {
-    display: flex;
-    background: var(--accent-color);
-    margin: .6rem;
-    align-items: center;
-    height: 3.5rem;
-    width: 3.5rem;
-    border-radius: .7rem;
-    font-size: 1.2rem;
-    color: var(--text-color-invert);
-    box-shadow: 0 .2rem .5rem rgba(24, 45, 77, 0.212);
-    border: none;
-    cursor: pointer;
-    transition-duration: .3s;
-}
-
-.btn:hover {
-    scale: 1.05;
 }
 
 .txt {
