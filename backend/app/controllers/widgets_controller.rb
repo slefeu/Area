@@ -57,20 +57,20 @@ class WidgetsController < ApplicationController
     end
 
     # Update Widget
-    unless @widget.update(widget_params)
+    unless @widget.update(name: widget_params[:name], active: (widget_params[:active] || true))
       render json: @widget.errors, status: :unprocessable_entity and return
     end
 
     # Update Action
     action = @widget.action
-    if action_params && !action.update(klass: action_params[:name])
-      render json: action.errors, status: :un and return
+    if action_params && !action.update(klass: action_params[:name], options: action_params[:options])
+      render json: action.errors, status: :unprocessable_entity and return
     end
 
     # Update Reaction
     reaction = action.reaction
-    if reaction_params && !reaction.update(klass: reaction_params[:name])
-      render json: reaction.errors, status: :un and return
+    if reaction_params && !reaction.update(klass: reaction_params[:name], options: reaction_params[:options])
+      render json: reaction.errors, status: :unprocessable_entity and return
     end
 
     render json: @widget, status: :ok, location: @widget
@@ -89,6 +89,6 @@ class WidgetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def widget_params
-      params.require(:widget).permit(:name, :user_id, action: {}, reaction: {})
+      params.require(:widget).permit(:name, :active, :user_id, action: {}, reaction: {})
     end
 end

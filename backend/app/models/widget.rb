@@ -25,7 +25,7 @@ class Widget < ApplicationRecord
   after_create :capitalize_name
 
   # Validations
-  validates :name, { uniqueness: { case_sensitive: false } }
+  validates :name, { uniqueness: { case_sensitive: false }, length: { minimum: 1 } }
 
   # Associations
   belongs_to :user

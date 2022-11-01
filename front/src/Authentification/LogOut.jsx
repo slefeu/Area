@@ -1,6 +1,8 @@
 import AXIOS from "../Tools/Client.jsx"
-import { Navigate } from 'react-router-dom';
 import Load from '../Tools/Load'
+import { Error } from '../Tools/Notif'
+
+import { Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 
 function LogoutUser() {
@@ -18,13 +20,12 @@ function LogoutUser() {
         AXIOS.delete(url, values)
             .then(res => {
                 localStorage.removeItem("token");
-                console.log("success");
                 setElement(<Navigate to="/login" />)
             })
             .catch((error) => {
-                console.log( {error} )
                 // localStorage.removeItem("token");
-                setElement(<Navigate to="/home" />)
+                // setElement(<Navigate to="/home" />)
+                Error({"res": error})
             });
     }, [])
     

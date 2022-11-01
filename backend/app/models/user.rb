@@ -62,7 +62,6 @@ class User < ApplicationRecord
   end
 
   def destroy_children
-    self.reaction&.destroy
-    self.action&.destroy
+    self.widgets.destroy
   end
 end
