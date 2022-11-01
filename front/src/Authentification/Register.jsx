@@ -6,10 +6,13 @@ import AXIOS from "../Tools/Client.jsx"
 import { Error } from "../Tools/Notif"
 import SwitchTheme from "../Tools/SwitchTheme";
 
-import React from "react";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { FaMoon } from "react-icons/fa"
 
 function Register() {
+    const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "theme-dark" ? true : false);
+
     SwitchTheme();
     if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
 
@@ -32,8 +35,21 @@ function Register() {
             .catch(err => { Error({ "res": err }) })
     }
 
+    const switchTheme = () => {
+        setIsDark(!isDark);
+        SwitchTheme();
+    }
+
     return (
         <div className="background">
+            <button className="themeButton" onClick={switchTheme}>
+                <FaMoon
+                    style={{
+                        fill: isDark ? "white" : "black",
+                    }}
+                ></FaMoon>
+            </button>
+
             <div className="authContainer">
                 <ButtonNavBar active="Register" classPicked="activeButton" dark={localStorage.getItem('theme') === "theme-dark" ? true : false} />                <form className="form">
                     <input className="fieldFormat" id="first_name" type="email" placeholder="First name" required />

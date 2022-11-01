@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
 import { Navigate } from "react-router-dom"
 import { useGoogleLogin } from "@react-oauth/google";
+import { FaMoon } from "react-icons/fa"
 
 import "../css/colors.css"
 import "../css/auth.css"
@@ -53,16 +54,30 @@ function LoginForm() {
 
 function Login() {
 
+    const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "theme-dark" ? true : false);
+
     const googleLogin = useGoogleLogin({
         onSuccess: tokenResponse => console.log(tokenResponse),
         onError: error => console.log(error)
     });
+
+    const switchTheme = () => {
+        setIsDark(!isDark);
+        SwitchTheme();
+    }
 
     if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
     SwitchTheme();
 
     return (
         <div className="background">
+            <button className="themeButton" onClick={switchTheme}>
+                <FaMoon
+                    style={{
+                        fill: isDark ? "white" : "black",
+                    }}
+                ></FaMoon>
+            </button>
             <div className="authContainer">
                 <ButtonNavBar active="Login" classPicked="activeButton" dark={localStorage.getItem("theme") === "theme-dark" ? true : false} />
                 <LoginForm></LoginForm>

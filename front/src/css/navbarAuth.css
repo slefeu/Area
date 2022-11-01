@@ -37,6 +37,9 @@ a {
     border: none;
     color: none;
     background: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
 }
 
 svg {
