@@ -236,6 +236,7 @@ RSpec.describe "api/users", type: :request do
     delete "Delete user" do
       tags "Users as admin"
       produces "application/json"
+      security [bearer: {}]
       parameter name: :id, in: :path, type: :string
 
       response "204", "delete user" do
@@ -259,6 +260,7 @@ RSpec.describe "api/users", type: :request do
   path "/users/reset_token" do
     get "Reset and send new token hashed" do
       tags "Users"
+      security [bearer: {}]
       produces "application/json"
 
       response "200", "ok" do
@@ -282,6 +284,7 @@ RSpec.describe "api/users", type: :request do
   path "/signout" do
     delete "Sign out current user" do
       tags "Connection"
+      security [bearer: {}]
       produces "application/json"
 
       response "200", "ok" do

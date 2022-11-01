@@ -215,6 +215,8 @@ paths:
       summary: Delete user
       tags:
       - Users as admin
+      security:
+      - bearer: {}
       parameters:
       - name: id
         in: path
@@ -240,6 +242,8 @@ paths:
       summary: Reset and send new token hashed
       tags:
       - Users
+      security:
+      - bearer: {}
       responses:
         '200':
           description: ok
@@ -262,6 +266,8 @@ paths:
       summary: Sign out current user
       tags:
       - Connection
+      security:
+      - bearer: {}
       responses:
         '200':
           description: ok
