@@ -63,26 +63,26 @@ function Widget({ w }) {
         const token = "Bearer " + localStorage.getItem("token")
         const url = localStorage.getItem("url") + "/widgets/" + w.id
         
-        w.active = w.active === undefined ? false : !w.active
+        w.active = !w.active
         AXIOS.patch(url, w, { headers: { Authorization: token,} })
             .then(res => { 
                 try {
                     var element = document.getElementById("widget_" + w.id)
-                    element.classList.add(`${!w.active}`)
-                    element.classList.remove(`${w.active}`)
-                    document.getElementById(`enable_${w.id}`).innerHTML = w.active ? "💤" : "✅"
+                    try { element.classList.add(`${w.active}`) } catch (e) {}
+                    try { element.classList.remove(`${!w.active}`) } catch (e) {}
+                    document.getElementById(`enable_${w.id}`).innerHTML = w.active ? "✅" : "💤"
                 } catch (e) {}
                 })
             .catch(res => { Error({"res": res}) })
     }
 
     return (
-        <Container key={w.id} id={`widget_${w.id}`} type="widget">
+        <Container key={w.id} id={`widget_${w.id}`} type={`widget ${w.active}`}>
             {content}
             <div className="funZone">
                 <button className="button" onClick={() => { editThis(w) }}><AiFillEdit /></button>
                 <button className="button" onClick={() => { removeThis(w.id) }}><AiFillDelete /></button>
-                <button className="button" id={`enable_${w.id}`} onClick={() => { activeThis(w) }}>{w.active ? "💤" : "✅"}</button>
+                <button className="button" id={`enable_${w.id}`} onClick={() => { activeThis(w) }}>{w.active ? "✅" : "💤"}</button>
             </div>
         </Container>
     )

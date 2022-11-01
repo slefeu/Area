@@ -4,7 +4,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import Container from '../Tools/Container'
 import AXIOS from "../Tools/Client"
 import Load from "../Tools/Load"
-import Error from "../Tools/Notif"
+import { Error } from "../Tools/Notif"
 import SettingsNavBar from "./SettingsNavBar"
 import SwitchTheme from "../Tools/SwitchTheme";
 
