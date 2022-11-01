@@ -57,7 +57,7 @@ class WidgetsController < ApplicationController
     end
 
     # Update Widget
-    unless @widget.update(name: widget_params[:name], active: widget_params[:active])
+    unless @widget.update(name: widget_params[:name], active: (widget_params[:active] || true))
       render json: @widget.errors, status: :unprocessable_entity and return
     end
 
