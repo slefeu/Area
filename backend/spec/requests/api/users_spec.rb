@@ -164,6 +164,10 @@ RSpec.describe "api/users", type: :request do
 
         run_test!
       end
+
+      response "404", "user not found" do
+        run_test!
+      end
     end
 
     patch "Update user information" do
@@ -179,9 +183,11 @@ RSpec.describe "api/users", type: :request do
                 type: :object,
                 properties: {
                   email: { type: :string, example: "jean.michelle@email.com" }
-                }
+                },
+                required: %w[email]
               }
-            }
+            },
+            required: %w[user]
         }
 
       response "200", "ok" do
@@ -231,6 +237,10 @@ RSpec.describe "api/users", type: :request do
 
         run_test!
       end
+
+      response "404", "user not found" do
+        run_test!
+      end
     end
 
     delete "Delete user" do
@@ -254,6 +264,10 @@ RSpec.describe "api/users", type: :request do
 
         run_test!
       end
+
+      response "404", "user not found" do
+        run_test!
+      end
     end
   end
 
@@ -267,6 +281,51 @@ RSpec.describe "api/users", type: :request do
         example "application/json", :example, {
                   token: "897987ee7f0ed983570d19c17aab94a8cde3c4e53c57e3fb7f6366948997155b"
                 }
+
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                  error: "You need to be logged"
+                }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/users/password.json" do
+    put "Update user password" do
+      tags "Users"
+      security [bearer: {}]
+      produces "application/json"
+      consumes "application/json"
+      parameter name: :user, in: :body, schema: {
+                  type: :object,
+                  properties: {
+                    user: {
+                      type: :object,
+                      properties: {
+                        current_password: { type: :string, example: "123456" },
+                        password: { type: :string, example: "azerty" },
+                        password_confirmation: { type: :string, example: "azerty" },
+                        reset_password_token: { type: :string, example: "rifdlghqgiufogoaeze43hyu8" }
+                      },
+                      required: %w[current_password password password_confirmation reset_password_token]
+                    }
+                  },
+                required: %w[user]
+                }
+
+      response "204", "password changed" do
+        let!(:user) {
+          {
+            user: {
+              current_password: "123456", password: "azerty", current_password: "azertyj",
+              reset_token: "rifdlghqgiufogoaeze43hyu8" }
+          }
+        }
 
         run_test!
       end
@@ -299,6 +358,7 @@ RSpec.describe "api/users", type: :request do
         example "application/json", :your_not_logged, {
                 error: "You need to be logged"
                 }
+
         run_test!
       end
     end

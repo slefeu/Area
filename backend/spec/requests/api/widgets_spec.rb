@@ -32,7 +32,8 @@ RSpec.describe "api/widgets", type: :request do
             },
             required: %w[name action reaction]
           }
-        }
+        },
+        required: %w[widget]
       }
 
       response "201", "widget created" do
@@ -90,8 +91,16 @@ RSpec.describe "api/widgets", type: :request do
         run_test!
       end
 
-      response "422", "invalid request" do
+      response "422", "Unprocessabel entity" do
         let(:widget) { { widget: { name: nil } } }
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                error: "You need to be logged"
+                }
+
         run_test!
       end
     end
@@ -119,7 +128,8 @@ RSpec.describe "api/widgets", type: :request do
           },
           required: %w[active]
         }
-      }
+      },
+      required: %w[widget]
     }
 
       response "200", "widget modified" do
@@ -151,7 +161,7 @@ RSpec.describe "api/widgets", type: :request do
         run_test!
       end
 
-      response "422", "invalid request" do
+      response "422", "Unprocessable entity" do
         let(:widget) {
           {
             widget: {
@@ -161,9 +171,20 @@ RSpec.describe "api/widgets", type: :request do
         }
         run_test!
       end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                error: "You need to be logged"
+                }
+        run_test!
+      end
+
+      response "404", "widget not found" do
+        run_test!
+      end
     end
 
-    delete "Destroy widget" do
+    delete "Destroy a widget" do
       tags "Widgets"
       security [bearer: {}]
       produces "application/json"
@@ -174,7 +195,14 @@ RSpec.describe "api/widgets", type: :request do
       end
 
       response "404", "widget not found" do
-        let!(:id) { 340 }
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        example "application/json", :your_not_logged, {
+                error: "You need to be logged"
+                }
+
         run_test!
       end
     end

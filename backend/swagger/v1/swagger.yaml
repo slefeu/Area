@@ -5,6 +5,61 @@ info:
   version: v1
 paths:
   "/users":
+    post:
+      summary: Register new user
+      tags:
+      - Connection
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '202':
+          description: User created
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 4
+                    first_name: Adam
+                    last_name: Smasher
+                    email: adam.smash@email.com
+                    admin: false
+                    background:
+                    widgets: []
+        '422':
+          description: Unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      example: Adam
+                    last_name:
+                      type: string
+                      example: Smasher
+                    email:
+                      type: string
+                      example: adam.smash@email.com
+                    password:
+                      type: string
+                      example: '12345'
+                    password_confirmation:
+                      type: string
+                      example: '12345'
+                  required:
+                  - first_name
+                  - last_name
+                  - email
+                  - password
+              required:
+              - user
     get:
       summary: Get all user
       tags:
@@ -50,6 +105,51 @@ paths:
                 your_not_admin:
                   value:
                     error: You are not admin.
+  "/users/sign_in.json":
+    post:
+      summary: Sign in user
+      tags:
+      - Connection
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    message: Logged.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    error: Invalid Email or password.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properites:
+                    email:
+                      type: string
+                      example: adam.smash@email.com
+                    password:
+                      type: string
+                      example: '123456'
+                  required:
+                  - email
+                  - password
+              required:
+              - user
   "/current_user":
     get:
       summary: Get current user
@@ -147,6 +247,8 @@ paths:
                 your_not_admin:
                   value:
                     error: You are not admin.
+        '404':
+          description: user not found
     patch:
       summary: Update user information
       tags:
@@ -199,6 +301,8 @@ paths:
                 your_not_admin:
                   value:
                     error: You are not admin.
+        '404':
+          description: user not found
       requestBody:
         content:
           application/json:
@@ -211,6 +315,10 @@ paths:
                     email:
                       type: string
                       example: jean.michelle@email.com
+                  required:
+                  - email
+              required:
+              - user
     delete:
       summary: Delete user
       tags:
@@ -237,6 +345,8 @@ paths:
                 your_not_admin:
                   value:
                     error: You are not admin.
+        '404':
+          description: user not found
   "/users/reset_token":
     get:
       summary: Reset and send new token hashed
@@ -261,6 +371,53 @@ paths:
                 your_not_logged:
                   value:
                     error: You need to be logged
+  "/users/password.json":
+    put:
+      summary: Update user password
+      tags:
+      - Users
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '204':
+          description: password changed
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    current_password:
+                      type: string
+                      example: '123456'
+                    password:
+                      type: string
+                      example: azerty
+                    password_confirmation:
+                      type: string
+                      example: azerty
+                    reset_password_token:
+                      type: string
+                      example: rifdlghqgiufogoaeze43hyu8
+                  required:
+                  - current_password
+                  - password
+                  - password_confirmation
+                  - reset_password_token
+              required:
+              - user
   "/signout":
     delete:
       summary: Sign out current user
@@ -315,7 +472,15 @@ paths:
                       name: daily_photo_bg
                       options: {}
         '422':
-          description: invalid request
+          description: Unprocessabel entity
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
       requestBody:
         content:
           application/json:
@@ -359,6 +524,8 @@ paths:
                   - name
                   - action
                   - reaction
+              required:
+              - widget
   "/widgets/{id}":
     patch:
       summary: Update a widget
@@ -393,7 +560,17 @@ paths:
                       name: daily_photo_bg
                       options: {}
         '422':
-          description: invalid request
+          description: Unprocessable entity
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+        '404':
+          description: widget not found
       requestBody:
         content:
           application/json:
@@ -425,8 +602,10 @@ paths:
                       - options
                   required:
                   - active
+              required:
+              - widget
     delete:
-      summary: Destroy widget
+      summary: Destroy a widget
       tags:
       - Widgets
       security:
@@ -442,6 +621,14 @@ paths:
           description: widget deleted
         '404':
           description: widget not found
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
 servers:
 - url: http://{defaultHost}
   variables:
