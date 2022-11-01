@@ -3,7 +3,7 @@ import { useState } from "react"
 import Container from '../Tools/Container'
 import AXIOS from "../Tools/Client"
 import Load from "../Tools/Load"
-import Error from "../Tools/Notif"
+import { Error } from "../Tools/Notif"
 import SettingsNavBar from "./SettingsNavBar"
 import SwitchTheme from "../Tools/SwitchTheme"
 
