@@ -3,18 +3,13 @@
 class UsersController < ApplicationController
   before_action :user_logged?, only: %i[ show_current_user reset_token ]
   before_action :set_user, only: %i[ show update destroy ]
-  before_action :is_admin?, only: [:destroy]
+  before_action :is_admin?, only: %i[ index show update destroy ]
 
   # GET /users
   def index
     @users = User.all
 
     render json: @users
-  end
-
-  def signout
-    sign_out current_user
-    render json: { message: "Logged out." }, status: :ok
   end
 
   # GET /users/1
@@ -28,6 +23,14 @@ class UsersController < ApplicationController
     render json: @user, include: "*.*.*"
   end
 
+  # PATCH /users/1
+  def update
+    if @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
   # DELETE /users/1
   def destroy
     @user.destroy
@@ -42,6 +45,12 @@ class UsersController < ApplicationController
     user.save
 
     render json: hashed
+  end
+
+  # DELETE /signout
+  def signout
+    sign_out current_user
+    render json: { message: "Logged out." }, status: :ok
   end
 
   private

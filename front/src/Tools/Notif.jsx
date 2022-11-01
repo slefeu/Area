@@ -1,7 +1,7 @@
 import '../css/notif.css'
 import '../css/colors.css'
 
-export default function SetNotif({ title, body, type }) {
+export function SetNotif({ title, body, type }) {
     try { document.getElementById("notif").remove() } catch (e) { }
 
     var notif = document.createElement("div")
@@ -13,14 +13,13 @@ export default function SetNotif({ title, body, type }) {
 
 
 export function Error({ title, res, msg }) {
-
     var temp = res?.response?.status
     var type = ""
 
-    if (temp === 401) {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-        return;
+    if (temp === 401 && localStorage.getItem("token")) {
+        localStorage.removeItem("token")
+        window.location.href = "/login"
+        return
     }
 
     try {
