@@ -1,16 +1,17 @@
 import React from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom"
+import { useGoogleLogin } from "@react-oauth/google";
 
 import "../css/colors.css"
 import "../css/auth.css"
 
-import ButtonNavBar from "./NavBarAuth.jsx"
-import AXIOS from "../Tools/Client.jsx"
+import ButtonNavBar from "./NavBarAuth"
+import AXIOS from "../Tools/Client"
 import { Error } from "../Tools/Notif"
-import SwitchTheme from "../Tools/SwitchTheme";
-import PasswordInput from "../Tools/Password";
+import SwitchTheme from "../Tools/SwitchTheme"
+import PasswordInput from "../Tools/Password"
 
 function LoginForm() {
 
@@ -51,6 +52,12 @@ function LoginForm() {
 }
 
 function Login() {
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: tokenResponse => console.log(tokenResponse),
+        onError: error => console.log(error)
+    });
+
     if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
     SwitchTheme();
 
@@ -61,7 +68,7 @@ function Login() {
                 <LoginForm></LoginForm>
                 <div className="subtitle">Or continue with</div>
                 <div>
-                    <button className="socialNetworks">
+                    <button className="socialNetworks" onClick={googleLogin}>
                         <GoogleLogo />
                     </button>
                     <button className="socialNetworks">

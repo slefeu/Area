@@ -10,10 +10,11 @@ import UserProfil from "./Settings/UserProfil"
 import Appearance from "./Settings/Appearance"
 import Identification from "./Settings/Identification"
 import APIPage from "./Settings/KeyManagement"
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
     return (
-        <>
+        <GoogleOAuthProvider clientId={"786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com"}>
             <HashRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />
@@ -30,7 +31,7 @@ function App() {
                     <Route path='/keys' element={<APIPage />} />
                 </Routes>
             </HashRouter>
-        </>
+        </GoogleOAuthProvider>
     );
 }
 
