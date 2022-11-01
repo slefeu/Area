@@ -26,6 +26,9 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+
+require "httparty"
+
 class User < ApplicationRecord
   # Callbacks
   before_destroy :destroy_children
@@ -63,7 +66,36 @@ class User < ApplicationRecord
     end
   end
 
+  def self.from_oauth(auth)
+    where(provider: auth.provider).find_or_create_by(p_uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token
+      user.first_name = auth.info.first_name # assuming the user model has a username
+      user.last_name = auth.info.last_name # assuming the user model has a username
+      user.provider = auth.name
+      user.p_uid = auth.uid
+      # user.image = auth.info.image # assuming the user model has an image
+    end
+  end
+
+  def self.request_token_from_google(token)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", self.to_params(token))
+    puts "*"*100
+    puts result
+    puts to_params(token)
+  end
+
   def destroy_children
     self.widgets.destroy
   end
+
+  private
+
+  def self.to_params(token)
+    { 'refresh_token' => token,
+      'client_id'     => ENV['GOOGLE_CLIENT_ID'],
+      'client_secret' => ENV['GOOGLE_CLIENT_SECRET'],
+      'grant_type'    => 'refresh_token'}
+  end
+
 end

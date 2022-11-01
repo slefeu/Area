@@ -12,11 +12,6 @@ class UsersController < ApplicationController
     render json: @users
   end
 
-  # GET REFRESH_TOKEN
-  def refresh_token
-    render json: refresh_token
-  end
-
   def signout
     sign_out current_user
     render json: { message: "Logged out." }, status: :ok
@@ -49,21 +44,32 @@ class UsersController < ApplicationController
     render json: hashed
   end
 
+  # POST /users/refresh_token
+  def refresh_token
+    puts token_params
+    User.send("request_token_from_#{token_params[:name]}", token_params[:token])
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    def is_admin?
-      puts current_user.inspect
-      unless current_user.admin
-        render json: { message: "You are not admin." }, status: :unauthorized
-      end
-    end
+  def token_params
+    params.require(:refresh_token).permit(:name, :token)
+  end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :user_type, :password)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def is_admin?
+    puts current_user.inspect
+    unless current_user.admin
+      render json: { message: "You are not admin." }, status: :unauthorized
     end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :user_type, :password)
+  end
 end

@@ -76,6 +76,8 @@ services:
       - TWITTER_API_SECRET=APP_SECRyEvZGxqYCFhqRVQtlxWnusyojL0tVsI2VDNQY3dpTpd0y5ijFJET
       - GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
       - GOOGLE_API_SECRET=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
+      - GOOGLE_CLIENT_ID=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
     volumes:
       - ./backend/:/rails-app
       - bundle:/bundle

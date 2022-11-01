@@ -1,6 +1,6 @@
 FROM ruby:3.0.2-alpine
 
-RUN apk update && apk add bash build-base nodejs postgresql-dev tzdata
+RUN apk update && apk add bash build-base nodejs postgresql-dev tzdata libcurl
 
 RUN mkdir /rails-app
 WORKDIR /rails-app
