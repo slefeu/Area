@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe EachHourActionCommand do
+RSpec.describe EachHourActionCommandHandler do
   describe "#each_hour" do
     let(:action) { create(:action) }
     mocked_response = HTTParty.get("https://api.timezonedb.com/v2.1/get-time-zone?key=MLW9WKV7JEUS&format=json&by=position&lat=44.8404&lng=-0.5805")
+
     context "when the last hour is one hour ago" do
-      let(:options)  { { "action_id" => action.id, "last_hour" => (Date.hour-1).to_s } }
+      let(:options)  { { "action_id" => action.id, "last_hour" => (Time.now-1.hour).to_s } }
       it "returns true" do
         command = EachHourActionCommand.new(options)
         handler = EachHourActionCommandHandler.new
@@ -14,7 +15,7 @@ RSpec.describe EachHourActionCommand do
     end
 
     context "when the last hour is now" do
-      let(:options)  { { "action_id" => action.id, "last_hour" => (Date.hour).to_s } }
+      let(:options)  { { "action_id" => action.id, "last_hour" => Time.now.to_s } }
       it "returns false" do
         command = EachHourActionCommand.new(options)
         handler = EachHourActionCommandHandler.new
@@ -23,7 +24,7 @@ RSpec.describe EachHourActionCommand do
     end
 
     context "when the last hour is in one hour" do
-      let(:options)  { { "action_id" => action.id, "last_hour" => (Date.hour+1).to_s } }
+      let(:options)  { { "action_id" => action.id, "last_hour" => (Time.now+1.hour).to_s } }
       it "returns false" do
         command = EachHourActionCommand.new(options)
         handler = EachHourActionCommandHandler.new

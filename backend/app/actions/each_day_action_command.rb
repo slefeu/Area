@@ -3,7 +3,7 @@
 class EachDayActionCommand
   def initialize(options)
     @action_id = options["action_id"]
-    @last_day = options["last_day"] || (Date.today-1).to_s
+    @last_day = options["last_day"] || Date.yesterday.to_s
   end
 
   def to_h

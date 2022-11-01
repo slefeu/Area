@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe EachMonthActionCommand do
+RSpec.describe EachMonthActionCommandHandler do
   describe "#each_month" do
     let(:action) { create(:action) }
     mocked_response = HTTParty.get("https://api.timezonedb.com/v2.1/get-time-zone?key=MLW9WKV7JEUS&format=json&by=position&lat=44.8404&lng=-0.5805")
+
     context "when the last month is one month ago" do
-      let(:options)  { { "action_id" => action.id, "last_month" => (Date.today-30).to_s } }
+      let(:options)  { { "action_id" => action.id, "last_month" => Date.today.prev_month.to_s } }
       it "returns true" do
         command = EachMonthActionCommand.new(options)
         handler = EachMonthActionCommandHandler.new
@@ -14,7 +15,7 @@ RSpec.describe EachMonthActionCommand do
     end
 
     context "when the last month is today" do
-      let(:options)  { { "action_id" => action.id, "last_month" => (Date.today).to_s } }
+      let(:options)  { { "action_id" => action.id, "last_month" => Date.today.to_s } }
       it "returns false" do
         command = EachMonthActionCommand.new(options)
         handler = EachMonthActionCommandHandler.new
@@ -23,7 +24,7 @@ RSpec.describe EachMonthActionCommand do
     end
 
     context "when the last month is in 30 days" do
-      let(:options)  { { "action_id" => action.id, "last_month" => (Date.today+30).to_s } }
+      let(:options)  { { "action_id" => action.id, "last_month" => Date.today.next_month.to_s } }
       it "returns false" do
         command = EachMonthActionCommand.new(options)
         handler = EachMonthActionCommandHandler.new
