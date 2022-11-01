@@ -32,7 +32,7 @@ function UserIdentification({ data, token }) {
         console.log(url);
         await AXIOS.patch(url, user, { headers: { Authorization: token } })
             .then(res => { SetNotif({ "title": "Success", "body": "Email address changed" }) })
-            .catch(res => { Error({"res": res}) })
+            .catch(res => { Error({ "res": res }) })
     }
 
     async function SetPasswordValue(evt) {
@@ -58,22 +58,21 @@ function UserIdentification({ data, token }) {
                 {data.first_name + "'s Login"}
             </div>
 
-            <div className="column row-2 border padding">
-                <div>Want to change Email ?</div>
+            <div className="column row-2 border padding-top">
+                <div className="margin-top">Want to change Email ?</div>
                 <input type="text" id="new_email" placeholder="Enter a new email address" />
                 <PasswordInput id="current_password" placeholder="Your current password" />
             </div>
+            <button onClick={SetEmailValue} className="btnBig margin"><AiOutlineCheck /></button>
 
-            <button onClick={SetEmailValue} className="btnBig cornerBtn"><AiOutlineCheck /></button>
-
-            <div className="column row-2 border padding">
-                <div> Want to change Password ? </div>
+            <div className="column row-2 border padding-top">
+                <div className="margin-top"> Want to change Password ? </div>
                 <PasswordInput id="password" placeholder="Your old Password"> </PasswordInput>
                 <PasswordInput id="password_reset" placeholder="Enter new Password"></PasswordInput>
                 <PasswordInput id="confirm" placeholder="Confirm new Password"></PasswordInput>
             </div>
 
-            <button onClick={SetPasswordValue} className="btnBig cornerBtn"><AiOutlineCheck /></button>
+            <button onClick={SetPasswordValue} className="btnBig"><AiOutlineCheck /></button>
 
         </Container>
     );
