@@ -4,7 +4,6 @@ require "swagger_helper"
 require "rails_helper"
 
 RSpec.describe "api/widgets", type: :request do
-  before { login_as create(:user) }
   before { create(:widget_complet, id: 1) }
   let!(:id) { 1 }
 

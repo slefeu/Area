@@ -24,9 +24,13 @@
 #
 FactoryBot.define do
   factory :user do
-    first_name { "Jean Jean" }
-    last_name { "Michelle" }
+    first_name { FFaker::NameFR.first_name }
+    last_name { FFaker::NameFR.last_name }
     email { FFaker::Internet.unique.email }
-    password { "12345" }
+    password { "123456" }
+
+    factory :user_admin do
+      admin { true }
+    end
   end
 end

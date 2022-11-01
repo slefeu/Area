@@ -4,6 +4,95 @@ info:
   title: API V1
   version: v1
 paths:
+  "/users":
+    get:
+      summary: Get all user
+      tags:
+      - Users as admin
+      security:
+      - bearer: {}
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example_two_user:
+                  value:
+                  - id: 3
+                    first_name: Alain
+                    last_name: Provist
+                    email: al.pro@email.com
+                    admin: false
+                    background:
+                    widgets: []
+                  - id: 4
+                    first_name: Jean
+                    last_name: Michelle
+                    email: jean.michelle@email.com
+                    admin: false
+                    background:
+                    widgets:
+                    - id: 1
+                      name: Widget background
+                      active: true
+                    - id: 2
+                      name: Widget twitter
+                      active: true
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+                your_not_admin:
+                  value:
+                    error: You are not admin.
+  "/current_user":
+    get:
+      summary: Get current user
+      tags:
+      - Users
+      security:
+      - bearer: {}
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 1
+                    first_name: Adam
+                    last_name: Smasher
+                    admin: false
+                    background: https://apod.nasa.gov/apod/image/2210/LDN43_SelbyHanson_960.jpg
+                    widgets:
+                    - id: 41
+                      name: New background at 16h
+                      active: false
+                      action:
+                        id: 4
+                        name: at_hour
+                        options:
+                          hour: '16:00:00'
+                          action_id: 4
+                      reaction:
+                        id: 3
+                        name: daily_photo_bg
+                        options:
+                          reaction_id: 3
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
   "/widgets":
     post:
       summary: Create a widget
