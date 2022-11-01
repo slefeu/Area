@@ -8,8 +8,9 @@ import "../css/auth.css"
 
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
-import Error from "../Tools/Notif"
+import { Error } from "../Tools/Notif"
 import SwitchTheme from "../Tools/SwitchTheme";
+import PasswordInput from "../Tools/Password";
 
 function LoginForm() {
 
@@ -41,7 +42,7 @@ function LoginForm() {
         <>
             <form className="form">
                 <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
-                <input className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
+                <PasswordInput className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
                 <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? { display: "none" } : { display: "flex" }} required />
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>
