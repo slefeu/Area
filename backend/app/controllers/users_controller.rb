@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :user_logged?, only: %i[ show_current_user reset_token ]
+  before_action :user_logged?, only: %i[ index show show_current_user update destroy reset_token signout ]
   before_action :set_user, only: %i[ show update destroy ]
   before_action :is_admin?, only: %i[ index show update destroy ]
 
@@ -38,13 +38,13 @@ class UsersController < ApplicationController
 
   # GET /users/reset_token
   def reset_token
-    raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
+    _raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
     user = current_user
     user.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
     user.reset_password_sent_at = Time.now
     user.save
 
-    render json: hashed
+    render json: { token: hashed.to_s }
   end
 
   # DELETE /signout
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     def is_admin?
       puts current_user.inspect
       unless current_user.admin
-        render json: { message: "You are not admin." }, status: :unauthorized
+        render json: { error: "You are not admin." }, status: :unauthorized
       end
     end
 
