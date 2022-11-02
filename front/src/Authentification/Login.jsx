@@ -1,7 +1,7 @@
 import React from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom"
 
 import "../css/colors.css"
 import "../css/auth.css"
@@ -13,6 +13,7 @@ import SwitchTheme from "../Tools/SwitchTheme";
 import PasswordInput from "../Tools/Password";
 
 function LoginForm() {
+    const navigate = useNavigate()
 
     async function SetLoginValues(evt) {
         evt.preventDefault();
@@ -33,7 +34,7 @@ function LoginForm() {
             .then(response => {
                 const token = response.headers["authorization"].replace("Bearer ", "");
                 localStorage.setItem("token", token);
-                window.location.href = "/home";
+                navigate('/home')
             })
             .catch(error => { Error({ "res": error }) });
     }

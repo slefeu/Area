@@ -4,13 +4,13 @@ import "../css/auth.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
 import { Error } from "../Tools/Notif"
-import SwitchTheme from "../Tools/SwitchTheme";
 
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Register() {
-    SwitchTheme();
+    const navigate = useNavigate()
+
     if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
 
     function SetRegisterValues() {
@@ -28,7 +28,7 @@ function Register() {
             localStorage.setItem("url", document.getElementById("server").value);
 
         AXIOS.post(localStorage.getItem("url") + "/users", user)
-            .then(res => { window.location.href = "/login"; })
+            .then(res => { navigate("/login") })
             .catch(err => { Error({ "res": err }) })
     }
 
