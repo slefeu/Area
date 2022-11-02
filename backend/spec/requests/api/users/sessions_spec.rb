@@ -28,7 +28,7 @@ RSpec.describe "api/users/sessions", type: :request do
                   required: %w[user]
                 }
 
-      response "202", "User created" do
+      response "201", "User created" do
         let!(:user) {
           {
             user: {
@@ -82,6 +82,7 @@ RSpec.describe "api/users/sessions", type: :request do
                   required: %w[user]
                 }
       response "200", "ok" do
+        before { sign_in(create(:user)) }
         let!(:user) { { user: { email: "adam.smash@email.com", password: "123456" } } }
         example "application/json", :example, {
                   message: "Logged."

@@ -39,10 +39,7 @@ class UsersController < ApplicationController
   # GET /users/reset_token
   def reset_token
     _raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
-    user = current_user
-    user.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
-    user.reset_password_sent_at = Time.now
-    user.save
+    current_user.reset_token(hashed)
 
     render json: { token: hashed.to_s }
   end
@@ -57,10 +54,11 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { error: "User not found" }, status: :not_found
     end
 
     def is_admin?
-      puts current_user.inspect
       unless current_user.admin
         render json: { error: "You are not admin." }, status: :unauthorized
       end
