@@ -68,6 +68,8 @@ RSpec.describe "api/users", type: :request do
       security [bearer: {}]
 
       response "200", "ok" do
+        before { login_as create(:user_admin) }
+
         example "application/json", :example, {
                   id: 1,
                   first_name: "Adam",
@@ -119,6 +121,11 @@ RSpec.describe "api/users", type: :request do
       parameter name: :id, in: :path, type: :string
 
       response "200", "ok" do
+        before { sign_in(create(:user_admin)) }
+        before { create(:user, id: 1) }
+        let(:id) { 1 }
+
+
         example "application/json", :example, {
                   id: 1,
                   first_name: "Adam",
@@ -154,6 +161,8 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "401", "unauthorized" do
+        let(:id) { 1 }
+
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
                 }
@@ -166,6 +175,9 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "404", "user not found" do
+        before { sign_in(create(:user_admin)) }
+        let(:id) { 34 }
+
         run_test!
       end
     end
@@ -182,16 +194,22 @@ RSpec.describe "api/users", type: :request do
               user: {
                 type: :object,
                 properties: {
-                  email: { type: :string, example: "jean.michelle@email.com" }
-                },
-                required: %w[email]
+                  first_name: { type: :string, example: "Jean-Jean" },
+                  last_name: { type: :string, example: "Sernine" },
+                  email: { type: :string, example: "jean.michelle@email.com" },
+                  password: { type: :string, example: "azerty" },
+                  admin: { type: :boolean, example: true }
+                }
               }
             },
             required: %w[user]
         }
 
       response "200", "ok" do
+        before { sign_in(create(:user_admin)) }
+        before { create(:user, id: 1) }
         let!(:user) { { user: { email: "jean.michelle@email.com" } } }
+        let(:id) { 1 }
 
         example "application/json", :example, {
                   id: 1,
@@ -227,6 +245,9 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "401", "unauthorized" do
+        let(:id) { 1 }
+        let!(:user) { }
+
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
                 }
@@ -239,6 +260,10 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "404", "user not found" do
+        before { sign_in(create(:user_admin)) }
+        let(:id) { 34 }
+        let!(:user) { }
+
         run_test!
       end
     end
@@ -250,10 +275,16 @@ RSpec.describe "api/users", type: :request do
       parameter name: :id, in: :path, type: :string
 
       response "204", "delete user" do
+        before { sign_in(create(:user_admin)) }
+        before { create(:user, id: 1) }
+        let(:id) { 1 }
+
         run_test!
       end
 
       response "401", "unauthorized" do
+        let(:id) { 1 }
+
         example "application/json", :your_not_logged, {
                     error: "You need to be logged"
                 }
@@ -266,6 +297,9 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "404", "user not found" do
+        before { sign_in(create(:user_admin)) }
+        let(:id) { 34 }
+
         run_test!
       end
     end
@@ -278,6 +312,8 @@ RSpec.describe "api/users", type: :request do
       produces "application/json"
 
       response "200", "ok" do
+        before { sign_in(create(:user_admin)) }
+        let(:id) { 1 }
         example "application/json", :example, {
                   token: "897987ee7f0ed983570d19c17aab94a8cde3c4e53c57e3fb7f6366948997155b"
                 }
@@ -286,6 +322,7 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "401", "unauthorized" do
+        let(:id) { 1 }
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
                 }
@@ -296,6 +333,8 @@ RSpec.describe "api/users", type: :request do
   end
 
   path "/users/password.json" do
+    let(:hashed) { Devise.token_generator.generate(User, :reset_password_token)[1] }
+
     put "Update user password" do
       tags "Users"
       security [bearer: {}]
@@ -319,20 +358,90 @@ RSpec.describe "api/users", type: :request do
                 }
 
       response "204", "password changed" do
+        before { sign_in(create(:user)) }
+        before { User.last.reset_token(hashed) }
         let!(:user) {
           {
             user: {
               current_password: "123456", password: "azerty", current_password: "azertyj",
-              reset_token: "rifdlghqgiufogoaeze43hyu8" }
+              reset_password_token: hashed }
           }
         }
 
         run_test!
       end
 
-      response "401", "unauthorized" do
+      response "422", "unprocessable entity" do
+        before { User.last.reset_token(hashed) }
+        let!(:user) {
+          {
+            user: {
+              current_password: "123456", password: "azerty", current_password: "azertyj",
+              reset_password_token: "dfgsdhsg42fsdg8" }
+          }
+        }
+
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
+                }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/users" do
+    patch "Update user information" do
+      tags "Users"
+      consumes "application/json"
+      produces "application/json"
+      security [bearer: {}]
+      parameter name: :user, in: :body, schema: {
+                  type: :object,
+                  properties: {
+                    user: {
+                      type: :object,
+                      properties: {
+                        email: { type: :string, example: "new_email@email.com" },
+                        current_password: { type: :string, example: "123456" }
+                      },
+                      required: %w[current_password]
+                    }
+                  },
+                  required: %w[user]
+                }
+
+      response "204", "user updated" do
+        before { sign_in(create(:user, password: "123456")) }
+        let!(:user) { { user: { email: "new_email@email.com", current_password: "123456" } } }
+
+        run_test!
+      end
+
+      response "401", "unauthorize" do
+        let!(:user) { { user: { email: "new_email@email.com", current_password: "123456" } } }
+        example "application/json", :your_not_logged, {
+                  error: "You need to be logged"
+                }
+
+        run_test!
+      end
+
+      response "422", "unprocessable entity" do
+        before { sign_in(create(:user, password: "123456")) }
+        let!(:user) { { user: { email: "new_email@email.com", current_password: "126" } } }
+        example "application/json", :bad_password, {
+                  errors: { current_password: ["is invalid"] }
+                }
+
+        run_test!
+      end
+
+      response "422", "unprocessable entity" do
+        before { sign_in(create(:user, password: "123456")) }
+        let!(:user) { { user: { email: "new_email@email.com" } } }
+        example "application/json", :bad_password, {
+                  errors: { current_password: ["can't be blank"] }
                 }
 
         run_test!
@@ -347,6 +456,8 @@ RSpec.describe "api/users", type: :request do
       produces "application/json"
 
       response "200", "ok" do
+        before { sign_in(create(:user)) }
+
         example "application/json", :example, {
                   message: "Logged out"
                 }

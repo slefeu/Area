@@ -5,8 +5,11 @@ class ApplicationController < ActionController::API
   respond_to :json
 
   def about
-    about = File.read("public/about.json")
-    render json: about
+    about = JSON.parse(File.read("public/about.json"))
+    current_timestamp = Time.now.getutc.to_i
+    services = about["server"]["services"]
+    about["server"] = { "current_time"=>current_timestamp, "services"=>services }
+    render json: JSON.pretty_generate(about)
   end
 
 

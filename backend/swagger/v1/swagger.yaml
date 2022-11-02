@@ -13,7 +13,7 @@ paths:
       - bearer: {}
       parameters: []
       responses:
-        '202':
+        '201':
           description: User created
           content:
             application/json:
@@ -105,6 +105,53 @@ paths:
                 your_not_admin:
                   value:
                     error: You are not admin.
+    patch:
+      summary: Update user information
+      tags:
+      - Users
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '204':
+          description: user updated
+        '401':
+          description: unauthorize
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              examples:
+                bad_password:
+                  value:
+                    errors:
+                      current_password:
+                      - can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: new_email@email.com
+                    current_password:
+                      type: string
+                      example: '123456'
+                  required:
+                  - current_password
+              required:
+              - user
   "/users/sign_in.json":
     post:
       summary: Sign in user
@@ -312,11 +359,21 @@ paths:
                 user:
                   type: object
                   properties:
+                    first_name:
+                      type: string
+                      example: Jean-Jean
+                    last_name:
+                      type: string
+                      example: Sernine
                     email:
                       type: string
                       example: jean.michelle@email.com
-                  required:
-                  - email
+                    password:
+                      type: string
+                      example: azerty
+                    admin:
+                      type: boolean
+                      example: true
               required:
               - user
     delete:
@@ -382,8 +439,8 @@ paths:
       responses:
         '204':
           description: password changed
-        '401':
-          description: unauthorized
+        '422':
+          description: unprocessable entity
           content:
             application/json:
               examples:
@@ -472,7 +529,7 @@ paths:
                       name: daily_photo_bg
                       options: {}
         '422':
-          description: Unprocessabel entity
+          description: unprocessable entity
         '401':
           description: unauthorized
           content:
