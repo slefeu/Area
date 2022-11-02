@@ -17,17 +17,17 @@ RSpec.describe "/users", type: :request do
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-      { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "12345",
+      { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "123456",
 admin: false }
     }
 
   let(:valid_attributes_admin) {
-      { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "12345",
+      { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "123456",
 admin: true }
     }
 
   let(:invalid_attributes) {
-      { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four", password: "12345", admin: true }
+      { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four", password: "1", admin: true }
     }
 
   # This should return the minimal set of values that should be in the headers
@@ -39,6 +39,8 @@ admin: true }
   }
 
   describe "GET /index" do
+    before { sign_in(create(:user_admin)) }
+
     it "renders a successful response" do
       User.create! valid_attributes
       get users_url, headers: valid_headers, as: :json
@@ -47,6 +49,8 @@ admin: true }
   end
 
   describe "GET /show" do
+    before { sign_in(create(:user_admin)) }
+
     it "renders a successful response" do
       user = User.create! valid_attributes
       get user_url(user), as: :json
