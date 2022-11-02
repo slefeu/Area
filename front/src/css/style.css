@@ -249,8 +249,8 @@ body {
     border-top-right-radius: .7rem;
     border-bottom-right-radius: .7rem;
     background: var(--navbar-color);
-    padding-left: .2rem;
-    padding-right: .2rem;
+    padding-left: .4rem;
+    padding-right: .3rem;
 }
 
 .funZone button {

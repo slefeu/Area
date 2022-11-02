@@ -32,7 +32,6 @@ function Home() {
                                         src={res.data.background}
                                         title="YouTube video player"
                                         frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen></iframe>
                                 : <img alt="Background from the user" src={res.data.background} /> }
                         </Container>

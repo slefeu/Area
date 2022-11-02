@@ -2,7 +2,7 @@
 import React from "react"
 import { NavItem } from "../Tools/NavItem"
 
-import { AiFillHome, AiOutlineUser, AiOutlineLogout, AiFillEdit, AiOutlineKey, AiOutlineCloudUpload } from "react-icons/ai"
+import { AiFillHome, AiOutlineUser, AiFillEdit, AiOutlineKey, AiOutlineCloudUpload } from "react-icons/ai"
 
 import "../css/navbar.css"
 
@@ -20,7 +20,6 @@ function SettingsNavBar({ currentPage }) {
                 <NavItem icon={<AiOutlineKey />} name="Services" classes={`${currentPage === "API" ? "active" : ""}`} link="/keys" />
                 <NavItem icon={<AiFillEdit />} name="Appearance" classes={`${currentPage === "Appearance" ? "active" : ""}`} link="/appearance" />
                 <NavItem icon={<AiFillHome />} classes={`right ${currentPage === "Home" ? "active" : ""}`} link="/home" />
-                <NavItem icon={<AiOutlineLogout />} classes={`right`} link="/logout" />
 
                 <div className="line"></div>
 
