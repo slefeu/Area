@@ -311,7 +311,6 @@ RSpec.describe "api/users", type: :request do
       response "200", "ok" do
         before { sign_in(create(:user_admin)) }
         let(:id) { 1 }
-
         example "application/json", :example, {
                   token: "897987ee7f0ed983570d19c17aab94a8cde3c4e53c57e3fb7f6366948997155b"
                 }
@@ -321,7 +320,6 @@ RSpec.describe "api/users", type: :request do
 
       response "401", "unauthorized" do
         let(:id) { 1 }
-
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
                 }
@@ -382,6 +380,65 @@ RSpec.describe "api/users", type: :request do
 
         example "application/json", :your_not_logged, {
                   error: "You need to be logged"
+                }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/users" do
+    patch "Update user information" do
+      tags "Users"
+      consumes "application/json"
+      produces "application/json"
+      security [bearer: {}]
+      parameter name: :user, in: :body, schema: {
+                  type: :object,
+                  properties: {
+                    user: {
+                      type: :object,
+                      properties: {
+                        email: { type: :string, example: "new_email@email.com" },
+                        current_password: { type: :string, example: "123456" }
+                      },
+                      required: %w[current_password]
+                    }
+                  },
+                  required: %w[user]
+                }
+
+      response "204", "user updated" do
+        before { sign_in(create(:user, password: "123456")) }
+        let!(:user) { { user: { email: "new_email@email.com", current_password: "123456" } } }
+
+        run_test!
+      end
+
+      response "401", "unauthorize" do
+        let!(:user) { { user: { email: "new_email@email.com", current_password: "123456" } } }
+        example "application/json", :your_not_logged, {
+                  error: "You need to be logged"
+                }
+
+        run_test!
+      end
+
+      response "422", "unprocessable entity" do
+        before { sign_in(create(:user, password: "123456")) }
+        let!(:user) { { user: { email: "new_email@email.com", current_password: "126" } } }
+        example "application/json", :bad_password, {
+                  errors: { current_password: ["is invalid"] }
+                }
+
+        run_test!
+      end
+
+      response "422", "unprocessable entity" do
+        before { sign_in(create(:user, password: "123456")) }
+        let!(:user) { { user: { email: "new_email@email.com" } } }
+        example "application/json", :bad_password, {
+                  errors: { current_password: ["can't be blank"] }
                 }
 
         run_test!

@@ -105,6 +105,53 @@ paths:
                 your_not_admin:
                   value:
                     error: You are not admin.
+    patch:
+      summary: Update user information
+      tags:
+      - Users
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '204':
+          description: user updated
+        '401':
+          description: unauthorize
+          content:
+            application/json:
+              examples:
+                your_not_logged:
+                  value:
+                    error: You need to be logged
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              examples:
+                bad_password:
+                  value:
+                    errors:
+                      current_password:
+                      - can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: new_email@email.com
+                    current_password:
+                      type: string
+                      example: '123456'
+                  required:
+                  - current_password
+              required:
+              - user
   "/users/sign_in.json":
     post:
       summary: Sign in user
