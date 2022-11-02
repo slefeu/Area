@@ -105,6 +105,11 @@ body {
     border-radius: .7rem;
 }
 
+.biggerContainer.video {
+    height: 25vh;
+    overflow: hidden;
+}
+
 .biggerContainer:active {
     height: calc(100vh - 7.5rem);
 }

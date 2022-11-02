@@ -17,7 +17,7 @@ function SettingsNavBar({ currentPage }) {
             <div className="navbarMiddle">
                 <NavItem icon={<AiOutlineUser />} name="Profil" classes={`${currentPage === "UserProfil" ? "active" : ""}`} link="/profil" />
                 <NavItem icon={<AiOutlineCloudUpload />} name="Identification" classes={`${currentPage === "Identification" ? "active" : ""}`} link="/identification" />
-                <NavItem icon={<AiOutlineKey />} name="Handle Your Keys" classes={`${currentPage === "API" ? "active" : ""}`} link="/keys" />
+                <NavItem icon={<AiOutlineKey />} name="Services" classes={`${currentPage === "API" ? "active" : ""}`} link="/keys" />
                 <NavItem icon={<AiFillEdit />} name="Appearance" classes={`${currentPage === "Appearance" ? "active" : ""}`} link="/appearance" />
                 <NavItem icon={<AiFillHome />} classes={`right ${currentPage === "Home" ? "active" : ""}`} link="/home" />
                 <NavItem icon={<AiOutlineLogout />} classes={`right`} link="/logout" />
@@ -28,7 +28,6 @@ function SettingsNavBar({ currentPage }) {
 
             <div className="navbarBottom">
                 <NavItem icon={<AiFillHome />} classes={`${currentPage === "Home" ? "active" : ""}`} link="/home" />
-                <NavItem icon={<AiOutlineLogout />} classes={`fixedRight`} link="/logout" />
             </div>
         </div>
 
