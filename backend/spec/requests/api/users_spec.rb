@@ -194,9 +194,12 @@ RSpec.describe "api/users", type: :request do
               user: {
                 type: :object,
                 properties: {
-                  email: { type: :string, example: "jean.michelle@email.com" }
-                },
-                required: %w[email]
+                  first_name: { type: :string, example: "Jean-Jean" },
+                  last_name: { type: :string, example: "Sernine" },
+                  email: { type: :string, example: "jean.michelle@email.com" },
+                  password: { type: :string, example: "azerty" },
+                  admin: { type: :boolean, example: true }
+                }
               }
             },
             required: %w[user]

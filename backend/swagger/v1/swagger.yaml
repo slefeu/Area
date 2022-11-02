@@ -359,11 +359,18 @@ paths:
                 user:
                   type: object
                   properties:
+                    first_name:
+                      type: string
+                      example: Jean-Jean
+                    last_name:
+                      type: string
+                      example: Sernine
                     email:
                       type: string
                       example: jean.michelle@email.com
-                  required:
-                  - email
+                    password:
+                      type: string
+                      example: azerty
               required:
               - user
     delete:
