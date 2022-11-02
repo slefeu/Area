@@ -370,7 +370,7 @@ RSpec.describe "api/users", type: :request do
         run_test!
       end
 
-      response "422", "unprocessabel entity" do
+      response "422", "unprocessable entity" do
         before { User.last.reset_token(hashed) }
         let!(:user) {
           {

@@ -13,7 +13,7 @@ paths:
       - bearer: {}
       parameters: []
       responses:
-        '202':
+        '201':
           description: User created
           content:
             application/json:
@@ -382,8 +382,8 @@ paths:
       responses:
         '204':
           description: password changed
-        '401':
-          description: unauthorized
+        '422':
+          description: unprocessable entity
           content:
             application/json:
               examples:
@@ -472,7 +472,7 @@ paths:
                       name: daily_photo_bg
                       options: {}
         '422':
-          description: Unprocessabel entity
+          description: unprocessable entity
         '401':
           description: unauthorized
           content:

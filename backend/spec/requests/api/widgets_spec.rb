@@ -94,7 +94,7 @@ RSpec.describe "api/widgets", type: :request do
         run_test!
       end
 
-      response "422", "Unprocessabel entity" do
+      response "422", "unprocessable entity" do
         before { sign_in(create(:user)) }
         let(:widget) { { widget: { name: nil } } }
 
