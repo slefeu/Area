@@ -44,12 +44,10 @@
 }
 
 @media only screen and (max-width: 600px) {
-
     .column {
         justify-content: unset;
         align-items: unset;
     }
-
     .pageTitle {
         margin-bottom: 1rem;
     }

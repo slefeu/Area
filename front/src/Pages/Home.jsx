@@ -24,7 +24,6 @@ function Home() {
             .then(res => {
                 var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
                 if (res.data.background !== null) {
-                    if (res.data.background.includes("youtube")) console.log("youtube")
                     setElement(<>
                         <Container key="front_background" type={`biggerContainer ${res.data.background.includes("youtube") ? "video" : ""}`}>
                             { res.data.background.includes("youtube") ?

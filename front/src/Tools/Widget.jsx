@@ -81,9 +81,9 @@ function Widget({ w }) {
         <Container key={w.id} id={`widget_${w.id}`} type={`widget ${w.active}`}>
             {content}
             <div className="funZone">
-                <button className="button" onClick={() => { editThis(w) }}>🖊️</button>
-                <button className="button" id={`enable_${w.id}`} onClick={() => { activeThis(w) }}>{w.active ? "✅" : "💤"}</button>
-                <button className="button" onClick={() => { removeThis(w.id) }}>🗑️</button>
+                <button className="button" title="Edit" onClick={() => { editThis(w) }}>🖊️</button>
+                <button className="button" title="Enable/Disable" id={`enable_${w.id}`} onClick={() => { activeThis(w) }}>{w.active ? "✅" : "💤"}</button>
+                <button className="button" title="Remove" onClick={() => { removeThis(w.id) }}>🗑️</button>
             </div>
         </Container>
     )

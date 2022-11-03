@@ -357,6 +357,7 @@ body {
     transition-duration: .3s;
     white-space: nowrap;
     font-style: italic;
+    text-align: center;
 }
 
 .tag:hover {

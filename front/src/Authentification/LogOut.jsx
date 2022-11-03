@@ -23,6 +23,8 @@ function LogoutUser() {
             })
             .catch((error) => {
                 Error({"res": error})
+                localStorage.removeItem("token");
+                navigate('/login')
             });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

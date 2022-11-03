@@ -29,7 +29,6 @@ function UserIdentification({ data, token }) {
                 "current_password": document.getElementById("current_password").value
             }
         };
-        console.log(url);
         await AXIOS.patch(url, user, { headers: { Authorization: token } })
             .then(res => { SetNotif({ "title": "Success", "body": "Email address changed" }) })
             .catch(res => { Error({ "res": res }) })

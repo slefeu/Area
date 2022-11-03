@@ -10,6 +10,7 @@ import UserProfil from "./Settings/UserProfil"
 import Appearance from "./Settings/Appearance"
 import Identification from "./Settings/Identification"
 import APIPage from "./Settings/KeyManagement"
+import Admin from "./Pages/Admin"
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path='/identification' element={<Identification />} />
                     <Route path='/appearance' element={<Appearance />} />
                     <Route path='/keys' element={<APIPage />} />
+                    <Route path='/admin' element={<Admin />} />
                 </Routes>
             </HashRouter>
         </>
