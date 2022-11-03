@@ -26,7 +26,7 @@
 #
 class User < ApplicationRecord
   # Callbacks
-  before_destroy :destroy_children
+  before_destroy :destroy_widgets
 
   # Validattions
   validates :email,
@@ -61,7 +61,7 @@ class User < ApplicationRecord
     end
   end
 
-  def destroy_children
+  def destroy_widgets
     self.widgets.map(&:destroy)
   end
 
