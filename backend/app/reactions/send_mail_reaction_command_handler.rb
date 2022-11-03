@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-class SendMailCommandHandler
+require "google-apis-gmail_v1"
+
+class SendMailReactionCommandHandler
   def initialize
+    # @client = Google::Apis::GmailV1Service.new
   end
 
   def call(attributs)
-    # TODO do something with options
     puts "Send Mail Command Handler"
   end
 end

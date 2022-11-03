@@ -2,44 +2,46 @@ import '../css/colors.css'
 import '../css/style.css'
 
 import Navbar from '../Tools/Navbar'
-import Error from '../Tools/Error'
 import Load from '../Tools/Load'
 import Container from '../Tools/Container'
+import Widget from '../Tools/Widget'
+import { Error } from '../Tools/Notif'
+import AXIOS from "../Tools/Client.jsx"
+import GenerateKey from '../Tools/Key'
 
 import { useState, useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
-import AXIOS from "../Tools/Client.jsx"
+import SwitchTheme from '../Tools/SwitchTheme'
 
 function Home() {
-    const [element, setElement] = useState(<Load />)
+    SwitchTheme();
 
+    const [element, setElement] = useState(<Load />)
     useEffect(() => {
-        if (!localStorage.getItem('token')) { setElement(<Navigate to="/login" />) }
 
         const token = "Bearer " + localStorage.getItem("token");
-        const url = localStorage.getItem("url") + "/current_user";
-        const values = {
-            headers: {
-                Authorization: token,
-            }
-        }
-        AXIOS.get(url, values)
-            .then(function (res) {
-                var widgets = res.data.widgets.map((w) => {
-                    return (
-                        <Container title={w.name} data={`${w.action.name} => ${w.reaction.name}`} key={w.name} />
-                    )
-                })
+
+        AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
+            .then(res => {
+                var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
                 if (res.data.background !== null) {
+                    if (res.data.background.includes("youtube")) console.log("youtube")
                     setElement(<>
-                        <Container key="front_background" type="biggerContainer">
-                            <img alt="Background from the user" src={res.data.background} />
+                        <Container key="front_background" type={`biggerContainer ${res.data.background.includes("youtube") ? "video" : ""}`}>
+                            { res.data.background.includes("youtube") ?
+                                <iframe width="100%" height="100%"
+                                        src={res.data.background}
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allowFullScreen></iframe>
+                                : <img alt="Background from the user" src={res.data.background} /> }
                         </Container>
                         {widgets}
                     </>)
                 } else { setElement(widgets) }
             })
-            .catch(function (err) { setElement(<Error error={err.message} msg="Please reload the page." />) });
+            .catch(err => {
+                Error({ "res": err })
+            });
     }, []);
 
     return (

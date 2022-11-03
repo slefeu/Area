@@ -44,6 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_142140) do
     t.string "email", null: false
     t.string "background"
     t.boolean "admin", default: false, null: false
+    t.string "provider"
+    t.string "p_uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
@@ -55,7 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_142140) do
   end
 
   create_table "widgets", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"

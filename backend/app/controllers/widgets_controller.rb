@@ -1,5 +1,5 @@
 class WidgetsController < ApplicationController
-  before_action :user_logged?, only: [ :create ]
+  before_action :user_logged?, only: %i[ create update destroy ]
   before_action :set_widget, only: %i[ show update destroy ]
 
   # GET /widgets
@@ -21,7 +21,10 @@ class WidgetsController < ApplicationController
     action_params = widget_params[:action]
     reaction_params = widget_params[:reaction]
 
-    unless action_params && reaction_params && @widget.save
+    unless action_params && reaction_params
+      render json: { message: "Params missing" }, status: :unprocessable_entity and return
+    end
+    unless @widget.save
       render json: @widget.errors, status: :unprocessable_entity and return
     end
 
@@ -29,12 +32,14 @@ class WidgetsController < ApplicationController
     @action = Action.new(klass: action_params[:name], options: action_params[:options], widget_id: @widget.id)
 
     unless @action.save
+      @widget.destroy
       render json: @action.errors, status: :unprocessable_entity and return
     end
 
     # Create Reaction
     @reaction = Reaction.new(klass: reaction_params[:name], options: reaction_params[:options], action_id: @action.id)
     unless @reaction.save
+      @widget.destroy
       render json: @reaction.errors, status: :unprocessable_entity and return
     end
 
@@ -43,11 +48,32 @@ class WidgetsController < ApplicationController
 
   # PATCH/PUT /widgets/1
   def update
-    if @widget.update(widget_params)
-      render json: @widget
-    else
-      render json: @widget.errors, status: :unprocessable_entity
+    action_params = widget_params[:action]
+    reaction_params = widget_params[:reaction]
+
+    # Check params
+    unless @widget
+      render json: { message: "Widget with id #{params[:id]} not found" }, status: :not_found and return
     end
+
+    # Update Widget
+    unless @widget.update(name: widget_params[:name], active: (widget_params[:active] || true))
+      render json: @widget.errors, status: :unprocessable_entity and return
+    end
+
+    # Update Action
+    action = @widget.action
+    if action_params && !action.update(klass: action_params[:name], options: action_params[:options])
+      render json: action.errors, status: :unprocessable_entity and return
+    end
+
+    # Update Reaction
+    reaction = action.reaction
+    if reaction_params && !reaction.update(klass: reaction_params[:name], options: reaction_params[:options])
+      render json: reaction.errors, status: :unprocessable_entity and return
+    end
+
+    render json: @widget, status: :ok, location: @widget
   end
 
   # DELETE /widgets/1
@@ -59,10 +85,12 @@ class WidgetsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_widget
       @widget = Widget.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { error: "Widget not found" }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.
     def widget_params
-      params.require(:widget).permit(:name, action: {}, reaction: {})
+      params.require(:widget).permit(:name, :active, :user_id, action: {}, reaction: {})
     end
 end

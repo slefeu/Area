@@ -5,12 +5,10 @@ class BusActions
     @router = router
   end
 
-  def call(klass, options)
-    klass = klass.camelize + "Command"
-
-    action = klass.constantize.send(:new, options)
-    router[action.class].call action.to_h
+  def send_command(cmd)
+    router.route(cmd).call cmd.to_h
   end
 
+  alias << send_command
   attr_accessor :router
 end

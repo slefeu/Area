@@ -1,15 +1,19 @@
 import React from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from "react-router-dom"
 
 import "../css/colors.css"
 import "../css/auth.css"
 
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
+import { Error } from "../Tools/Notif"
+import SwitchTheme from "../Tools/SwitchTheme";
+import PasswordInput from "../Tools/Password";
 
 function LoginForm() {
+    const navigate = useNavigate()
 
     async function SetLoginValues(evt) {
         evt.preventDefault();
@@ -30,22 +34,17 @@ function LoginForm() {
             .then(response => {
                 const token = response.headers["authorization"].replace("Bearer ", "");
                 localStorage.setItem("token", token);
-                window.location.href = "/home";
+                navigate('/home')
             })
-            .catch(error => {
-                console.log({error});
-                //do red borders on elements that don't work
-                // document.getElementById("id_de_l'element").style.[valeur à changer]= "nouvelle valeur"
-
-            });
+            .catch(error => { Error({ "res": error }) });
     }
 
     return (
         <>
             <form className="form">
                 <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
-                <input className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
-                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? {display: 'none'} : {display: 'flex'}} required />
+                <PasswordInput className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
+                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? { display: "none" } : { display: "flex" }} required />
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>
         </>
@@ -53,12 +52,13 @@ function LoginForm() {
 }
 
 function Login() {
-    if (localStorage.getItem('token')) {return (<Navigate to="/home" />)}
+    if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
+    SwitchTheme();
 
     return (
         <div className="background">
             <div className="authContainer">
-                <ButtonNavBar active="Login" classPicked="activeButton" />
+                <ButtonNavBar active="Login" classPicked="activeButton" dark={localStorage.getItem("theme") === "theme-dark" ? true : false} />
                 <LoginForm></LoginForm>
                 <div className="subtitle">Or continue with</div>
                 <div>
