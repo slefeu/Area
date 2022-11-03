@@ -62,7 +62,7 @@ class User < ApplicationRecord
   end
 
   def destroy_children
-    self.widgets.each { |widget| widget.destroy }
+    self.widgets.map(&:destroy)
   end
 
   def reset_token(hashed)
