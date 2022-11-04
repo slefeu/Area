@@ -92,10 +92,10 @@ class User < ApplicationRecord
   private
 
   def self.to_params(token)
-    { 'refresh_token' => token,
+    { 'code' => code,
       'client_id'     => ENV['GOOGLE_CLIENT_ID'],
       'client_secret' => ENV['GOOGLE_CLIENT_SECRET'],
-      'grant_type'    => 'refresh_token'}
+      'grant_type'    => 'authorization_code'}
   end
 
 end
