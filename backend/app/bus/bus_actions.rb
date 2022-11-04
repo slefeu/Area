@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BusActions
+class Bus
   def initialize(router)
     @router = router
   end
