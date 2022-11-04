@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :user_logged?, only: %i[ index show show_current_user update destroy reset_token signout ]
   before_action :set_user, only: %i[ show update destroy ]
   before_action :is_admin?, only: %i[ index show update destroy ]
+  before_action :user_logged?
 
   # GET /users
   def index
@@ -31,6 +31,7 @@ class UsersController < ApplicationController
       render json: @user.errors, status: :unprocessable_entity
     end
   end
+
   # DELETE /users/1
   def destroy
     @user.destroy
@@ -56,12 +57,6 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { error: "User not found" }, status: :not_found
-    end
-
-    def is_admin?
-      unless current_user.admin
-        render json: { error: "You are not admin." }, status: :unauthorized
-      end
     end
 
     # Only allow a list of trusted parameters through.
