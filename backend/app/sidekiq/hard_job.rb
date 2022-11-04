@@ -15,6 +15,7 @@ class HardJob
   private
     def user_job
       User.all.each do |user|
+        puts user.inspect
         user.widgets.activated.each do |widget|
           action = widget.action
           action_cmd = action.klass_command.constantize.send(:new, action.options)
@@ -24,7 +25,6 @@ class HardJob
           reaction_cmd = reaction.klass_command.constantize.send(:new, reaction.options)
           Bus_reactions << reaction_cmd
         end
-        puts user.inspect
       end
     end
 end
