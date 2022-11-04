@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   respond_to :json
 
   def about
-    about = JSON.parse(File.read("public/about.json"))
+    about = JSON.parse(File.read("private/about.json"))
     current_timestamp = Time.now.getutc.to_i
     services = about["server"]["services"]
     about["server"] = { "current_time"=>current_timestamp, "services"=>services }

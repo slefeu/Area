@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # ##cancel for tests
 
   get "about.json", to: "application#about"
+  get "about", to: "application#about"
 
   resources :reactions, only: [:index, :show]
   resources :actions, only: [:index, :show]

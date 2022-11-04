@@ -8,27 +8,20 @@
             "actions": [{
                 "name": "each_day",
                 "description": "Each day ...",
-                "options": {
-                    "last_day": "text"
-                }
+                "options": {}
             }, {
                 "name": "each_month",
                 "description": "Each month...",
-                "options": {
-                    "last_month": "text"
-                }
+                "options": {}
             }, {
                 "name": "each_hour",
                 "description": "Each hour...",
-                "options": {
-                    "last_hour": "text"
-                }
+                "options": {}
             }, {
                 "name": "at_hour",
                 "description": "At such time ...",
                 "options": {
-                    "hour": "text"
-                }
+                    "hour": "text"}
             }],
             "reactions": []
         }, {
