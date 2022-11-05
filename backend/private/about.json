@@ -21,7 +21,9 @@
                 "name": "at_hour",
                 "description": "At such time ...",
                 "options": {
-                    "hour": "text"}
+                    "hour": "hour",
+                    "city": "city"
+                }
             }],
             "reactions": []
         }, {
@@ -29,11 +31,15 @@
             "actions": [{
                 "name": "temparature_change",
                 "description": "When the temperature outside change ...",
-                "options": {}
+                "options": {
+                    "city": "city"
+                }
             }, {
                 "name": "weather_change",
                 "description": "When the weather outside change ...",
-                "options": {}
+                "options": {
+                    "city": "city"
+                }
             }],
             "reactions": []
         }, {

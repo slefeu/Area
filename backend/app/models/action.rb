@@ -19,7 +19,7 @@
 #
 class Action < ApplicationRecord
   # Callbacks
-  after_create :add_id_informations
+  after_create :add_id_information
 
   # Validations
   validate :klass_exist?
@@ -27,7 +27,6 @@ class Action < ApplicationRecord
   # Associations
   belongs_to :widget
   has_one :reaction
-
 
   def klass_command
     klass.camelize+"ActionCommand"

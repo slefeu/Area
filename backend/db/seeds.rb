@@ -27,7 +27,7 @@ if Widget.count == 0
 end
 
 # Actions
-actions = [{ klass: "each_day", options: {}, widget_id: Widget.first.id }]
+actions = [{ klass: "at_hour", options: { "hour": "16:00" }, widget_id: Widget.first.id }]
 if Action.count == 0
   actions.each do |action|
     Action.create!(klass: action[:klass], options: action[:options], widget_id: action[:widget_id])

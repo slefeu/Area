@@ -19,6 +19,7 @@ class HardJob
         user.widgets.activated.each do |widget|
           action = widget.action
           action_cmd = action.klass_command.constantize.send(:new, action.options)
+
           next unless Bus_actions << action_cmd
 
           reaction = action.reaction
