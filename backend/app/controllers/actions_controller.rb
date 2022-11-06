@@ -1,7 +1,5 @@
 class ActionsController < ApplicationController
   before_action :set_action, only: [ :show ]
-  before_action :user_logged?
-  before_action :is_admin?
 
   # GET /actions
   def index

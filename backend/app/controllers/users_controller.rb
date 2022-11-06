@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :user_logged?
   before_action :set_user, only: %i[ show update destroy ]
   before_action :is_admin?, only: %i[ index show update destroy ]
-  before_action :user_logged?
 
   # GET /users
   def index
@@ -62,5 +62,11 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :admin, :password)
+    end
+
+    def is_admin?
+      unless current_user.admin
+        render json: { message: "You are not admin." }, status: :unauthorized
+      end
     end
 end

@@ -1,7 +1,5 @@
 class ReactionsController < ApplicationController
   before_action :set_reaction, only: [ :show ]
-  before_action :user_logged?
-  before_action :is_admin?
 
   # GET /reactions
   def index
