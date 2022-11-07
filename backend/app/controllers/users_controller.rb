@@ -53,10 +53,10 @@ class UsersController < ApplicationController
 
   # POST /users/refresh_token
   def refresh_token
-    puts code_params
     res = current_user.send("request_token_from_#{code_params[:name]}", code_params)
-    unless res[:error]
-      render json: { error: res[:error] }, status: :unauthorized
+
+    if res[:error]
+      render json: { error: res[:error] }, status: :unauthorized and return
     end
     render json: { message: res[:message] }, status: :ok
   end
