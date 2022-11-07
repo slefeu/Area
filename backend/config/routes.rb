@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "current_user", to: "users#show_current_user"
   get "users/reset_token", to: "users#reset_token"
   delete "signout", to: "users#signout"
+  post "users/spotify_token", to: "users#spotify_token"
 
   resources :reactions, only: [:index, :show]
   resources :actions, only: [:index, :show]

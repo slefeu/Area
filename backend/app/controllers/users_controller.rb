@@ -51,6 +51,24 @@ class UsersController < ApplicationController
     render json: { message: "Logged out." }, status: :ok
   end
 
+  # POST /users/spotify_token
+  def spotify_token
+    code = spotify_token_params[:code]
+    redirect_uri = spotify_token_params[:redirect_uri]
+
+    data = { client_id: ENV["SPOTIFY_CLIENT_ID"],
+             client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
+             grant_type: "authorization_code", redirect_uri: redirect_uri }
+
+    info_spotify = HTTParty.post("https://accounts.spotify.com/api/token", body: data)
+    puts info_spotify
+    if info_spotify["error"]
+      render json: { error: info_spotify["error_description"] }, status: :unauthorized and return
+    end
+    current_user.spotify_token = info_spotify["refresh_token"]
+    render json: { message: "Spotify token added to user" }, status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -62,6 +80,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :admin, :password)
+    end
+    def spotify_token_params
+      params.require(:user).permit(:code, :redirect_uri)
     end
 
     def is_admin?
