@@ -4,6 +4,7 @@ import "../css/auth.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
 import { Error } from "../Tools/Notif"
+import SwitchTheme from "../Tools/SwitchTheme"
 
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
