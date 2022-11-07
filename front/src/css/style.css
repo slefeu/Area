@@ -43,10 +43,11 @@ body {
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
+    gap: .7rem;
 }
 
 .container {
-    margin: .7rem;
+    /* margin: .7rem; */
     background: var(--navbar-light-color);
     display: flex;
     flex: 1 25%;
@@ -381,7 +382,7 @@ a:active {
 
 #toHome {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     z-index: -1;
 }
