@@ -88,28 +88,6 @@ class User < ApplicationRecord
     self.google_refresh_token = result["refresh_token"]
   end
 
-  def destroy_children
-    self.widgets.destroy
-  end
-
-  private
-
-  def self.google_body(code)
-    { 'code' => code,
-      'client_id'     => ENV['GOOGLE_CLIENT_ID'],
-      'client_secret' => ENV['GOOGLE_CLIENT_SECRET'],
-      'grant_type'    => 'authorization_code'}
-  end
-
-  def self.twitter_body(code)
-    { 'code' => code,
-      'client_id'     => ENV['TWITTER_API_PUBLIC'],
-      'client_secret' => ENV['TWITTER_API_SECRET'],
-      'grant_type'    => 'authorization_code'}
-  end
-
-end
-
   def reset_token(hashed)
     self.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
     self.reset_password_sent_at = Time.now
@@ -117,6 +95,20 @@ end
   end
 
   private
+    def self.google_body(code)
+      { "code" => code,
+        "client_id"     => ENV["GOOGLE_CLIENT_ID"],
+        "client_secret" => ENV["GOOGLE_CLIENT_SECRET"],
+        "grant_type"    => "authorization_code" }
+    end
+
+    def self.twitter_body(code)
+      { "code" => code,
+        "client_id"     => ENV["TWITTER_API_PUBLIC"],
+        "client_secret" => ENV["TWITTER_API_SECRET"],
+        "grant_type"    => "authorization_code" }
+    end
+
     def destroy_widgets
       self.widgets.map(&:destroy)
     end
