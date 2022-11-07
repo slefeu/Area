@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class NewSongReactionCommandHandler
+class NewAlbumReactionCommandHandler
   def initialize
   end
 
   def call(attributes)
-    puts "New Songs Command Handler"
+    puts "New Album Command Handler"
 
     client_id = "d89d9e6d83484fc48fff9bc6791371c0"
     client_secret = "e6d65483b28c4c1195b94f67ea6e03cf"
@@ -25,13 +25,19 @@ class NewSongReactionCommandHandler
       result << {
         "image": song["images"][0]["url"],
         "url": song["external_urls"]["spotify"],
+        "title": song["name"],
+        "artist": song["artists"][0]["name"]
       }
     end
 
-    puts result
-
     user = User.find(attributes[:user_id])
-    user.songs = result
+
+    # if user.songs is null or undefined
+    if user.songs.nil?
+      user.songs = { "albums": result }
+    else
+      user.songs["albums"] = result
+    end
     user.save
   end
 end
