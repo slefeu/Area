@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get "current_user", to: "users#show_current_user"
   get "users/reset_token", to: "users#reset_token"
   delete "signout", to: "users#signout"
-  post "users/spotify_token", to: "users#spotify_token"
 
   resources :reactions, only: [:index, :show]
   resources :actions, only: [:index, :show]
@@ -25,7 +24,8 @@ Rails.application.routes.draw do
 
   # oauth2
   post "users/refresh_token", to: "users#refresh_token"
-
+  post "users/twitter_sign_in", to: "users#twitter_sign_in"
+  post "users/google_sign_in", to: "users#google_sign_in"
 
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
