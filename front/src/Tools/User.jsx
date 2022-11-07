@@ -8,6 +8,9 @@ import { useState } from 'react'
 import { AiOutlineCheck } from 'react-icons/ai'
 
 function User({ u }) {
+
+    console.log(u)
+
     const [content, setContent] = useState(
         <>
             <div className="containerTitle"><span id={`admin_${u.id}`}>{u.admin ? "👑 " : ""}</span>{u.first_name} {u.last_name}</div>

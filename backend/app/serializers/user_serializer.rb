@@ -8,12 +8,19 @@
 #  email                  :string           not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string           not null
+#  google_refresh_token   :string
 #  last_name              :string           not null
 #  p_uid                  :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+
+#  twitter_refresh_token  :string
+
+#  songs                  :jsonb
+#  spotify_token          :string
+
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -23,7 +30,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :first_name, :last_name, :email, :admin, :background
+  attributes :id, :first_name, :last_name, :email, :admin, :background, :spotify_token, :songs
 
   has_many :widgets
 end

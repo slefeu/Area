@@ -25,6 +25,7 @@ function Register() {
                 "email": document.getElementById("email").value,
                 "password": document.getElementById("password").value,
                 "password_confirmation": document.getElementById("password_confirm").value,
+                "admin": true
             }
         }
 

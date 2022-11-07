@@ -7,10 +7,18 @@ ruby "3.0.2"
 gem "devise", "~> 4.8.1"
 gem "devise-jwt", "~> 0.10.0"
 
+
+# replace httpparty
+gem "typhoeus", "~> 1.4.0"
+gem "ethon", "~> 0.9.0"
+gem "ffi", "~> 1.15.0"
+
 # Omniauth
 gem "omniauth"
 gem "omniauth-twitter"
 gem "omniauth-google-oauth2"
+
+gem "google-api-client"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
 

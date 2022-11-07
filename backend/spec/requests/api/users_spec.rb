@@ -372,6 +372,7 @@ RSpec.describe "api/users", type: :request do
       end
 
       response "422", "unprocessable entity" do
+        before { sign_in(create(:user, password: "123456")) }
         before { User.last.reset_token(hashed) }
         let!(:user) {
           {

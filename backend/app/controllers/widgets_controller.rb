@@ -85,7 +85,7 @@ class WidgetsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_widget
       @widget = Widget.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       render json: { error: "Widget not found" }, status: :not_found
     end
 

@@ -19,7 +19,7 @@
 #
 class Reaction < ApplicationRecord
   # Callbacks
-  after_create :add_id_informations
+  after_create :add_id_information
 
   # Validations
   validate :klass_exist?
@@ -27,21 +27,23 @@ class Reaction < ApplicationRecord
   # Associations
   belongs_to :action
 
-  def klass_exist?
-    (klass.camelize+"ReactionCommand").constantize
-  rescue NameError => e
-    errors.add(:errors, "Reaction '#{klass}' doesn't exist")
-    false
-  else
-    true
-  end
-
-  def add_id_informations
-    self.options["reaction_id"] = self.id
-    self.save
-  end
 
   def klass_command
     klass.camelize+"ReactionCommand"
   end
+
+  private
+    def klass_exist?
+      (klass.camelize+"ReactionCommand").constantize
+    rescue NameError
+      errors.add(:errors, "Reaction '#{klass}' doesn't exist")
+      false
+    else
+      true
+    end
+
+    def add_id_information
+      self.options["reaction_id"] = self.id
+      self.save
+    end
 end
