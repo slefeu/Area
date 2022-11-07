@@ -8,8 +8,8 @@
 
 # Users
 users = [
-  { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "123456", admin: true },
-  { first_name: "Kevin", last_name: "Gros", email: "grosKevin@gmail.com", password: "123456", admin: false }
+  { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "123456", admin: true, songs: :nil },
+  { first_name: "Kevin", last_name: "Gros", email: "grosKevin@gmail.com", password: "123456", admin: false, songs: :nil }
   ]
 if User.count == 0
   users.each do |user|
