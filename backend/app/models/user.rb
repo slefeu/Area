@@ -59,49 +59,78 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtDenylist
 
 
-  def self.from_omniauth(auth)
+  def self.connection_from_omniauth(auth)
     User.find_or_create_by(p_uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token
       user.first_name = auth.info.first_name # assuming the user model has a username
       user.last_name = auth.info.last_name # assuming the user model has a username
-      user.provider = auth.provider
+      #user.provider = auth.provider
       user.p_uid = auth.uid
       # user.image = auth.info.image # assuming the user model has an image
     end
   end
 
 
+  def request_token_from_spotify(code, redirect_uri)
+    info_spotify = HTTParty.post("https://accounts.spotify.com/api/token", body: spotify_body)
+    puts info_spotify
+    if info_spotify["error"]
+      return {error: info_spotify["error_description"]}
+    end
+    self.spotify_token = info_spotify["refresh_token"]
+    return {message: "Spotify token added to user"}
+  end
+
   def request_token_from_twitter(code)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.twitter_body(code))
-    puts "*"*100
-    puts result
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: twitter_body(code))
     puts twitter_body(code)
+    if result["error"]
+      return {error: result["error_description"]}
+    end
     self.twitter_refresh_token = result["refresh_token"]
+    return {message: "Twitter token added to user"}
   end
 
   def request_token_from_google(code)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.google_body(code))
-    puts "*"*100
-    puts result
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(code))
     puts google_body(code)
+    if result["error"]
+      return {error: result["error_description"]}
+    end
     self.google_refresh_token = result["refresh_token"]
+    return {message: "Google token added to user"}
   end
 
   def destroy_children
     self.widgets.destroy
   end
 
+  def sign_in_with_google(param)
+    token = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(code))
+    puts token
+    access_token = token["access_token"]
+    puts access_token
+    result = HTTParty.post("https://www.googleapis.com/oauth2/v2/userinfo?access_token=#{access_token}")
+    connection_from_omniauth(result)
+  end
+
   private
 
-  def self.google_body(code)
+  def spotify_body(code, redirect_uri)
+    { client_id: ENV["SPOTIFY_CLIENT_ID"],
+      client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
+      grant_type: "authorization_code", redirect_uri: redirect_uri }
+  end
+
+  def google_body(code)
     { 'code' => code,
       'client_id'     => ENV['GOOGLE_CLIENT_ID'],
       'client_secret' => ENV['GOOGLE_CLIENT_SECRET'],
       'grant_type'    => 'authorization_code'}
   end
 
-  def self.twitter_body(code)
+  def twitter_body(code)
     { 'code' => code,
       'client_id'     => ENV['TWITTER_API_PUBLIC'],
       'client_secret' => ENV['TWITTER_API_SECRET'],

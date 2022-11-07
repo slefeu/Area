@@ -72,10 +72,26 @@ class UsersController < ApplicationController
   # POST /users/refresh_token
   def refresh_token
     puts code_params
-    current_user.send("request_token_from_#{code_params[:name]}", code_params[:code])
+    res = current_user.send("request_token_from_#{code_params[:name]}", code_params[:code])
+    unless res[:error]
+      render json: { error: res[:error] }, status: :unauthorized
+    end
+    render json: { message: res[:message] }, status: :ok
+  end
+
+  # POST /users/google_sign_in
+  def google_sign_in
+    user = User.sign_in_with_google(google_params)
+
+    render json: user
   end
 
   private
+
+    def google_params
+     params.require(:user).permit(:code)
+    end
+
     def code_params
       params.require(:refresh_token).permit(:name, :code)
     end
@@ -91,7 +107,7 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :admin, :password)
     end
-    
+
     def spotify_token_params
       params.require(:user).permit(:code, :redirect_uri)
     end

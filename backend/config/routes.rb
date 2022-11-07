@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   # oauth2
   post "users/refresh_token", to: "users#refresh_token"
 
+  post "users/twitter_sign_in", to: "users#twitter_sign_in"
+
+  post "users/google_sign_in", to: "users#google_sign_in"
 
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
