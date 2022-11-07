@@ -8,7 +8,7 @@ RSpec.describe EachHourActionCommandHandler do
                         "regionName"=>"Nouvelle-Aquitaine", "cityName"=>"Bordeaux", "zoneName"=>"Europe/Paris",
                         "abbreviation"=>"CET", "gmtOffset"=>3600, "dst"=>"0",
                         "zoneStart"=>1667091600, "zoneEnd"=>1679792400, "nextAbbreviation"=>"CEST",
-                        "timestamp"=>1667769118, "formatted"=>"2022-11-06 #{current_hour}" } }
+                        "timestamp"=>1667769118, "formatted"=>"#{Date.today} #{current_hour}" } }
 
     context "when the last hour is one hour ago" do
       let(:options)  { { "action_id" => action.id, "last_hour" => (current_hour.to_time-1.hour).to_s } }
@@ -38,6 +38,7 @@ RSpec.describe EachHourActionCommandHandler do
     end
 
     context "when the last hour is undefined" do
+      let!(:current_hour) { Time.now.end_of_hour.to_s }
       let(:options)  { { "action_id" => action.id } }
       it "returns true" do
         command = EachHourActionCommand.new(options)

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe EachDayActionCommandHandler do
   describe "#each_day" do
     let(:action) { create(:action) }
-    let(:current_day) { "2022-11-06" }
+    let(:current_day) { "2022-11-05" }
     let(:mocked_response)  { { "status"=>"OK", "message"=>"", "countryCode"=>"FR", "countryName"=>"France",
                         "regionName"=>"Nouvelle-Aquitaine", "cityName"=>"Bordeaux", "zoneName"=>"Europe/Paris",
                         "abbreviation"=>"CET", "gmtOffset"=>3600, "dst"=>"0",
@@ -38,6 +38,7 @@ RSpec.describe EachDayActionCommandHandler do
     end
 
     context "when the last day is undefined" do
+      let!(:current_day) { Date.today.to_s }
       let(:options)  { { "action_id" => action.id } }
       it "returns true" do
         command = EachDayActionCommand.new(options)
