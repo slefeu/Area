@@ -3,7 +3,6 @@
         "host": "127.0.0.1"
     },
     "server": {
-        "current_time": 1531680780,
         "services": [{
             "name": "calendar",
             "actions": [{
@@ -37,11 +36,17 @@
             "actions": [{
                 "name": "temparature_change",
                 "description": "When the temperature outside change ...",
-                "options": {}
+                "options": {
+                    "latitude": "text",
+                    "longitude": "text"
+                }
             }, {
                 "name": "weather_change",
                 "description": "When the weather outside change ...",
-                "options": {}
+                "options": {
+                    "latitude": "text",
+                    "longitude": "text"
+                }
             }],
             "reactions": []
         }, {

@@ -4,13 +4,13 @@ import "../css/auth.css"
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
 import { Error } from "../Tools/Notif"
-import SwitchTheme from "../Tools/SwitchTheme";
 
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { FaMoon } from "react-icons/fa"
 
 function Register() {
+    const navigate = useNavigate()
     const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "theme-dark" ? true : false);
 
     SwitchTheme();
@@ -31,7 +31,7 @@ function Register() {
             localStorage.setItem("url", document.getElementById("server").value);
 
         AXIOS.post(localStorage.getItem("url") + "/users", user)
-            .then(res => { window.location.href = "/login"; })
+            .then(res => { navigate("/login") })
             .catch(err => { Error({ "res": err }) })
     }
 

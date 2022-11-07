@@ -62,6 +62,18 @@ class User < ApplicationRecord
   end
 
   def destroy_children
-    self.widgets.destroy
+    self.widgets.each { |widget| widget.destroy }
+  end
+
+  def reset_token(hashed)
+    self.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
+    self.reset_password_sent_at = Time.now
+    self.save
+  end
+
+  def reset_token(hashed)
+    self.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
+    self.reset_password_sent_at = Time.now
+    self.save
   end
 end

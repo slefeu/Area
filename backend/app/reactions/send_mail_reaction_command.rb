@@ -4,7 +4,7 @@ class SendMailReactionCommand
   def initialize(options)
     @reaction_id = options["reaction_id"]
     @user_id = Reaction.find(@reaction_id).action.widget.user.id
-    @token_refreshed = options["token_refreshed"]
+    @refresh_token = options["refresh_token"]
     @to = options["receiver"]
     @subject = options["object"]
     @body = options["message"]

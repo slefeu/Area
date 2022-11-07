@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import Container from '../Tools/Container'
 import AXIOS from "../Tools/Client"
@@ -34,13 +34,15 @@ function DisplayUserInfos({ data }) {
 
 function UserProfil() {
     SwitchTheme();
-
     const [element, setElement] = useState(<Load />)
-    const token = "Bearer " + localStorage.getItem("token");
 
-    AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
-        .then(res => { setElement(<DisplayUserInfos data={res.data} />) })
-        .catch(error => { Error({ "res": error }) });
+    useEffect(() => {
+        const token = "Bearer " + localStorage.getItem("token");
+
+        AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
+            .then(res => { setElement(<DisplayUserInfos data={res.data} />) })
+            .catch(error => { Error({ "res": error }) });
+    }, [])
 
     return (
         <>
