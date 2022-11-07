@@ -16,6 +16,9 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  twitter_refresh_token  :string
+#  songs                  :jsonb
+#  spotify_token          :string
+
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -26,9 +29,13 @@
 #
 FactoryBot.define do
   factory :user do
-    first_name { "Jean Jean" }
-    last_name { "Michelle" }
+    first_name { FFaker::NameFR.first_name }
+    last_name { FFaker::NameFR.last_name }
     email { FFaker::Internet.unique.email }
-    password { "12345" }
+    password { "123456" }
+
+    factory :user_admin do
+      admin { true }
+    end
   end
 end

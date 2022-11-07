@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 
 import AXIOS from "../Tools/Client.jsx"
 import Load from '../Tools/Load'
+import { Error } from '../Tools/Notif.jsx'
 
 function EditContainer({ widget, json }) {
     const [actionsMore, setActionsMore] = useState(<div className="row-2 border"><div>Action Option</div></div>)
@@ -15,6 +16,10 @@ function EditContainer({ widget, json }) {
         widget.name = document.getElementById("name").value
         widget.action.name = document.getElementById("actionsList").value
         widget.reaction.name = document.getElementById("reactionsList").value
+        var tempActionID = widget.action.options.action_id
+        var tempReactionID = widget.reaction.options.reaction_id
+        widget.action.options = { "action_id": tempActionID }
+        widget.reaction.options = { "reaction_id": tempReactionID }
 
         try {
             var actionOptions = document.getElementById("inputAction")

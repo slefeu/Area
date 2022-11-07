@@ -22,11 +22,20 @@ function Home() {
 
         AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
             .then(res => {
+                console.log(res.data.songs)
                 var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
                 if (res.data.background !== null) {
                     setElement(<>
-                        <Container key="front_background" type="biggerContainer">
-                            <img alt="Background from the user" src={res.data.background} />
+                        <Container key="front_background" type={`biggerContainer ${res.data.background.includes("youtube") ? "video" : ""}`}>
+                            {   res.data.background.includes("youtube") ||
+                                res.data.background.includes("vimeo") ||
+                                res.data.background.includes("dailymotion") ?
+                                <iframe width="100%" height="100%"
+                                        src={res.data.background}
+                                        title="Video player"
+                                        frameBorder="0"
+                                        allowFullScreen></iframe>
+                                : <img alt="Background from the user" src={res.data.background} /> }
                         </Container>
                         {widgets}
                     </>)

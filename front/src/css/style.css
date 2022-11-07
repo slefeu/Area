@@ -23,7 +23,6 @@ body {
     color: var(--text-color);
     animation: rotate infinite 2s linear;
     font-size: 3rem;
-    /* width: 100%; */
 }
 
 @keyframes rotate {
@@ -61,6 +60,10 @@ body {
     flex-direction: column;
     animation: linear .2s fadeIn;
     position: relative;
+}
+
+.large {
+    flex-direction: column;
 }
 
 .editContainer {
@@ -104,6 +107,11 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: .7rem;
+}
+
+.biggerContainer.video {
+    height: 25vh;
+    overflow: hidden;
 }
 
 .biggerContainer:active {
@@ -245,8 +253,8 @@ body {
     border-top-right-radius: .7rem;
     border-bottom-right-radius: .7rem;
     background: var(--navbar-color);
-    padding-left: .2rem;
-    padding-right: .2rem;
+    padding-left: .4rem;
+    padding-right: .3rem;
 }
 
 .funZone button {
@@ -353,11 +361,29 @@ body {
     transition-duration: .3s;
     white-space: nowrap;
     font-style: italic;
+    text-align: center;
 }
 
 .tag:hover {
     filter: brightness(1.5);
     cursor: pointer;
+}
+
+.infos {
+    padding: .8rem;
+    padding-bottom: 0;
+}
+
+a,
+a:active {
+    color: var(--accent-color);
+}
+
+#toHome {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 @media only screen and (max-width: 600px) {

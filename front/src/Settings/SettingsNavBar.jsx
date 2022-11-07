@@ -2,7 +2,7 @@
 import React from "react"
 import { NavItem } from "../Tools/NavItem"
 
-import { AiFillHome, AiOutlineUser, AiOutlineLogout, AiFillEdit, AiOutlineKey, AiOutlineCloudUpload } from "react-icons/ai"
+import { AiOutlineArrowLeft, AiOutlineUser, AiFillFormatPainter, AiOutlineKey, AiFillIdcard } from "react-icons/ai"
 
 import "../css/navbar.css"
 
@@ -16,19 +16,17 @@ function SettingsNavBar({ currentPage }) {
 
             <div className="navbarMiddle">
                 <NavItem icon={<AiOutlineUser />} name="Profil" classes={`${currentPage === "UserProfil" ? "active" : ""}`} link="/profil" />
-                <NavItem icon={<AiOutlineCloudUpload />} name="Identification" classes={`${currentPage === "Identification" ? "active" : ""}`} link="/identification" />
-                <NavItem icon={<AiOutlineKey />} name="Handle Your Keys" classes={`${currentPage === "API" ? "active" : ""}`} link="/keys" />
-                <NavItem icon={<AiFillEdit />} name="Appearance" classes={`${currentPage === "Appearance" ? "active" : ""}`} link="/appearance" />
-                <NavItem icon={<AiFillHome />} classes={`right ${currentPage === "Home" ? "active" : ""}`} link="/home" />
-                <NavItem icon={<AiOutlineLogout />} classes={`right`} link="/logout" />
+                <NavItem icon={<AiFillIdcard />} name="Identification" classes={`${currentPage === "Identification" ? "active" : ""}`} link="/identification" />
+                <NavItem icon={<AiOutlineKey />} name="Services" classes={`${currentPage === "API" ? "active" : ""}`} link="/keys" />
+                <NavItem icon={<AiFillFormatPainter />} name="Appearance" classes={`${currentPage === "Appearance" ? "active" : ""}`} link="/appearance" />
+                <NavItem icon={<AiOutlineArrowLeft />} classes={`right ${currentPage === "Home" ? "active" : ""}`} link="/home" />
 
                 <div className="line"></div>
 
             </div>
 
             <div className="navbarBottom">
-                <NavItem icon={<AiFillHome />} classes={`${currentPage === "Home" ? "active" : ""}`} link="/home" />
-                <NavItem icon={<AiOutlineLogout />} classes={`fixedRight`} link="/logout" />
+                <NavItem icon={<AiOutlineArrowLeft />} classes={`${currentPage === "Home" ? "active" : ""}`} link="/home" />
             </div>
         </div>
 

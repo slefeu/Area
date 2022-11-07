@@ -1,7 +1,7 @@
 import '../css/notif.css'
 import '../css/colors.css'
 
-export default function SetNotif({ title, body, type }) {
+export function SetNotif({ title, body, type }) {
     try { document.getElementById("notif").remove() } catch (e) { }
 
     var notif = document.createElement("div")
@@ -11,39 +11,29 @@ export default function SetNotif({ title, body, type }) {
     document.body.appendChild(notif)
 }
 
-
 export function Error({ title, res, msg }) {
-
     var temp = res?.response?.status
     var type = ""
 
-    if (temp === 401) {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-        return;
-    }
-
-    try {
-        type = Object.keys(res.response.data.errors).map((e) => {
-            var temp = ""
-
-            res.response.data.errors[e].forEach((elem) => { temp += elem + ", " })
-            temp = temp.slice(0, -2)
-
-            return `<b>${e}</b>: ${temp}`
-        })
-    } catch (e) { type = res.response.data.error }
-
-    if (type === undefined) {
-        switch (temp) {
-            case 401:
-                type = "No access. Please log in again to continue.";
-                localStorage.removeItem("token");
-                window.location.href = "/login";
-                return
-            case 404: type = "Server not found. Please restart the application."; break
-            case 422: type = "Invalid Informations. Please change request data and retry."; break
-            default: type = "An error occured. Please try again later."; break
+    if (res?.response?.data?.errors) { res.response.data.errors.forEach((e) => { type += `${e}<br/>` }) }
+    else if (res?.response?.data?.error) { type = res.response.data.error }
+    else {
+        try {
+            type = Object.keys(res.response.data).map((e) => {
+                var temp = ""
+                res.response.data[e].forEach((elem) => { temp += elem + ", " })
+                temp = temp.slice(0, -2)
+                return `<b>${e}</b> ${temp}`
+            })
+        } catch (e) {
+            switch (temp) {
+                case 401:
+                    type = "No access. Please log in again to continue.";
+                    localStorage.removeItem("token")
+                    break
+                case 404: type = "Server not found. Please restart the application."; break
+                default: type = "An error occured. Please try again later."; break
+            }
         }
     }
 

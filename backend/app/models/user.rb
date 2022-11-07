@@ -17,7 +17,12 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+
 #  twitter_refresh_token  :string
+
+#  songs                  :jsonb
+#  spotify_token          :string
+
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -31,7 +36,7 @@ require "httparty"
 
 class User < ApplicationRecord
   # Callbacks
-  before_destroy :destroy_children
+  before_destroy :destroy_widgets
 
   # Validattions
   validates :email,
@@ -65,6 +70,7 @@ class User < ApplicationRecord
       # user.image = auth.info.image # assuming the user model has an image
     end
   end
+
 
   def request_token_from_twitter(code)
     result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.twitter_body(code))
@@ -102,4 +108,16 @@ class User < ApplicationRecord
       'grant_type'    => 'authorization_code'}
   end
 
+end
+
+  def reset_token(hashed)
+    self.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
+    self.reset_password_sent_at = Time.now
+    self.save
+  end
+
+  private
+    def destroy_widgets
+      self.widgets.map(&:destroy)
+    end
 end

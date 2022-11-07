@@ -3,7 +3,6 @@ import AXIOS from "./Client.jsx"
 import { Error } from './Notif'
 import Edit from "../Pages/Edit.jsx"
 
-import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 import { useState } from 'react'
 
 function Widget({ w }) {
@@ -51,10 +50,12 @@ function Widget({ w }) {
                         <div className="containerContent"><span className="tagTitle">{w.reaction.name}</span>{optionsReaction}</div>
                     </>
                 )
+                try { temp.getElementsByClassName("funZone")[0].firstChild.innerHTML = "🖊️" } catch (e) {}
                 return
             }
+            try { temp.getElementsByClassName("funZone")[0].firstChild.innerHTML = "❌" } catch (e) {}
         } catch (e) {}
-
+        
         temp.classList.add("editContainer")
         setContent(<Edit widget={w}/>)
     }
@@ -63,26 +64,26 @@ function Widget({ w }) {
         const token = "Bearer " + localStorage.getItem("token")
         const url = localStorage.getItem("url") + "/widgets/" + w.id
         
-        w.active = w.active === undefined ? false : !w.active
+        w.active = !w.active
         AXIOS.patch(url, w, { headers: { Authorization: token,} })
             .then(res => { 
                 try {
                     var element = document.getElementById("widget_" + w.id)
-                    element.classList.add(`${!w.active}`)
-                    element.classList.remove(`${w.active}`)
-                    document.getElementById(`enable_${w.id}`).innerHTML = w.active ? "💤" : "✅"
+                    try { element.classList.add(`${w.active}`) } catch (e) {}
+                    try { element.classList.remove(`${!w.active}`) } catch (e) {}
+                    document.getElementById(`enable_${w.id}`).innerHTML = w.active ? "✅" : "💤"
                 } catch (e) {}
                 })
             .catch(res => { Error({"res": res}) })
     }
 
     return (
-        <Container key={w.id} id={`widget_${w.id}`} type="widget">
+        <Container key={w.id} id={`widget_${w.id}`} type={`widget ${w.active}`}>
             {content}
             <div className="funZone">
-                <button className="button" onClick={() => { editThis(w) }}><AiFillEdit /></button>
-                <button className="button" onClick={() => { removeThis(w.id) }}><AiFillDelete /></button>
-                <button className="button" id={`enable_${w.id}`} onClick={() => { activeThis(w) }}>{w.active ? "💤" : "✅"}</button>
+                <button className="button" title="Edit" onClick={() => { editThis(w) }}>🖊️</button>
+                <button className="button" title="Enable/Disable" id={`enable_${w.id}`} onClick={() => { activeThis(w) }}>{w.active ? "✅" : "💤"}</button>
+                <button className="button" title="Remove" onClick={() => { removeThis(w.id) }}>🗑️</button>
             </div>
         </Container>
     )

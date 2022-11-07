@@ -1,17 +1,19 @@
 import React from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom"
 
 import "../css/colors.css"
 import "../css/auth.css"
 
 import ButtonNavBar from "./NavBarAuth.jsx"
 import AXIOS from "../Tools/Client.jsx"
-import Error from "../Tools/Notif"
+import { Error } from "../Tools/Notif"
 import SwitchTheme from "../Tools/SwitchTheme";
+import PasswordInput from "../Tools/Password";
 
 function LoginForm() {
+    const navigate = useNavigate()
 
     async function SetLoginValues(evt) {
         evt.preventDefault();
@@ -32,7 +34,7 @@ function LoginForm() {
             .then(response => {
                 const token = response.headers["authorization"].replace("Bearer ", "");
                 localStorage.setItem("token", token);
-                window.location.href = "/home";
+                navigate('/home')
             })
             .catch(error => { Error({ "res": error }) });
     }
@@ -41,7 +43,7 @@ function LoginForm() {
         <>
             <form className="form">
                 <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
-                <input className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
+                <PasswordInput className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
                 <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? { display: "none" } : { display: "flex" }} required />
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>

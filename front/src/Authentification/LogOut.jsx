@@ -1,39 +1,35 @@
 import AXIOS from "../Tools/Client.jsx"
-import Load from '../Tools/Load'
 import { Error } from '../Tools/Notif'
 
-import { Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react'
 
 function LogoutUser() {
-    const [element, setElement] = useState(<Load/>)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const token = "Bearer " + localStorage.getItem("token");
         const url = localStorage.getItem("url") + "/signout";
         const values = {
             headers: {
-            Authorization: token,
+                Authorization: token,
             }
         }
 
         AXIOS.delete(url, values)
             .then(res => {
                 localStorage.removeItem("token");
-                setElement(<Navigate to="/login" />)
+                navigate('/login')
             })
             .catch((error) => {
-                // localStorage.removeItem("token");
-                // setElement(<Navigate to="/home" />)
                 Error({"res": error})
+                localStorage.removeItem("token");
+                navigate('/login')
             });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
-    return (
-        <>
-            {element}
-        </>
-    )
+    return ( <></> )
 }
 
 export default LogoutUser;
