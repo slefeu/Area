@@ -65,48 +65,49 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token
       user.first_name = auth.info.first_name # assuming the user model has a username
       user.last_name = auth.info.last_name # assuming the user model has a username
-      #user.provider = auth.provider
+      # user.provider = auth.provider
       user.p_uid = auth.uid
       # user.image = auth.info.image # assuming the user model has an image
     end
   end
 
-
   def request_token_from_spotify(code, redirect_uri)
     info_spotify = HTTParty.post("https://accounts.spotify.com/api/token", body: spotify_body)
     puts info_spotify
     if info_spotify["error"]
-      return {error: info_spotify["error_description"]}
+      return { error: info_spotify["error_description"] }
     end
     self.spotify_token = info_spotify["refresh_token"]
-    return {message: "Spotify token added to user"}
+    { message: "Spotify token added to user" }
   end
 
   def request_token_from_twitter(code)
     result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: twitter_body(code))
     puts twitter_body(code)
     if result["error"]
-      return {error: result["error_description"]}
+      return { error: result["error_description"] }
     end
     self.twitter_refresh_token = result["refresh_token"]
-    return {message: "Twitter token added to user"}
+    { message: "Twitter token added to user" }
   end
 
   def request_token_from_google(code)
     result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(code))
     puts google_body(code)
     if result["error"]
-      return {error: result["error_description"]}
+      return { error: result["error_description"] }
     end
     self.google_refresh_token = result["refresh_token"]
-    return {message: "Google token added to user"}
+    { message: "Google token added to user" }
   end
 
-  def destroy_children
-    self.widgets.destroy
+  def reset_token(hashed)
+    self.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
+    self.reset_password_sent_at = Time.now
+    self.save
   end
 
-  def sign_in_with_google(param)
+  def self.sign_in_with_google(param)
     token = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(code))
     puts token
     access_token = token["access_token"]
@@ -116,36 +117,26 @@ class User < ApplicationRecord
   end
 
   private
+    def spotify_body(code, redirect_uri)
+      { client_id: ENV["SPOTIFY_CLIENT_ID"],
+        client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
+        grant_type: "authorization_code", redirect_uri: redirect_uri }
+    end
 
-  def spotify_body(code, redirect_uri)
-    { client_id: ENV["SPOTIFY_CLIENT_ID"],
-      client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
-      grant_type: "authorization_code", redirect_uri: redirect_uri }
-  end
+    def google_body(code)
+      { "code" => code,
+        "client_id"     => ENV["GOOGLE_CLIENT_ID"],
+        "client_secret" => ENV["GOOGLE_CLIENT_SECRET"],
+        "grant_type"    => "authorization_code" }
+    end
 
-  def google_body(code)
-    { 'code' => code,
-      'client_id'     => ENV['GOOGLE_CLIENT_ID'],
-      'client_secret' => ENV['GOOGLE_CLIENT_SECRET'],
-      'grant_type'    => 'authorization_code'}
-  end
+    def twitter_body(code)
+      { "code" => code,
+        "client_id"     => ENV["TWITTER_API_PUBLIC"],
+        "client_secret" => ENV["TWITTER_API_SECRET"],
+        "grant_type"    => "authorization_code" }
+    end
 
-  def twitter_body(code)
-    { 'code' => code,
-      'client_id'     => ENV['TWITTER_API_PUBLIC'],
-      'client_secret' => ENV['TWITTER_API_SECRET'],
-      'grant_type'    => 'authorization_code'}
-  end
-
-end
-
-  def reset_token(hashed)
-    self.reset_password_token = Devise.token_generator.digest(User, :reset_password_token, hashed)
-    self.reset_password_sent_at = Time.now
-    self.save
-  end
-
-  private
     def destroy_widgets
       self.widgets.map(&:destroy)
     end
