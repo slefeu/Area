@@ -6,11 +6,13 @@ Rails.application.routes.draw do
   # config/routes.rb
 
   root "application#about"
-  # root to: "home#index"
-
-  # ##cancel for tests
 
   get "about.json", to: "application#about"
+
+  get "current_user", to: "users#show_current_user"
+  get "users/reset_token", to: "users#reset_token"
+  delete "signout", to: "users#signout"
+  post "users/spotify_token", to: "users#spotify_token"
 
   resources :reactions, only: [:index, :show]
   resources :actions, only: [:index, :show]
@@ -21,15 +23,14 @@ Rails.application.routes.draw do
   get "current_user", to: "users#show_current_user"
   get "users/reset_token", to: "users#reset_token"
 
+  # oauth2
+  post "users/refresh_token", to: "users#refresh_token"
+
+
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }
   # devise_for :admin
   resources :users, only: [:index, :show, :update, :destroy]
-
-  # Nasa service
-  scope :nasa do
-    get "apod", to: "nasa#apod"
-  end
 
   # Path for documentation
   mount Rswag::Ui::Engine => "/api-docs"

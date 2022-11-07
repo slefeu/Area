@@ -16,8 +16,10 @@ function EditContainer({ widget, json }) {
         widget.name = document.getElementById("name").value
         widget.action.name = document.getElementById("actionsList").value
         widget.reaction.name = document.getElementById("reactionsList").value
-        widget.action.options = {}
-        widget.reaction.options = {}
+        var tempActionID = widget.action.options.action_id
+        var tempReactionID = widget.reaction.options.reaction_id
+        widget.action.options = { "action_id": tempActionID }
+        widget.reaction.options = { "reaction_id": tempReactionID }
 
         try {
             var actionOptions = document.getElementById("inputAction")
