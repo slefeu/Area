@@ -46,14 +46,14 @@ class UsersController < ApplicationController
 
   # POST /users/refresh_token
   def refresh_token
-    puts token_params
-    User.send("request_token_from_#{token_params[:name]}", token_params[:token])
+    puts code_params
+    current_user.send("request_token_from_#{code_params[:name]}", code_params[:code])
   end
 
   private
 
-  def token_params
-    params.require(:refresh_token).permit(:name, :token)
+  def code_params
+    params.require(:refresh_token).permit(:name, :code)
   end
 
   # Use callbacks to share common setup or constraints between actions.

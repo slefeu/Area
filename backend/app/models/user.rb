@@ -55,7 +55,7 @@ class User < ApplicationRecord
 
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider).find_or_create_by(p_uid: auth.uid) do |user|
+    User.find_or_create_by(p_uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token
       user.first_name = auth.info.first_name # assuming the user model has a username
@@ -66,11 +66,20 @@ class User < ApplicationRecord
     end
   end
 
-  def self.request_token_from_google(token)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", self.to_params(token))
+  def request_token_from_twitter(code)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.twitter_body(code))
     puts "*"*100
     puts result
-    puts to_params(token)
+    puts twitter_body(code)
+    self.twitter_refresh_token = result["refresh_token"]
+  end
+
+  def request_token_from_google(code)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.google_body(code))
+    puts "*"*100
+    puts result
+    puts google_body(code)
+    self.google_refresh_token = result["refresh_token"]
   end
 
   def destroy_children
@@ -79,10 +88,17 @@ class User < ApplicationRecord
 
   private
 
-  def self.to_params(code)
+  def self.google_body(code)
     { 'code' => code,
       'client_id'     => ENV['GOOGLE_CLIENT_ID'],
       'client_secret' => ENV['GOOGLE_CLIENT_SECRET'],
+      'grant_type'    => 'authorization_code'}
+  end
+
+  def self.twitter_body(code)
+    { 'code' => code,
+      'client_id'     => ENV['TWITTER_API_PUBLIC'],
+      'client_secret' => ENV['TWITTER_API_SECRET'],
       'grant_type'    => 'authorization_code'}
   end
 
