@@ -32,13 +32,15 @@
                 "name": "temparature_change",
                 "description": "When the temperature outside change ...",
                 "options": {
-                    "city": "city"
+                    "latitude": "text",
+                    "longitude": "text"
                 }
             }, {
                 "name": "weather_change",
                 "description": "When the weather outside change ...",
                 "options": {
-                    "city": "city"
+                    "latitude": "text",
+                    "longitude": "text"
                 }
             }],
             "reactions": []

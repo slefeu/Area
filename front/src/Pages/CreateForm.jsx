@@ -7,8 +7,10 @@ import { Error } from '../Tools/Notif'
 import AXIOS from "../Tools/Client.jsx"
 import { AiOutlineCheck } from 'react-icons/ai'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function CreateForm({ json }) {
+    const navigate = useNavigate()
 
     const [actionsMore, setActionsMore] = useState(<div className="row-2 border"><div>Action Option</div></div>)
     const [reactionsMore, setReactionsMore] = useState(<div className="row-2 border"><div>Reaction Option</div></div>)
@@ -51,7 +53,7 @@ function CreateForm({ json }) {
         } catch (err) {}
 
         AXIOS.post(url, widget, { headers: { Authorization: token,} })
-            .then(res => { window.location.href = "/home" })
+            .then(res => { navigate("/home") })
             .catch(res => { Error({"res": res}) })
     }
 
