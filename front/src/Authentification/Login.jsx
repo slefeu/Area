@@ -59,7 +59,8 @@ function Login() {
 
     const googleLogin = useGoogleLogin({
         onSuccess: tokenResponse => console.log(tokenResponse),
-        onError: error => console.log(error)
+        flow: 'auth-code',
+        onError: error => Error({ "res": error }),
     });
 
     const switchTheme = () => {
