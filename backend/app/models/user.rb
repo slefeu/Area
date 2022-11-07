@@ -82,8 +82,9 @@ class User < ApplicationRecord
     end
   end
 
-  def request_token_from_spotify(code, redirect_uri)
-    info_spotify = HTTParty.post("https://accounts.spotify.com/api/token", body: spotify_body)
+  def request_token_from_spotify(params)
+    info_spotify = HTTParty.post("https://accounts.spotify.com/api/token",
+                                 body: spotify_body(params[:code], params[:redirect_uri]))
     puts info_spotify
     if info_spotify["error"]
       return { error: info_spotify["error_description"] }
@@ -92,9 +93,9 @@ class User < ApplicationRecord
     { message: "Spotify token added to user" }
   end
 
-  def request_token_from_twitter(code)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: twitter_body(code))
-    puts twitter_body(code)
+  def request_token_from_twitter(params)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: twitter_body(params[:code]))
+    puts twitter_body(params[:code])
     if result["error"]
       return { error: result["error_description"] }
     end
@@ -102,9 +103,9 @@ class User < ApplicationRecord
     { message: "Twitter token added to user" }
   end
 
-  def request_token_from_google(code)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(code))
-    puts google_body(code)
+  def request_token_from_google(params)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(params[:code]))
+    puts google_body(params[:code])
     if result["error"]
       return { error: result["error_description"] }
     end

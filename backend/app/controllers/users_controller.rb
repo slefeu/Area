@@ -51,28 +51,10 @@ class UsersController < ApplicationController
     render json: { message: "Logged out." }, status: :ok
   end
 
-  # POST /users/spotify_token
-  def spotify_token
-    code = spotify_token_params[:code]
-    redirect_uri = spotify_token_params[:redirect_uri]
-
-    data = { client_id: ENV["SPOTIFY_CLIENT_ID"],
-             client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
-             grant_type: "authorization_code", redirect_uri: redirect_uri }
-
-    info_spotify = HTTParty.post("https://accounts.spotify.com/api/token", body: data)
-    puts info_spotify
-    if info_spotify["error"]
-      render json: { error: info_spotify["error_description"] }, status: :unauthorized and return
-    end
-    current_user.spotify_token = info_spotify["refresh_token"]
-    render json: { message: "Spotify token added to user" }, status: :ok
-  end
-
   # POST /users/refresh_token
   def refresh_token
     puts code_params
-    res = current_user.send("request_token_from_#{code_params[:name]}", code_params[:code])
+    res = current_user.send("request_token_from_#{code_params[:name]}", code_params)
     unless res[:error]
       render json: { error: res[:error] }, status: :unauthorized
     end
@@ -87,13 +69,12 @@ class UsersController < ApplicationController
   end
 
   private
-
     def google_params
-     params.require(:user).permit(:code)
+      params.require(:user).permit(:code)
     end
 
     def code_params
-      params.require(:refresh_token).permit(:name, :code)
+      params.require(:refresh_token).permit(:name, :code, :redirect_uri)
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -117,5 +98,4 @@ class UsersController < ApplicationController
         render json: { message: "You are not admin." }, status: :unauthorized
       end
     end
-
 end
