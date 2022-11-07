@@ -15,8 +15,7 @@ services:
     volumes:
       - apk:/mobile_app/
     environment:
-      - GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
-      - GOOGLE_API_SECRET=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
+      - REACT_APP_GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
 
   client_mobile:
     build:
@@ -25,8 +24,7 @@ services:
     volumes:
       - apk:/mobile_app/
     environment:
-      - GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
-      - GOOGLE_API_SECRET=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
+      - REACT_APP_GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
 
   db:
     image: "postgres:10-alpine"
