@@ -64,13 +64,17 @@ class UsersController < ApplicationController
   # POST /users/google_sign_in
   def google_sign_in
     user = User.sign_in_with_google(google_params)
+    if user.class == Hash
+      render json: { error: user[:error] }, status: :unauthorized and return
+    end
 
-    render json: user
+    sign_in(user)
+    render json: user, status: :ok
   end
 
   private
     def google_params
-      params.require(:user).permit(:code)
+      params.require(:user).permit(:code, :redirect_uri)
     end
 
     def code_params

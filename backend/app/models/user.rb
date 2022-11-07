@@ -13,6 +13,7 @@
 #  google_token           :string
 #  last_name              :string           not null
 #  p_uid                  :string
+#  picture                :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -70,15 +71,15 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtDenylist
 
 
-  def self.connection_from_omniauth(auth)
-    User.find_or_create_by(p_uid: auth.uid) do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token
-      user.first_name = auth.info.first_name # assuming the user model has a username
-      user.last_name = auth.info.last_name # assuming the user model has a username
-      # user.provider = auth.provider
-      user.p_uid = auth.uid
-      # user.image = auth.info.image # assuming the user model has an image
+  def self.connection_from_omniauth(auth, provider)
+    User.find_or_create_by(p_uid: auth["id"]) do |user|
+      user.email = auth["email"]
+      user.password = "123456"
+      user.first_name = auth["given_name"] # assuming the user model has a username
+      user.last_name = auth["family_name"] # assuming the user model has a username
+      # user.p_uid = auth["id"]
+      user.picture = auth["picture"]
+      user.provider = provider
     end
   end
 
@@ -119,30 +120,69 @@ class User < ApplicationRecord
     self.save
   end
 
-  def self.sign_in_with_google(param)
-    token = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(code))
-    puts token
-    access_token = token["access_token"]
-    puts access_token
-    result = HTTParty.post("https://www.googleapis.com/oauth2/v2/userinfo?access_token=#{access_token}")
-    connection_from_omniauth(result)
+  def self.sign_in_with_google(params)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token",
+                           body: google_body(params[:code], params[:redirect_uri]), headers: { "content-type": "application/x-www-form-urlencoded" })
+    puts "*" * 100
+    puts "TOKEN".center(40)
+    puts result
+    puts "*" * 100
+    if result["error"]
+      return { error: result["error_description"] }
+    end
+
+    refresh_token = result["refresh_token"]
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_refresh_token_body(refresh_token),
+                           headers: { "content-type": "application/x-www-form-urlencoded" })
+
+    puts "*" * 100
+    puts "REFRESH_TOKEN".center(40)
+    puts result
+    puts "*" * 100
+
+    access_token = result["access_token"]
+    result = HTTParty.get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=#{access_token}",
+                           headers: { "content-type": "application/x-www-form-urlencoded", "Authorization": "Bearer" })
+
+    puts "*" * 100
+    puts "ACCESS_TOKEN".center(40)
+    puts result
+    puts "*" * 100
+    connection_from_omniauth(result, "google")
   end
 
+
   private
-    def spotify_body(code, redirect_uri)
+    def self.google_refresh_token_body(refresh_token)
+      { grant_type: "refresh_token",
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        refresh_token: refresh_token }
+    end
+
+    def self.google_access_token_body(access_token)
+      { client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        access_token: access_token }
+    end
+
+    def self.google_body(code, redirect_uri)
+      { code: code,
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        grant_type: "authorization_code",
+        redirect_uri: redirect_uri }
+    end
+
+    def self.spotify_body(code, redirect_uri)
       { client_id: ENV["SPOTIFY_CLIENT_ID"],
         client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
-        grant_type: "authorization_code", redirect_uri: redirect_uri }
+        grant_type: "authorization_code",
+        redirect_uri: redirect_uri }
     end
 
-    def google_body(code)
-      { "code" => code,
-        "client_id"     => ENV["GOOGLE_CLIENT_ID"],
-        "client_secret" => ENV["GOOGLE_CLIENT_SECRET"],
-        "grant_type"    => "authorization_code" }
-    end
 
-    def twitter_body(code)
+    def self.twitter_body(code)
       { "code" => code,
         "client_id"     => ENV["TWITTER_API_PUBLIC"],
         "client_secret" => ENV["TWITTER_API_SECRET"],
