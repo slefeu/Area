@@ -14,8 +14,7 @@ services:
     volumes:
       - apk:/mobile_app/
     environment:
-      - GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
-      - GOOGLE_API_SECRET=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
+      - REACT_APP_GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
       - SPOTIFY_CLIENT_ID=d89d9e6d83484fc48fff9bc6791371c0
       - SPOTIFY_CLIENT_SECRET=e6d65483b28c4c1195b94f67ea6e03cf
 
@@ -26,8 +25,7 @@ services:
     volumes:
       - apk:/mobile_app/
     environment:
-      - GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
-      - GOOGLE_API_SECRET=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
+      - REACT_APP_GOOGLE_API_PUBLIC=786358951542-6embdk4g0midg0odojrc55fq969jrs0a.apps.googleusercontent.com
       - SPOTIFY_CLIENT_ID=d89d9e6d83484fc48fff9bc6791371c0
       - SPOTIFY_CLIENT_SECRET=e6d65483b28c4c1195b94f67ea6e03cf
 

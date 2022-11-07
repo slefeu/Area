@@ -10,6 +10,7 @@ import Appearance from "./Settings/Appearance"
 import Identification from "./Settings/Identification"
 import APIPage from "./Settings/KeyManagement"
 import Admin from "./Pages/Admin"
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
     if (window.location.href.includes("code")) {
@@ -19,26 +20,25 @@ function App() {
      }
 
     return (
-        <>
-        <HashRouter>
-            <Link id="toHome" to="/Home" tabIndex="1">
-                Return to Home
-            </Link>
-            <Routes>
-                <Route path="/" exact element={<Login />} />
-                <Route path="/login" exact element={<Login />} />
-                <Route path="/register" exact element={<Register />} />
-                <Route path="/home" exact element={<Home />} />
-                <Route path="/logout" exact element={<LogoutUser />} />
-                <Route path='/create' exact element={<Create />} />
-                <Route path='/profil' exact element={<UserProfil />} />
-                <Route path='/identification' exact element={<Identification />} />
-                <Route path='/appearance' exact element={<Appearance />} />
-                <Route path='/keys' exact element={<APIPage />} />
-                <Route path='/admin' exact element={<Admin />} />
-            </Routes>
-        </HashRouter>
-        </>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_PUBLIC}>
+            <HashRouter>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/logout" element={<LogoutUser />} />
+                    <Route path='/create' element={<Create />} />
+                    <Route path='/edit/:id' element={<Edit />} />
+                    <Route path='/create' element={<Create />} />
+                    <Route path='/profil' element={<UserProfil />} />
+                    <Route path='/identification' element={<Identification />} />
+                    <Route path='/appearance' element={<Appearance />} />
+                    <Route path='/keys' element={<APIPage />} />
+                    <Route path='/admin' element={<Admin />} />
+                </Routes>
+            </HashRouter>
+        </GoogleOAuthProvider>
     );
 }
 
