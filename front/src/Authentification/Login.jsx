@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
+// import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
 import { Navigate, useNavigate } from "react-router-dom"
 import { useGoogleLogin } from "@react-oauth/google";
@@ -60,6 +60,7 @@ function Login() {
     const googleLogin = useGoogleLogin({
         onSuccess: tokenResponse => console.log(tokenResponse),
         flow: 'auth-code',
+        scope: `https://www.googleapis.com/auth/gmail.modify`,
         onError: error => Error({ "res": error }),
     });
 
@@ -87,9 +88,6 @@ function Login() {
                 <div>
                     <button className="socialNetworks" onClick={googleLogin}>
                         <GoogleLogo />
-                    </button>
-                    <button className="socialNetworks">
-                        <TwitterLogo className="twitter" />
                     </button>
                 </div>
             </div>

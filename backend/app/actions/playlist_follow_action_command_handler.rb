@@ -7,13 +7,10 @@ class PlaylistFollowActionCommandHandler
   def call(attributes)
     puts "Playlist Follow Command Handler"
 
-    client_id = "d89d9e6d83484fc48fff9bc6791371c0"
-    client_secret = "e6d65483b28c4c1195b94f67ea6e03cf"
-
     begin
       token_info = HTTParty.post(
         "https://accounts.spotify.com/api/token",
-        "body": "grant_type=client_credentials&client_id=#{client_id}&client_secret=#{client_secret}"
+        "body": "grant_type=client_credentials&client_id=#{ENV["SPOTIFY_CLIENT_ID"]}&client_secret=#{ENV["SPOTIFY_CLIENT_SECRET"]}"
       )
     rescue NoMethodError
       puts "Error: Spotify return null"
