@@ -6,6 +6,8 @@ import Edit from "../Pages/Edit.jsx"
 import { useState } from 'react'
 
 function Widget({ w }) {
+
+    console.table(w)
     
     var optionsAction = Object.keys(w.action.options).map((elem) => {
         if (elem === "action_id") return ""

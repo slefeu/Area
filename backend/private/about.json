@@ -111,7 +111,13 @@
             }]
         }, {
             "name": "spotify",
-            "actions": [],
+            "actions": [{
+                "name": "playlist_follow",
+                "description": "When playlist has a new follower...",
+                "options": {
+                    "playlist_id": "text"
+                }
+            }],
             "reactions": [{
                     "name": "like_playlist",
                     "description": "Archive every song liked in a playlist [Spotify account required]",

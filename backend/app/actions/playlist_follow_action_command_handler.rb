@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class NewSongReactionCommandHandler
+class PlaylistFollowActionCommandHandler
   def initialize
   end
 
   def call(attributes)
-    puts "New Songs Command Handler"
+    puts "Playlist Follow Command Handler"
 
     client_id = "d89d9e6d83484fc48fff9bc6791371c0"
     client_secret = "e6d65483b28c4c1195b94f67ea6e03cf"
@@ -21,8 +21,8 @@ class NewSongReactionCommandHandler
     end
 
     begin
-      songs = HTTParty.get(
-        "https://api.spotify.com/v1/browse/new-releases?limit=5",
+      playlist = HTTParty.get(
+        "https://api.spotify.com/v1/playlists/#{attributes[:playlist]}",
         "headers": {"Authorization": "Bearer #{token_info["access_token"]}"}
       )
     rescue NoMethodError
@@ -30,18 +30,18 @@ class NewSongReactionCommandHandler
       return false
     end
 
-    result = []
-    songs["albums"]["items"].each do |song|
-      result << {
-        "image": song["images"][0]["url"],
-        "url": song["external_urls"]["spotify"],
-      }
+    current_follow = playlist["followers"]["total"].to_i
+
+    last_follow = attributes[:nb_follower].to_i
+    result = current_follow != last_follow
+
+    if result
+      puts "Follow Change: #{result}"
+      action = Action.find(attributes[:action_id])
+      action.options["nb_follower"] = current_follow.to_s
+      action.save
     end
 
-    puts result
-
-    user = User.find(attributes[:user_id])
-    user.songs = result
-    user.save
+    result
   end
 end
