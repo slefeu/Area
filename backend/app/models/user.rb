@@ -70,19 +70,6 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[twitter google_oauth2],
          jwt_revocation_strategy: JwtDenylist
 
-
-  def self.connection_from_omniauth(auth, provider)
-    User.find_or_create_by(p_uid: auth["id"]) do |user|
-      user.email = auth["email"]
-      user.password = "123456"
-      user.first_name = auth["given_name"] # assuming the user model has a username
-      user.last_name = auth["family_name"] # assuming the user model has a username
-      # user.p_uid = auth["id"]
-      user.picture = auth["picture"]
-      user.provider = provider
-    end
-  end
-
   def request_token_from_spotify(params)
     info_spotify = HTTParty.post("https://accounts.spotify.com/api/token",
                                  body: spotify_body(params[:code], params[:redirect_uri]))
@@ -156,6 +143,18 @@ class User < ApplicationRecord
     end
 
     connection_from_omniauth(result, "google")
+  end
+
+  def self.connection_from_omniauth(auth, provider, token)
+    User.find_or_create_by(p_uid: auth["id"]) do |user|
+      user.email = auth["email"]
+      user.password = "123456"
+      user.first_name = auth["given_name"]
+      user.last_name = auth["family_name"]
+      user.picture = auth["picture"]
+      user.provider = provider
+      user.send("#{provider}_token", token)
+    end
   end
 
 
