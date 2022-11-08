@@ -78,6 +78,7 @@ class User < ApplicationRecord
       return { error: info_spotify["error_description"] }
     end
     self.spotify_token = info_spotify["refresh_token"]
+    self.save
     { message: "Spotify token added to user" }
   end
 
@@ -88,6 +89,7 @@ class User < ApplicationRecord
       return { error: result["error_description"] }
     end
     self.twitter_refresh_token = result["refresh_token"]
+    self.save
     { message: "Twitter token added to user" }
   end
 
@@ -98,6 +100,7 @@ class User < ApplicationRecord
       return { error: result["error_description"] }
     end
     self.google_refresh_token = result["refresh_token"]
+    self.save
     { message: "Google token added to user" }
   end
 
@@ -181,7 +184,7 @@ class User < ApplicationRecord
         redirect_uri: redirect_uri }
     end
 
-    def self.spotify_body(code, redirect_uri)
+    def spotify_body(code, redirect_uri)
       { client_id: ENV["SPOTIFY_CLIENT_ID"],
         client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
         grant_type: "authorization_code",

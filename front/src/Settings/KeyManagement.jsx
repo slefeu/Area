@@ -1,21 +1,8 @@
-import { AiOutlineSave } from "react-icons/ai"
+// import { AiOutlineSave } from "react-icons/ai"
 
 import SettingsNavBar from "./SettingsNavBar"
 import Container from "../Tools/Container"
-import AXIOS from "../Tools/Client"
 import SwitchTheme from "../Tools/SwitchTheme"
-
-function HandleKey({children, title, fun}) {
-    return (
-        <Container type="large">
-            <div className="column row-2 border">
-                <div>{title}</div>
-                {children}
-            </div>
-            <button onClick={fun} className="btnBig"><AiOutlineSave /></button>
-        </Container>
-    );
-}
 
 function APIPage() {
     SwitchTheme();
@@ -27,40 +14,16 @@ function APIPage() {
         <>
         <SettingsNavBar currentPage="API" />
         <div className="content large">
-            <HandleKey title="Spotify" key="Spotify" fun={() => {
-                const token = "Bearer " + localStorage.getItem("token")
-                AXIOS.patch(localStorage.getItem("url") + "/users",
-                    { 
-                        "user": {
-                            "spotify_token": document.getElementById("spotifyInput").value,
-                            "current_password": document.getElementById("passwordInput").value
-                        }
-                    },
-                    { headers: { Authorization: token } })
-                    .then(res => { console.log(res) })
-                    .catch(error => { Error({ "res": error }) });
-            }}>
-                <div className="infos">
-                    Go to <a href="https://developer.spotify.com/console/get-current-user/" target="_blank" rel="noreferrer">Spotify API</a> and get your token, or try to
-                    <a href={`https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=${url}&response_type=code`}> login with Spotify</a>.
-                </div>
-                <input type="text" id="spotifyInput" placeholder="User Token" defaultValue={localStorage.getItem("spotifyToken")}/>
-                <input type="text" id="passwordInput" placeholder="AREA Password" />
-                <button onClick={() => {
-                    AXIOS.get("https://api.spotify.com/v1/me", {
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + localStorage.getItem("spotifyToken")
-                        }
-                    })
-                    .then(res => { console.log(res.data) })
-                    .catch(err => { console.log(err) })
+            <Container type="large" key="Spotify">
+                <a  className="spotify" href={`https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=${url}&response_type=code&scope=user-library-read,playlist-modify-public,playlist-modify-private,user-read-private,user-read-email`}>Login with Spotify</a>
+            </Container>
 
-                }}>Test Spotify Token</button>
-            </HandleKey>
-            <HandleKey title="Google" key="Google" fun={() => { console.log("google") } } />
-            <HandleKey title="Twitter" key="Twitter" fun={() => { console.log("twitter") } } />
+            {/* <Container type="large" key="Google">
+                <div className="column row-2 border">
+                    <div>Google</div>
+                </div>
+                <button onClick={() => { console.log("google") }} className="btnBig"><AiOutlineSave /></button>
+            </Container> */}
         </div>
         </>
     );
