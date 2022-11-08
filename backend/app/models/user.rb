@@ -142,10 +142,10 @@ class User < ApplicationRecord
       return [nil, result]
     end
 
-    connection_from_omniauth(result, "google")
+    connection_from_oauth(result, "google")
   end
 
-  def self.connection_from_omniauth(auth, provider, token)
+  def self.connection_from_oauth(auth, provider, token)
     User.find_or_create_by(p_uid: auth["id"]) do |user|
       user.email = auth["email"]
       user.password = "123456"
