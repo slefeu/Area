@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :user_logged?
+  before_action :user_logged?, except: %i[ google_sign_in ]
   before_action :set_user, only: %i[ show update destroy ]
   before_action :is_admin?, only: %i[ index show update destroy ]
 
@@ -63,13 +63,14 @@ class UsersController < ApplicationController
 
   # POST /users/google_sign_in
   def google_sign_in
-    user, error = User.sign_in_with_google(google_params)
-    unless user
+    @user, error = User.sign_in_with_google(google_params)
+    unless @user
       render json: error, status: :unauthorized and return
     end
 
-    sign_in(user)
-    render json: user, status: :ok
+    # sign_in_and_redirect @user, event: :authentication
+    # redirect_to login_path # return interslice_session
+    authenticate_user!
   end
 
   private
