@@ -109,7 +109,8 @@ class User < ApplicationRecord
 
   def self.sign_in_with_google(params)
     result = HTTParty.post("https://accounts.google.com/o/oauth2/token",
-                           body: google_body(params[:code], params[:redirect_uri]), headers: { "content-type": "application/x-www-form-urlencoded" })
+                           body: google_body(params[:code], params[:redirect_uri]),
+                           headers: { "content-type": "application/x-www-form-urlencoded" })
     puts "*" * 100
     puts "TOKEN".center(40)
     puts result
