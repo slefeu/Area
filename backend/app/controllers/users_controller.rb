@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :user_logged?
+  before_action :user_logged?, except: %i[ google_sign_in ]
   before_action :set_user, only: %i[ show update destroy ]
   before_action :is_admin?, only: %i[ index show update destroy ]
 

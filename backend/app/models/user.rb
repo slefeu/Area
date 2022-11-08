@@ -143,7 +143,7 @@ class User < ApplicationRecord
       return [nil, result]
     end
 
-    connection_from_oauth(result, "google")
+    connection_from_oauth(result, "google", refresh_token)
   end
 
   def self.connection_from_oauth(auth, provider, token)
@@ -154,7 +154,7 @@ class User < ApplicationRecord
       user.last_name = auth["family_name"]
       user.picture = auth["picture"]
       user.provider = provider
-      user.send("#{provider}_token", token)
+      user.send("#{provider}_token=", token)
     end
   end
 
