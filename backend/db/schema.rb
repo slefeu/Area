@@ -52,9 +52,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_07_234354) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "twitter_token"
-    t.string "google_token"
     t.string "spotify_token"
+    t.string "google_token"
+    t.string "twitter_token"
     t.jsonb "songs"
     t.string "picture"
     t.index ["email"], name: "index_users_on_email", unique: true
