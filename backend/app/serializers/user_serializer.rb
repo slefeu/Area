@@ -42,7 +42,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :first_name, :last_name, :email, :admin, :background, :spotify_token, :songs, :picture
+  attributes :id, :first_name, :last_name, :email, :admin, :background, :songs, :picture
 
   has_many :widgets
 end
