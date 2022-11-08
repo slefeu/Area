@@ -124,8 +124,8 @@
                     "options": {}
                 },
                 {
-                    "name": "new_song",
-                    "description": "Add the 5 newest songs to the home page",
+                    "name": "new_album",
+                    "description": "Add the 5 newest album to the home page",
                     "options": {}
                 }
             ]

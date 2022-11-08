@@ -1,16 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
 import { Navigate, useNavigate } from "react-router-dom"
+import { useGoogleLogin } from "@react-oauth/google";
+import { FaMoon } from "react-icons/fa"
 
 import "../css/colors.css"
 import "../css/auth.css"
 
-import ButtonNavBar from "./NavBarAuth.jsx"
-import AXIOS from "../Tools/Client.jsx"
+import ButtonNavBar from "./NavBarAuth"
+import AXIOS from "../Tools/Client"
 import { Error } from "../Tools/Notif"
-import SwitchTheme from "../Tools/SwitchTheme";
-import PasswordInput from "../Tools/Password";
+import SwitchTheme from "../Tools/SwitchTheme"
+import PasswordInput from "../Tools/Password"
 
 function LoginForm() {
     const navigate = useNavigate()
@@ -52,17 +54,38 @@ function LoginForm() {
 }
 
 function Login() {
+
+    const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "theme-dark" ? true : false);
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: tokenResponse => console.log(tokenResponse),
+        flow: 'auth-code',
+        onError: error => Error({ "res": error }),
+    });
+
+    const switchTheme = () => {
+        setIsDark(!isDark);
+        SwitchTheme();
+    }
+
     if (localStorage.getItem("token")) { return (<Navigate to="/home" />) }
     SwitchTheme();
 
     return (
         <div className="background">
+            <button className="themeButton" onClick={switchTheme}>
+                <FaMoon
+                    style={{
+                        fill: isDark ? "white" : "black",
+                    }}
+                ></FaMoon>
+            </button>
             <div className="authContainer">
                 <ButtonNavBar active="Login" classPicked="activeButton" dark={localStorage.getItem("theme") === "theme-dark" ? true : false} />
                 <LoginForm></LoginForm>
                 <div className="subtitle">Or continue with</div>
                 <div>
-                    <button className="socialNetworks">
+                    <button className="socialNetworks" onClick={googleLogin}>
                         <GoogleLogo />
                     </button>
                     <button className="socialNetworks">
