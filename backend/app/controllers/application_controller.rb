@@ -24,4 +24,13 @@ class ApplicationController < ActionController::API
         render json: { "error": "You need to be logged" }, status: :unauthorized
       end
     end
+
+    def authenticate_user!
+      if user_signed_in?
+        super
+      else
+        redirect_to login_path # return interslice_session
+        # redirect_to controller: "users/sessions", action: :create
+      end
+    end
 end
