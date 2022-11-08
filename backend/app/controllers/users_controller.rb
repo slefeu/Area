@@ -68,9 +68,8 @@ class UsersController < ApplicationController
       render json: error, status: :unauthorized and return
     end
 
-    # sign_in_and_redirect @user, event: :authentication
-    # redirect_to login_path # return interslice_session
-    authenticate_user!
+    sign_in(@user)
+    redirect_to controller: "users/sessions", action: :create
   end
 
   private

@@ -150,15 +150,17 @@ class User < ApplicationRecord
   end
 
   def self.connection_from_oauth(auth, provider, token)
-    User.find_or_create_by(p_uid: auth["id"]) do |user|
+    user = User.find_or_create_by(p_uid: auth["id"]) do |user|
       user.email = auth["email"]
       user.password = "123456"
       user.first_name = auth["given_name"]
       user.last_name = auth["family_name"]
       user.picture = auth["picture"]
       user.provider = provider
-      user.send("#{provider}_token=", token)
     end
+    user.send("#{provider}_token=", token)
+    user.save
+    user
   end
 
 
