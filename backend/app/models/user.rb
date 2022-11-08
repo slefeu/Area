@@ -128,7 +128,7 @@ class User < ApplicationRecord
     puts result
     puts "*" * 100
     if result["error"]
-      return { error: result["error_description"] }
+      return [nil, result]
     end
 
     refresh_token = result["refresh_token"]
@@ -139,6 +139,9 @@ class User < ApplicationRecord
     puts "REFRESH_TOKEN".center(40)
     puts result
     puts "*" * 100
+    if result["error"]
+      return [nil, result]
+    end
 
     access_token = result["access_token"]
     result = HTTParty.get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=#{access_token}",
@@ -148,6 +151,10 @@ class User < ApplicationRecord
     puts "ACCESS_TOKEN".center(40)
     puts result
     puts "*" * 100
+    if result["error"]
+      return [nil, result]
+    end
+
     connection_from_omniauth(result, "google")
   end
 
