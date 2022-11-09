@@ -8,16 +8,17 @@
 #  email                  :string           not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string           not null
-#  google_refresh_token   :string
+#  google_token           :string
 #  last_name              :string           not null
 #  p_uid                  :string
+#  picture                :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  twitter_refresh_token  :string
 #  songs                  :jsonb
 #  spotify_token          :string
+#  twitter_token          :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

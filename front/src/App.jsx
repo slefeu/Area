@@ -11,13 +11,30 @@ import Identification from "./Settings/Identification"
 import APIPage from "./Settings/KeyManagement"
 import Admin from "./Pages/Admin"
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import AXIOS from "./Tools/Client"
 
 function App() {
 
     if (window.location.href.includes("code")) {
-        var url = new URL(window.location.href)
-        var access_token = url.searchParams.get("code")
-        localStorage.setItem("spotifyToken", access_token)
+        console.log("try to save spotify token")
+        var token = "Bearer " + localStorage.getItem("token");
+        var url_target = localStorage.getItem("url") + `/users/refresh_token`
+        localStorage.setItem("spotifyToken", window.location.href.split("code=")[1].split("&")[0])
+        var access_token = {
+            "refresh_token": {
+                "name": "spotify",
+                "code": localStorage.getItem("spotifyToken"),
+                "redirect_uri": localStorage.getItem("platform") === "mobile" ? "file:///android_asset/www/index.html" : "http://" + window.location.href.split("/")[2]
+            }
+        }
+
+        AXIOS.post(url_target, access_token, { headers: { Authorization: token } })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => Error(err))
+
+
     }
 
     return (

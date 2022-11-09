@@ -5,4 +5,5 @@ Rails.application.reloader.to_prepare do
   RouterReaction.resolve(command: SendMailReactionCommand, handler: SendMailReactionCommandHandler.new)
   RouterReaction.resolve(command: DailyPhotoBgReactionCommand, handler: DailyPhotoBgReactionCommandHandler.new)
   RouterReaction.resolve(command: NewAlbumReactionCommand, handler: NewAlbumReactionCommandHandler.new)
+  RouterReaction.resolve(command: LikePlaylistReactionCommand, handler: LikePlaylistReactionCommandHandler.new)
 end
