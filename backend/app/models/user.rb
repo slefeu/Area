@@ -10,13 +10,25 @@
 #  email                  :string           not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string           not null
-#  google_refresh_token   :string
+#  google_token           :string
 #  last_name              :string           not null
 #  p_uid                  :string
+#  picture                :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  songs                  :jsonb
+#  spotify_token          :string
+#  twitter_token          :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
 
 #  twitter_refresh_token  :string
 
@@ -58,34 +70,38 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[twitter google_oauth2],
          jwt_revocation_strategy: JwtDenylist
 
-
-  def self.from_omniauth(auth)
-    User.find_or_create_by(p_uid: auth.uid) do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token
-      user.first_name = auth.info.first_name # assuming the user model has a username
-      user.last_name = auth.info.last_name # assuming the user model has a username
-      user.provider = auth.provider
-      user.p_uid = auth.uid
-      # user.image = auth.info.image # assuming the user model has an image
+  def request_token_from_spotify(params)
+    info_spotify = HTTParty.post("https://accounts.spotify.com/api/token",
+                                 body: spotify_body(params[:code], params[:redirect_uri]))
+    puts info_spotify
+    if info_spotify["error"]
+      return { error: info_spotify["error_description"] }
     end
+    self.spotify_token = info_spotify["refresh_token"]
+    self.save
+    { message: "Spotify token added to user" }
   end
 
-
-  def request_token_from_twitter(code)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.twitter_body(code))
-    puts "*"*100
-    puts result
-    puts twitter_body(code)
+  def request_token_from_twitter(params)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: twitter_body(params[:code]))
+    puts twitter_body(params[:code])
+    if result["error"]
+      return { error: result["error_description"] }
+    end
     self.twitter_refresh_token = result["refresh_token"]
+    self.save
+    { message: "Twitter token added to user" }
   end
 
-  def request_token_from_google(code)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: self.google_body(code))
-    puts "*"*100
-    puts result
-    puts google_body(code)
+  def request_token_from_google(params)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(params[:code]))
+    puts google_body(params[:code])
+    if result["error"]
+      return { error: result["error_description"] }
+    end
     self.google_refresh_token = result["refresh_token"]
+    self.save
+    { message: "Google token added to user" }
   end
 
   def reset_token(hashed)
@@ -94,13 +110,89 @@ class User < ApplicationRecord
     self.save
   end
 
-  private
-    def self.google_body(code)
-      { "code" => code,
-        "client_id"     => ENV["GOOGLE_CLIENT_ID"],
-        "client_secret" => ENV["GOOGLE_CLIENT_SECRET"],
-        "grant_type"    => "authorization_code" }
+  def self.sign_in_with_google(params)
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token",
+                           body: google_body(params[:code], params[:redirect_uri]),
+                           headers: { "content-type": "application/x-www-form-urlencoded" })
+    puts "*" * 100
+    puts "TOKEN".center(40)
+    puts result
+    puts "*" * 100
+    if result["error"]
+      return [nil, result]
     end
+
+    refresh_token = result["refresh_token"]
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_refresh_token_body(refresh_token),
+                           headers: { "content-type": "application/x-www-form-urlencoded" })
+
+    puts "*" * 100
+    puts "REFRESH_TOKEN".center(40)
+    puts result
+    puts "*" * 100
+    if result["error"]
+      return [nil, result]
+    end
+
+    access_token = result["access_token"]
+    result = HTTParty.get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=#{access_token}",
+                           headers: { "content-type": "application/x-www-form-urlencoded", "Authorization": "Bearer" })
+
+    puts "*" * 100
+    puts "ACCESS_TOKEN".center(40)
+    puts result
+    puts "*" * 100
+    if result["error"]
+      return [nil, result]
+    end
+
+    connection_from_oauth(result, "google", refresh_token)
+  end
+
+  def self.connection_from_oauth(auth, provider, token)
+    user = User.find_or_create_by(p_uid: auth["id"]) do |user|
+      user.email = auth["email"]
+      user.password = "123456"
+      user.first_name = auth["given_name"]
+      user.last_name = auth["family_name"]
+      user.picture = auth["picture"]
+      user.provider = provider
+    end
+    user.send("#{provider}_token=", token)
+    user.save
+    user
+  end
+
+
+  private
+    def self.google_refresh_token_body(refresh_token)
+      { grant_type: "refresh_token",
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        refresh_token: refresh_token }
+    end
+
+    def self.google_access_token_body(access_token)
+      { client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        access_token: access_token }
+    end
+
+    def self.google_body(code, redirect_uri)
+      { code: code,
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        grant_type: "authorization_code",
+        redirect_uri: redirect_uri }
+    end
+
+    def spotify_body(code, redirect_uri)
+      { client_id: ENV["SPOTIFY_CLIENT_ID"],
+        client_secret: ENV["SPOTIFY_CLIENT_SECRET"], code: code,
+        grant_type: "authorization_code",
+        redirect_uri: redirect_uri }
+    end
+
 
     def self.twitter_body(code)
       { "code" => code,

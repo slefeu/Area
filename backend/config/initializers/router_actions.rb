@@ -8,4 +8,6 @@ Rails.application.reloader.to_prepare do
   RouterAction.resolve(command: EachMonthActionCommand, handler: EachMonthActionCommandHandler.new)
   RouterAction.resolve(command: TemparatureChangeActionCommand, handler: TemparatureChangeActionCommandHandler.new)
   RouterAction.resolve(command: WeatherChangeActionCommand, handler: WeatherChangeActionCommandHandler.new)
+  RouterAction.resolve(command: PlaylistFollowActionCommand, handler: PlaylistFollowActionCommandHandler.new)
+  RouterAction.resolve(command: EmailReceivedActionCommand, handler: EmailReceivedActionCommandHandler.new)
 end
