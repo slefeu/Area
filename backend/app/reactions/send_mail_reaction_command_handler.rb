@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "google-apis-gmail_v1"
-
 class SendMailReactionCommandHandler
   def initialize
   end
