@@ -8,8 +8,8 @@
 
 # Users
 users = [
-  { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "123456", admin: true },
-  { first_name: "Kevin", last_name: "Gros", email: "grosKevin@gmail.com", password: "123456", admin: false }
+  { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four@email.com", password: "123456", admin: true, songs: :nil },
+  { first_name: "Kevin", last_name: "Gros", email: "grosKevin@gmail.com", password: "123456", admin: false, songs: :nil }
   ]
 if User.count == 0
   users.each do |user|
@@ -27,7 +27,7 @@ if Widget.count == 0
 end
 
 # Actions
-actions = [{ klass: "each_day", options: {}, widget_id: Widget.first.id }]
+actions = [{ klass: "at_hour", options: { "hour": "16:00" }, widget_id: Widget.first.id }]
 if Action.count == 0
   actions.each do |action|
     Action.create!(klass: action[:klass], options: action[:options], widget_id: action[:widget_id])

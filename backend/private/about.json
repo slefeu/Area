@@ -8,26 +8,21 @@
             "actions": [{
                 "name": "each_day",
                 "description": "Each day ...",
-                "options": {
-                    "last_day": "text"
-                }
+                "options": {}
             }, {
                 "name": "each_month",
                 "description": "Each month...",
-                "options": {
-                    "last_month": "text"
-                }
+                "options": {}
             }, {
                 "name": "each_hour",
                 "description": "Each hour...",
-                "options": {
-                    "last_hour": "text"
-                }
+                "options": {}
             }, {
                 "name": "at_hour",
                 "description": "At such time ...",
                 "options": {
-                    "hour": "text"
+                    "hour": "hour",
+                    "city": "city"
                 }
             }],
             "reactions": []
@@ -36,23 +31,29 @@
             "actions": [{
                 "name": "temparature_change",
                 "description": "When the temperature outside change ...",
-                "options": {}
+                "options": {
+                    "latitude": "text",
+                    "longitude": "text"
+                }
             }, {
                 "name": "weather_change",
                 "description": "When the weather outside change ...",
-                "options": {}
+                "options": {
+                    "latitude": "text",
+                    "longitude": "text"
+                }
             }],
             "reactions": []
         }, {
             "name": "gmail",
             "actions": [{
                 "name": "email_received",
-                "description": "When an email is received in the inbox ...",
+                "description": "When an email is received in the inbox... [Google account required]",
                 "options": {}
             }],
             "reactions": [{
                 "name": "send_email",
-                "description": "An email is sent to the selected person/people",
+                "description": "An email is sent to the selected person/people [Google account required]",
                 "options": {
                     "receiver": "text",
                     "object": "text",
@@ -64,30 +65,30 @@
             "name": "twitter",
             "actions": [{
                 "name": "tweet_liked",
-                "description": "When you like a tweet ...",
+                "description": "When you like a tweet... [Twitter account required]",
                 "options": {}
             }, {
                 "name": "new_follower",
-                "description": "When someone follow you ...",
+                "description": "When someone follow you... [Twitter account required]",
                 "options": {}
             }, {
                 "name": "new_tl",
-                "description": "When a new tweet appear in your tweetline ...",
+                "description": "When a new tweet appear in your tweetline... [Twitter account required]",
                 "options": {}
             }, {
                 "name": "get_mentionned",
-                "description": "When someone mention you ...",
+                "description": "When someone mention you... [Twitter account required]",
                 "options": {}
             }],
             "reactions": [{
                 "name": "send_tweet",
-                "description": "A tweet is posted on your tweetline",
+                "description": "A tweet is posted on your tweetline [Twitter account required]",
                 "options": {
                     "content": "text"
                 }
             }, {
                 "name": "follow_user",
-                "description": "Follow the selected user",
+                "description": "Follow the selected user [Twitter account required]",
                 "options": {
                     "user_name": "text"
                 }
@@ -97,25 +98,37 @@
             "actions": [],
             "reactions": [{
                 "name": "daily_photo_bg",
-                "description": "Set the daily photography from the NASA as background",
+                "description": "Add the daily photography from the NASA to the home page",
                 "options": {}
             }, {
                 "name": "daily_photo_twitter",
-                "description": "Post the daily photography from the NASA on Twitter",
+                "description": "Post the daily photography from the NASA on Twitter [Twitter account required]",
                 "options": {}
             }, {
                 "name": "daily_photo_mail",
-                "description": "Send by email the photography from the NASA",
+                "description": "Send by email the photography from the NASA [Google account required]",
                 "options": {}
             }]
         }, {
             "name": "spotify",
-            "actions": [],
+            "actions": [{
+                "name": "playlist_follow",
+                "description": "When playlist has a new follower...",
+                "options": {
+                    "playlist_id": "text"
+                }
+            }],
             "reactions": [{
-                "name": "like_playlist",
-                "description": "Archive every song liked in a playlist",
-                "options": {}
-            }]
+                    "name": "like_playlist",
+                    "description": "Archive every song liked in a playlist [Spotify account required]",
+                    "options": {}
+                },
+                {
+                    "name": "new_album",
+                    "description": "Add the 5 newest album to the home page",
+                    "options": {}
+                }
+            ]
         }]
     }
 }

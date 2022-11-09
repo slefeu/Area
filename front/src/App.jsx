@@ -1,20 +1,46 @@
-import { HashRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route, Link } from "react-router-dom"
 
 import Register from "./Authentification/Register"
 import Login from "./Authentification/Login"
 import LogoutUser from "./Authentification/LogOut"
 import Home from "./Pages/Home"
 import Create from "./Pages/Create"
-import Edit from "./Pages/Edit"
 import UserProfil from "./Settings/UserProfil"
 import Appearance from "./Settings/Appearance"
 import Identification from "./Settings/Identification"
 import APIPage from "./Settings/KeyManagement"
+import Admin from "./Pages/Admin"
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import AXIOS from "./Tools/Client"
 
 function App() {
+
+    if (window.location.href.includes("code")) {
+        console.log("try to save spotify token")
+        var token = "Bearer " + localStorage.getItem("token");
+        var url_target = localStorage.getItem("url") + `/users/refresh_token`
+        localStorage.setItem("spotifyToken", window.location.href.split("code=")[1].split("&")[0])
+        var access_token = {
+            "refresh_token": {
+                "name": "spotify",
+                "code": localStorage.getItem("spotifyToken"),
+                "redirect_uri": localStorage.getItem("platform") === "mobile" ? "file:///android_asset/www/index.html" : "http://" + window.location.href.split("/")[2]
+            }
+        }
+
+        AXIOS.post(url_target, access_token, { headers: { Authorization: token } })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => Error(err))
+
+
+    }
+
     return (
-        <>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_PUBLIC}>
             <HashRouter>
+                <Link id="toHome" to="/Home" tabIndex="1">Return to Home</Link>
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
@@ -22,15 +48,14 @@ function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/logout" element={<LogoutUser />} />
                     <Route path='/create' element={<Create />} />
-                    <Route path='/edit/:id' element={<Edit />} />
-                    <Route path='/create' element={<Create />} />
                     <Route path='/profil' element={<UserProfil />} />
                     <Route path='/identification' element={<Identification />} />
                     <Route path='/appearance' element={<Appearance />} />
                     <Route path='/keys' element={<APIPage />} />
+                    <Route path='/admin' element={<Admin />} />
                 </Routes>
             </HashRouter>
-        </>
+        </GoogleOAuthProvider>
     );
 }
 

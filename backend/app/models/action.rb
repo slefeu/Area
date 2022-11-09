@@ -19,7 +19,7 @@
 #
 class Action < ApplicationRecord
   # Callbacks
-  after_create :add_id_informations
+  after_create :add_id_information
 
   # Validations
   validate :klass_exist?
@@ -28,21 +28,22 @@ class Action < ApplicationRecord
   belongs_to :widget
   has_one :reaction
 
-  def klass_exist?
-    (klass.camelize+"ActionCommand").constantize
-  rescue NameError => e
-    errors.add(:errors, "Action '#{klass}' doesn't exist")
-    false
-  else
-    true
-  end
-
-  def add_id_informations
-    self.options["action_id"] = self.id
-    self.save
-  end
-
   def klass_command
     klass.camelize+"ActionCommand"
   end
+
+  private
+    def klass_exist?
+      (klass.camelize+"ActionCommand").constantize
+    rescue NameError
+      errors.add(:errors, "Action '#{klass}' doesn't exist")
+      false
+    else
+      true
+    end
+
+    def add_id_information
+      self.options["action_id"] = self.id
+      self.save
+    end
 end

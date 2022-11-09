@@ -16,6 +16,7 @@ export function Error({ title, res, msg }) {
     var type = ""
 
     if (res?.response?.data?.errors) { res.response.data.errors.forEach((e) => { type += `${e}<br/>` }) }
+    else if (res?.response?.data?.error) { type = res.response.data.error }
     else {
         try {
             type = Object.keys(res.response.data).map((e) => {

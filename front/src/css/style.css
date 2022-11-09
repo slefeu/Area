@@ -43,10 +43,11 @@ body {
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
+    gap: .7rem;
 }
 
 .container {
-    margin: .7rem;
+    /* margin: .7rem; */
     background: var(--navbar-light-color);
     display: flex;
     flex: 1 25%;
@@ -60,6 +61,10 @@ body {
     flex-direction: column;
     animation: linear .2s fadeIn;
     position: relative;
+}
+
+.large {
+    flex-direction: column;
 }
 
 .editContainer {
@@ -357,11 +362,41 @@ body {
     transition-duration: .3s;
     white-space: nowrap;
     font-style: italic;
+    text-align: center;
 }
 
 .tag:hover {
     filter: brightness(1.5);
     cursor: pointer;
+}
+
+a,
+a:active {
+    color: var(--accent-color);
+}
+
+#toHome {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.spotify {
+    background: #00eb67;
+    text-align: center;
+    padding: .5rem;
+    border-radius: .7rem;
+    transition-duration: .3s;
+    box-shadow: 0 .5rem .5rem 0 rgba(0, 0, 0, 0.2);
+    width: 100%;
+    cursor: pointer;
+    color: var(--navbar-color) !important;
+    font-weight: bold;
+}
+
+.spotify:hover {
+    filter: brightness(1.4);
 }
 
 @media only screen and (max-width: 600px) {
