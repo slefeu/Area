@@ -52,9 +52,9 @@ $ docker-compose up --build
 
 ### Contributors
 
-- Solène LEFEU
-- Corentin ROY
-- Arthur DECAEN
-- Geoffrey LABRUYERE
-- Théau GRASSEAU
+- https://github.com/slefeu
+- https://github.com/roy-corentin
+- https://github.com/ArthurTakase
+- https://github.com/GeoffreyLabruyere
+- https://github.com/Theau-Grs
 
