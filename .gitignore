@@ -26,5 +26,7 @@ yarn-error.log*
 .byebug_history
 .rspec
 
+.log
+
 www/
 *.history

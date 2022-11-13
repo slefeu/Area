@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "devise/jwt/test_helpers"
+
 class UsersController < ApplicationController
   before_action :user_logged?, except: %i[ google_sign_in ]
   before_action :set_user, only: %i[ show update destroy ]
@@ -69,7 +71,19 @@ class UsersController < ApplicationController
     end
 
     sign_in(@user)
-    redirect_to controller: "users/sessions", action: :create
+    headers = Devise::JWT::TestHelpers.auth_headers({}, @user)
+    response.set_header("Authorization", headers["Authorization"])
+    render json: { message: "Logged" }
+  end
+
+  # POST /users/delete_token
+  def delete_token
+    res = current_user.delete_token(delete_token_params[:service_name])
+
+    if res[:error]
+      render json: { error: res[:error] }, status: :unauthorized and return
+    end
+    render json: { message: res[:message] }, status: :ok
   end
 
   private
@@ -91,6 +105,10 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :admin, :password)
+    end
+
+    def delete_token_params
+      params.require(:token).permit(:service_name)
     end
 
     def spotify_token_params

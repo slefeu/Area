@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-// import { AiOutlineTwitter as TwitterLogo } from "react-icons/ai"
 import { ReactComponent as GoogleLogo } from "../images/google-icon.svg"
 import { Navigate, useNavigate } from "react-router-dom"
 import { useGoogleLogin } from "@react-oauth/google";
@@ -44,9 +43,13 @@ function LoginForm() {
     return (
         <>
             <form className="form">
-                <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
+                <div className="custom-input">
+                    <input className="fieldFormat" id="email" type="email" placeholder="Email" required />
+                </div>
                 <PasswordInput className="fieldFormat" status="error" id="password" type="password" placeholder="Password" required />
-                <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? { display: "none" } : { display: "flex" }} required />
+                <div className="custom-input">
+                    <input className="fieldFormat" type="text" id="server" placeholder="Server URL" style={localStorage.getItem("platform") === "web" ? { display: "none" } : { display: "flex" }} required />
+                </div>
             </form>
             <button className="box buttonFormat" onClick={SetLoginValues}>Login</button>
         </>
@@ -54,11 +57,27 @@ function LoginForm() {
 }
 
 function Login() {
-
+    const navigate = useNavigate()
     const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "theme-dark" ? true : false);
 
     const googleLogin = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse),
+
+        onSuccess: tokenResponse => {
+            AXIOS.create({ "sameSite": "None; Secure" }).post(
+                localStorage.getItem("url") + "/users/google_sign_in",
+                {
+                    "user": {
+                        "code": tokenResponse.code,
+                        "redirect_uri": window.location.href.split("/#")[0]
+                    }
+                })
+                .then(response => {
+                    const token = response.headers["authorization"].replace("Bearer ", "");
+                    localStorage.setItem("token", token);
+                    navigate('/home')
+                })
+                .catch(error => { Error({ "res": error }) })
+        },
         flow: 'auth-code',
         scope: `https://www.googleapis.com/auth/gmail.modify`,
         onError: error => Error({ "res": error }),
@@ -84,12 +103,16 @@ function Login() {
             <div className="authContainer">
                 <ButtonNavBar active="Login" classPicked="activeButton" dark={localStorage.getItem("theme") === "theme-dark" ? true : false} />
                 <LoginForm></LoginForm>
-                <div className="subtitle">Or continue with</div>
-                <div>
-                    <button className="socialNetworks" onClick={googleLogin}>
-                        <GoogleLogo />
-                    </button>
-                </div>
+                {
+                    localStorage.getItem("platform") === "web" ?
+                    <><div className="subtitle">Or continue with</div>
+                    <div>
+                        <button className="socialNetworks" onClick={googleLogin}>
+                            <GoogleLogo />
+                        </button>
+                    </div></>
+                    : <></>
+                }
             </div>
         </div>
     );

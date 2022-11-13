@@ -2,8 +2,9 @@
 
 class SendMailReactionCommand
   def initialize(options)
-    user = Reaction.find(@reaction_id).action.widget.user
     @reaction_id = options["reaction_id"]
+
+    user = Reaction.find(@reaction_id).action.widget.user
     @token = user.google_token
     @email = user.email
     @to = options["receiver"]

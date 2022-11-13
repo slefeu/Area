@@ -475,4 +475,98 @@ RSpec.describe "api/users", type: :request do
       end
     end
   end
+
+  path "/users/google_sign_in" do
+    post "Register or sign in a user" do
+      tags "Connection"
+      security [bearer: {}]
+      consumes "application/json"
+      produces "application/json"
+      parameter name: :user, in: :body, schema: {
+                  type: :object,
+                  properties: {
+                    user: {
+                      type: :object,
+                      properties: {
+                        code: { type: :string,
+                                example: "4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg" },
+                        redirect_uri: { type: :string, example: "http://localhost:8081" }
+                      },
+                      required: %w[code redirect_uri]
+                    }
+                  },
+                  required: ["user"]
+                }
+
+      response "200", "ok" do
+        let!(:user) {
+          { user: { code: "4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg", redirect_uri: "http://localhost:8081" } } }
+        example "application/json", :valid_code, {
+                  message: "Logged."
+                }
+
+        # run_test!
+      end
+      response "401", "unauthorized" do
+        let!(:user) {
+          { user: { code: "4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg", redirect_uri: "http://localhost:8081" } } }
+        example "application/json", :invalid_code, {
+                  error: "invalid_grant",
+                  error_description: "Bad Request"
+                }
+
+        run_test!
+      end
+    end
+  end
+
+  path "/users/refresh_token" do
+    post "Use code to get refresh token and add it to user" do
+      tags "Users"
+      security [bearer: {}]
+      consumes "application/json"
+      produces "application/json"
+      parameter name: :refresh_token, in: :body, schema: {
+                  type: :object,
+                  properties: {
+                    refresh_token: {
+                      type: :object,
+                      properties: {
+                        name: { type: :string, enum: %w[google spotify], example: "google" },
+                        code: { type: :string,
+                                example: "4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg" },
+                        redirect_uri: { type: :string, example: "http://localhost:8081" }
+                      },
+                      required: %w[name code redirect_uri]
+                    }
+                  },
+                  required: ["refresh_token"]
+                }
+      response "200", "ok" do
+        let!(:refresh_token) {
+          { refresh_token: { name: "google",
+                             code: "4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg",
+                             redirect_uri: "http://localhost:8081" } }
+        }
+        example "application/json", :valid_code, {
+                  message: "Google token added to user"
+                }
+        # run_test!
+      end
+
+      response "401", "unauthorized" do
+        let!(:refresh_token) {
+          { refresh_token: { name: "google",
+                             code: "4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg",
+                             redirect_uri: "http://localhost:8081" } }
+        }
+        example "application/json", :invalid_code, {
+                  error: "invalid_grant",
+                  error_description: "Bad Request"
+                }
+
+        run_test!
+      end
+    end
+  end
 end

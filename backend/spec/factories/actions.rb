@@ -19,6 +19,7 @@
 #
 FactoryBot.define do
   factory :action do
+    id { SecureRandom.uuid }
     klass { "at_hour" }
     options { {} }
     widget_id { create(:widget).id }

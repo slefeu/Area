@@ -1,6 +1,6 @@
 import Container from './Container'
 
-function Background({ url }) {
+function Background({ childrens, url }) {
     
     if (url === null) { return <></> }
     
@@ -20,6 +20,7 @@ function Background({ url }) {
                 </iframe>
                 : <img alt="Background from the user" src={url} />
             }
+            {childrens}
         </Container>
     )
 }

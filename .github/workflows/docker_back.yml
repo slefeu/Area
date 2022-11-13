@@ -1,0 +1,12 @@
+name: Docker Image CI Back
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image (Backend)
+      run: cd backend && docker build . --file ./Dockerfile

@@ -64,7 +64,7 @@ function Widget({ w }) {
         const url = localStorage.getItem("url") + "/widgets/" + w.id
         
         w.active = !w.active
-        AXIOS.patch(url, w, { headers: { Authorization: token,} })
+        AXIOS.patch(url, {"widget" : w}, { headers: { Authorization: token,} })
             .then(res => { 
                 try {
                     var element = document.getElementById("widget_" + w.id)

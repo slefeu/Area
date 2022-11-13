@@ -4,10 +4,8 @@ import { AiOutlineCheck } from "react-icons/ai";
 import Container from '../Tools/Container'
 import AXIOS from "../Tools/Client"
 import Load from "../Tools/Load"
-import { Error } from "../Tools/Notif"
-import { SetNotif } from "../Tools/Notif"
+import { Error, SetNotif } from "../Tools/Notif"
 import SettingsNavBar from "./SettingsNavBar"
-import SwitchTheme from "../Tools/SwitchTheme";
 import PasswordInput from "../Tools/Password";
 
 function UserIdentification({ data, token }) {
@@ -15,7 +13,7 @@ function UserIdentification({ data, token }) {
 
     useEffect(() => {
         AXIOS.get(localStorage.getItem("url") + "/users/reset_token/", { headers: { Authorization: token } })
-            .then(function (res) { setElement(res.data) })
+            .then(function (res) { setElement(res.data["token"]) })
             .catch(function (err) { Error({ "res": err }) })
     }, [token]);
 
@@ -47,7 +45,7 @@ function UserIdentification({ data, token }) {
         };
 
         await AXIOS.put(localStorage.getItem("url") + "/users/password.json", infos)
-            .then(res => { Error({ "title": "Success", "body": "Password changed" }) })
+            .then(res => { SetNotif({ "title": "Success", "body": "Password changed" }) })
             .catch(error => { Error({ "res": error }) });
     }
 
@@ -78,7 +76,6 @@ function UserIdentification({ data, token }) {
 }
 
 function Identification() {
-    SwitchTheme();
     const [element, setElement] = useState(<Load />)
 
     useEffect(() => {

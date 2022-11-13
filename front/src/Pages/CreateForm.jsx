@@ -2,7 +2,7 @@ import '../css/colors.css'
 import '../css/style.css'
 
 import Container from '../Tools/Container'
-import { Error } from '../Tools/Notif'
+import { Error, SetNotif } from '../Tools/Notif'
 
 import AXIOS from "../Tools/Client.jsx"
 import { AiOutlineCheck } from 'react-icons/ai'
@@ -14,6 +14,7 @@ function CreateForm({ json }) {
 
     const [actionsMore, setActionsMore] = useState(<div className="row-2 border"><div>Action Option</div></div>)
     const [reactionsMore, setReactionsMore] = useState(<div className="row-2 border"><div>Reaction Option</div></div>)
+    const [location, setLocation] = useState(<></>)
 
     /**
      * It takes the values of the form and sends them to the server
@@ -60,15 +61,17 @@ function CreateForm({ json }) {
     /* A function that is called when the user selects an action. It will then display the options for
     the action. */
     function moreInputAction() {
+        setLocation(<></>)
         var data = document.getElementById("actionsList").value;
-
         json.server.services.forEach(element => {
             element.actions.forEach(elem => {
                 if (elem.name === data) {
                     if (Object.keys(elem.options).length === 0) { setActionsMore(<div></div>) }
                     else {
                         setActionsMore(<div id="inputAction" className="row-2 border"><div>Action Option</div>{
-                            Object.keys(elem.options).map((e) => { return <input type={elem.options[e]} placeholder={e} key={e}></input> })
+                            Object.keys(elem.options).map((e) => { 
+                                if (elem.options[e] === "location") { Location() }
+                                return <input type={elem.options[e]} placeholder={e} key={e}></input> })
                         }</div>)
                     }
                     return
@@ -94,6 +97,33 @@ function CreateForm({ json }) {
                 }
             })
         })
+    }
+
+    function Location() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setLocation(
+                    <div className="row-2 border red">
+                        <div>📍 (click to copy)</div>
+                        <div className="row-2-text" onClick={() => {
+                            navigator.clipboard.writeText(position.coords.latitude)
+                            SetNotif({ "title": "Infos", "body": "Latitude copied to clipboard" })
+                        }}>{position.coords.latitude} </div>
+                        <div className="row-2-text" onClick={() => {
+                            navigator.clipboard.writeText(position.coords.longitude)
+                            SetNotif({ "title": "Infos", "body": "Longitude copied to clipboard" })
+                        }}>{position.coords.longitude}</div>
+                    </div>
+                )
+            });
+        } else { 
+            setLocation(
+                <div className="row-2 border">
+                    <div>📍</div>
+                    <div>Geolocation is not supported by this browser.</div>
+                </div>
+            )
+        }
     }
 
     useEffect(() => {
@@ -123,6 +153,7 @@ function CreateForm({ json }) {
                     })
                 }</select>
             </div>
+            {location}
             {actionsMore}
             {reactionsMore}
             <button onClick={submit} className="btnBig cornerBtn"><AiOutlineCheck /></button>

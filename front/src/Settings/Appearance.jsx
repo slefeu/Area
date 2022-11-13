@@ -2,12 +2,10 @@ import { useState } from "react"
 import { AiOutlineCheck } from "react-icons/ai"
 
 import AXIOS from "../Tools/Client.jsx"
-import SwitchTheme from "../Tools/SwitchTheme"
 import SettingsNavBar from "./SettingsNavBar"
 import Container from "../Tools/Container"
 
 function Appearance() {
-    SwitchTheme();
     const token = "Bearer " + localStorage.getItem("token");
     const [picked, setPicked] = useState("Light");
 

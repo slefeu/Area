@@ -1,0 +1,13 @@
+name: Rspec CI
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Launch Rspect tests
+      run: echo "rails db:create db:migrate && bundle exec rspec" | sudo docker-compose run server bash

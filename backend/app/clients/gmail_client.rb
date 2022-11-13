@@ -7,22 +7,30 @@ class GmailClient
   end
 
   def user_info
+    return if @refresh_token.nil? || @email.nil?
+
     HTTParty.get("https://gmail.googleapis.com/gmail/v1/users/#{@email}/profile",
-                 headers: { "Authorization": "Bearer #{access_token}" })
+      headers: { "Authorization": "Bearer #{access_token}" })
   end
 
   def send_mail(to, subject, message)
+    return if @refresh_token.nil? || @email.nil?
+
     raw = Base64.encode64("From: <#{@email}>
 To: <#{to}>
 Subject: #{subject}
+Content-type: text/html;charset=utf-8
 
 #{message}").tr("+/", "-_").delete("\n")
-    puts raw
 
-    HTTParty.post("https://gmail.googleapis.com/gmail/v1/users/#{@email}/messages/send",
-                 headers: { "Authorization": "Bearer #{access_token}", "Accept": "application/json",
-                            "Content-Type": "application/json" },
-                 body: { raw: raw }.to_json)
+    response = HTTParty.post("https://gmail.googleapis.com/gmail/v1/users/#{@email}/messages/send",
+      headers: {
+        "Authorization": "Bearer #{access_token}", "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: { raw: raw }.to_json
+    )
+    puts response.request.headers.inspect unless response.success?
   end
 
   private

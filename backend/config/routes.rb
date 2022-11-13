@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   post "users/refresh_token", to: "users#refresh_token"
   post "users/twitter_sign_in", to: "users#twitter_sign_in"
   post "users/google_sign_in", to: "users#google_sign_in"
+  post "users/delete_token", to: "users#delete_token"
 
   devise_for :users, defaults: { format: :json },
                     controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "users/sessions" }

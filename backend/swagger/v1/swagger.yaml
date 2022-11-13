@@ -499,6 +499,105 @@ paths:
                 your_not_logged:
                   value:
                     error: You need to be logged
+  "/users/google_sign_in":
+    post:
+      summary: Register or sign in a user
+      tags:
+      - Connection
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                valid_code:
+                  value:
+                    message: Logged.
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_code:
+                  value:
+                    error: invalid_grant
+                    error_description: Bad Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      example: 4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg
+                    redirect_uri:
+                      type: string
+                      example: http://localhost:8081
+                  required:
+                  - code
+                  - redirect_uri
+              required:
+              - user
+  "/users/refresh_token":
+    post:
+      summary: Use code to get refresh token and add it to user
+      tags:
+      - Users
+      security:
+      - bearer: {}
+      parameters: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              examples:
+                valid_code:
+                  value:
+                    message: Google token added to user
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_code:
+                  value:
+                    error: invalid_grant
+                    error_description: Bad Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      enum:
+                      - google
+                      - spotify
+                      example: google
+                    code:
+                      type: string
+                      example: 4/0AfgeXvtvzNummXDNRNVHSwtkNRmZ20Ha0DsVENfB1HF41HHUtBdtz-w02l7ci7mJQ86Kdg
+                    redirect_uri:
+                      type: string
+                      example: http://localhost:8081
+                  required:
+                  - name
+                  - code
+                  - redirect_uri
+              required:
+              - refresh_token
   "/widgets":
     post:
       summary: Create a widget

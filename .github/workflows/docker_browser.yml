@@ -1,0 +1,12 @@
+name: Docker Image CI Browser
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image (Frontend Web)
+      run: cd front && docker build . --file ./Dockerfile.browser

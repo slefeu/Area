@@ -7,6 +7,7 @@
 #  id                     :bigint           not null, primary key
 #  admin                  :boolean          default(FALSE), not null
 #  background             :string
+#  cat                    :jsonb
 #  email                  :string           not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string           not null
@@ -18,7 +19,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  songs                  :jsonb
+#  songs                  :jsonb            not null
 #  spotify_token          :string
 #  twitter_token          :string
 #  created_at             :datetime         not null
@@ -49,6 +50,7 @@ require "httparty"
 class User < ApplicationRecord
   # Callbacks
   before_destroy :destroy_widgets
+  before_create :init_songs
 
   # Validattions
   validates :email,
@@ -94,12 +96,12 @@ class User < ApplicationRecord
   end
 
   def request_token_from_google(params)
-    result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_body(params[:code]))
-    puts google_body(params[:code])
+    result = HTTParty.post("https://accounts.google.com/o/oauth2/token",
+body: google_body(params[:code], params[:redirect_uri]))
     if result["error"]
       return { error: result["error_description"] }
     end
-    self.google_refresh_token = result["refresh_token"]
+    self.google_token = result["refresh_token"]
     self.save
     { message: "Google token added to user" }
   end
@@ -114,37 +116,21 @@ class User < ApplicationRecord
     result = HTTParty.post("https://accounts.google.com/o/oauth2/token",
                            body: google_body(params[:code], params[:redirect_uri]),
                            headers: { "content-type": "application/x-www-form-urlencoded" })
-    puts "*" * 100
-    puts "TOKEN".center(40)
-    puts result
-    puts "*" * 100
-    if result["error"]
-      return [nil, result]
-    end
+
+    return [nil, result] if result["error"]
 
     refresh_token = result["refresh_token"]
     result = HTTParty.post("https://accounts.google.com/o/oauth2/token", body: google_refresh_token_body(refresh_token),
                            headers: { "content-type": "application/x-www-form-urlencoded" })
 
-    puts "*" * 100
-    puts "REFRESH_TOKEN".center(40)
-    puts result
-    puts "*" * 100
-    if result["error"]
-      return [nil, result]
-    end
+
+    return [nil, result] if result["error"]
 
     access_token = result["access_token"]
     result = HTTParty.get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=#{access_token}",
                            headers: { "content-type": "application/x-www-form-urlencoded", "Authorization": "Bearer" })
 
-    puts "*" * 100
-    puts "ACCESS_TOKEN".center(40)
-    puts result
-    puts "*" * 100
-    if result["error"]
-      return [nil, result]
-    end
+    return [nil, result] if result["error"]
 
     connection_from_oauth(result, "google", refresh_token)
   end
@@ -163,6 +149,14 @@ class User < ApplicationRecord
     user
   end
 
+  def delete_token(name)
+    self.send("#{name}_token=", nil)
+    if self.save
+      { message: "#{name.capitalize} token deleted" }
+    else
+      { error: "Error with #{name} token" }
+    end
+  end
 
   private
     def self.google_refresh_token_body(refresh_token)
@@ -179,6 +173,14 @@ class User < ApplicationRecord
     end
 
     def self.google_body(code, redirect_uri)
+      { code: code,
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        grant_type: "authorization_code",
+        redirect_uri: redirect_uri }
+    end
+
+    def google_body(code, redirect_uri)
       { code: code,
         client_id: ENV["GOOGLE_CLIENT_ID"],
         client_secret: ENV["GOOGLE_CLIENT_SECRET"],
@@ -203,5 +205,9 @@ class User < ApplicationRecord
 
     def destroy_widgets
       self.widgets.map(&:destroy)
+    end
+
+    def init_songs
+      self.songs = {}
     end
 end

@@ -1,0 +1,12 @@
+name: Docker Image CI Android
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image (Frontend Mobile)
+      run: cd front && docker build . --file ./Dockerfile.android

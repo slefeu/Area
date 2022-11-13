@@ -11,7 +11,8 @@ class WidgetToDisable
 
   def call
     @liste.each do |widget_id|
-      Widget.find(widget_id)&.disactivate
+      widget = Widget.find(widget_id)
+      widget.disactivate
     end
 
     @liste.clear

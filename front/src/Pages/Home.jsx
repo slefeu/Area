@@ -4,6 +4,7 @@ import '../css/style.css'
 import Navbar from '../Tools/Navbar'
 import Load from '../Tools/Load'
 import Background from '../Tools/Background'
+import Text from '../Tools/Text'
 import { AlbumsShelf } from '../Tools/Songs'
 import Widget from '../Tools/Widget'
 import { Error } from '../Tools/Notif'
@@ -25,7 +26,9 @@ function Home() {
                 var widgets = res.data.widgets.map((w) => { return <Widget key={GenerateKey()} w={w} /> })
                 setElement(
                     <>
-                        <Background url={res?.data?.background}/>
+                        { res?.data?.cat ?  <Background url={res?.data?.cat["picture"]} /> : <></> }
+                        { res?.data?.cat ?  <Text text={res?.data?.cat["fact"]} /> : <></> }
+                        <Background url={res?.data?.background} />
                         <AlbumsShelf albums={res?.data?.songs} />
                         {widgets}
                     </>

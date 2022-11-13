@@ -47,4 +47,27 @@ RSpec.describe Widget, type: :model do
       expect { widget.activate }.to change(widget, :active).to(true)
     end
   end
+
+  describe "create two widget with the same name" do
+    before { create(:user, id: 1) }
+    before { create(:user, id: 2) }
+    before { create(:widget, name: "nom_widget", user_id: 1) }
+
+    context "attached to the same user" do
+      subject { create(:widget, name: "nom_widget", user_id: 1) }
+
+      it "raise an error" do
+        expect {
+          subject }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Errors Widget name already used")
+      end
+    end
+
+    context "attached to the two user" do
+      subject { create(:widget, name: "nom_widget", user_id: 2) }
+
+      it "persist widget" do
+        expect { subject }.to change(Widget, :count).by(1)
+      end
+    end
+  end
 end

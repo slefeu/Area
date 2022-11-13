@@ -12,29 +12,31 @@ import APIPage from "./Settings/KeyManagement"
 import Admin from "./Pages/Admin"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import AXIOS from "./Tools/Client"
+import { Error, SetNotif } from './Tools/Notif.jsx'
 
 function App() {
 
     if (window.location.href.includes("code")) {
-        console.log("try to save spotify token")
-        var token = "Bearer " + localStorage.getItem("token");
-        var url_target = localStorage.getItem("url") + `/users/refresh_token`
-        localStorage.setItem("spotifyToken", window.location.href.split("code=")[1].split("&")[0])
-        var access_token = {
-            "refresh_token": {
-                "name": "spotify",
-                "code": localStorage.getItem("spotifyToken"),
-                "redirect_uri": localStorage.getItem("platform") === "mobile" ? "file:///android_asset/www/index.html" : "http://" + window.location.href.split("/")[2]
-            }
-        }
+        var code = window.location.href.split("code=")[1].split("&")[0];
+        var url_target = localStorage.getItem("url") + `/users/refresh_token`;
+        const token = "Bearer " + localStorage.getItem("token");
 
-        AXIOS.post(url_target, access_token, { headers: { Authorization: token } })
-            .then((res) => {
-                console.log(res)
+        AXIOS.get(localStorage.getItem("url") + "/current_user", { headers: { Authorization: token } })
+            .then(function (res) {
+                if (res.data.spotify_token === null || res.data.spotify_token === false) {
+                    var access_token = {
+                        "refresh_token": {
+                            "name": "spotify",
+                            "code": code,
+                            "redirect_uri": localStorage.getItem("platform") === "mobile" ? "file:///android_asset/www/index.html" : "http://" + window.location.href.split("/")[2]
+                        }
+                    }
+
+                    AXIOS.post(url_target, access_token, { headers: { Authorization: token } })
+                        .then(function (res) { SetNotif({ "title": "Infos", "body": "Connection with Spotify completed" }) })
+                        .catch((err) => Error(err))
+                }
             })
-            .catch((err) => Error(err))
-
-
     }
 
     return (

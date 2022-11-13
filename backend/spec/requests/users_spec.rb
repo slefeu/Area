@@ -30,6 +30,14 @@ admin: true }
       { first_name: "Jean-Jean", last_name: "La fouriere", email: "jean.four", password: "1", admin: true }
     }
 
+  let(:valid_refresh_token_body) {
+    { name: "google", refresh_token: "flkhjglfda", redirect_uti: "http://localhost:8081" }
+  }
+
+  let(:valid_google_token_body) {
+    { refresh_token: "flkhjglfda", redirect_uti: "http://localhost:8081" }
+  }
+
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
   # UsersController, or in your router and rack
@@ -87,6 +95,96 @@ admin: true }
         post users_url,
              params: { user: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+  end
+
+  describe "GET /current_user" do
+    context "User connected" do
+      let(:user) { create(:user) }
+      before { sign_in(user) }
+
+      it "render a JSON response with the current_user" do
+        get current_user_url, headers: valid_headers, as: :json
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+
+    context "User not connected" do
+      it "render a JSON response with errors" do
+        get current_user_url, headers: valid_headers, as: :json
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+  end
+
+  describe "GET /reset_token" do
+    context "User connected" do
+      let(:user) { create(:user) }
+      before { sign_in(user) }
+
+      it "render a JSON response with the current_user" do
+        get users_reset_token_url, headers: valid_headers, as: :json
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+
+    context "User not connected" do
+      it "render a JSON response with errors" do
+        get users_reset_token_url, headers: valid_headers, as: :json
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+  end
+
+  describe "GET /refresh_token" do
+    context "User connected" do
+      let(:user) { create(:user) }
+      before { sign_in(user) }
+
+      context "invalid code" do
+        it "render a JSON response with the current_user" do
+          get users_refresh_token_url, params: { refresh_token: valid_refresh_token_body }, headers: valid_headers,
+              as: :json
+          expect(response).to have_http_status(:unauthorized)
+          expect(response.content_type).to match(a_string_including("application/json"))
+        end
+      end
+    end
+
+    context "User not connected" do
+      it "render a JSON response with errors" do
+        get users_refresh_token_url, headers: valid_headers, as: :json
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+  end
+
+  describe "GET /google_sign_in" do
+    context "User connected" do
+      let(:user) { create(:user) }
+      before { sign_in(user) }
+
+      context "invalid code" do
+        it "render a JSON response with the current_user" do
+          get users_google_sign_in_url, params: { user: valid_google_token_body }, headers: valid_headers,
+              as: :json
+          expect(response).to have_http_status(:unauthorized)
+          expect(response.content_type).to match(a_string_including("application/json"))
+        end
+      end
+    end
+
+    context "User not connected" do
+      it "render a JSON response with errors" do
+        get users_google_sign_in_url, headers: valid_headers, as: :json
+        expect(response).to have_http_status(:unauthorized)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end

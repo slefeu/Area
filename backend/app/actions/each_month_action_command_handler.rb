@@ -5,7 +5,7 @@ class EachMonthActionCommandHandler
   end
 
   def call(attributes, mocked_response = nil)
-    puts "Each Month Command Handler"
+    puts "Each Month Command Handler" unless Rails.env.test?
 
     time_info = mocked_response || HTTParty.get("https://api.timezonedb.com/v2.1/get-time-zone?key=MLW9WKV7JEUS&format=json&by=position&lat=44.8404&lng=-0.5805")
     current_month = time_info["formatted"].to_date.end_of_month
