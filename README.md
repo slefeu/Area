@@ -1,4 +1,4 @@
-# { EPITECH } | Third year | Web | Mobile | Rest API | AREA
+# {EPITECH} | Third year | Web | Mobile | Rest API | AREA
 
 
 ## Description
@@ -66,8 +66,10 @@ $ bash-5.1# exit
 $ docker-compose up --build
 ```
 
+### Documentation
+
+All of our documentation relative to the routes we used can be found via this url : ```http://localhost:8080/api-docs/index.html```
 ### Contributors
 
-Frontend team : [Solène](https://github.com/slefeu) and [Arthur](https://github.com/ArthurTakase)<br />
-Backend team : [Corentin](https://github.com/roy-corentin) and [Geoffrey](https://github.com/GeoffreyLabruyere)<br />
-Dockerization : [Théau](https://github.com/Theau-Grs)
+Frontend team : [Solène L.](https://github.com/slefeu), [Arthur D.](https://github.com/ArthurTakase)<br />
+Backend team : [Corentin R.](https://github.com/roy-corentin), [Geoffrey L.](https://github.com/GeoffreyLabruyere), [Théau G.](https://github.com/Theau-Grs)<br />
